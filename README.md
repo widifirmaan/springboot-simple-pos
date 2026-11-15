@@ -9,7 +9,6 @@ Simpos is an enterprise-grade retail POS system engineered for electronics hardw
 [![Database](https://img.shields.io/badge/MongoDB-Reactive_Data-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![Template Engine](https://img.shields.io/badge/Thymeleaf-3-005F0F?style=flat-square&logo=thymeleaf&logoColor=white)](https://www.thymeleaf.org/)
 [![Build Tool](https://img.shields.io/badge/Maven-3.9-C71A36?style=flat-square&logo=apachemaven&logoColor=white)](https://maven.apache.org/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
 ---
 
@@ -29,10 +28,12 @@ Simpos is an enterprise-grade retail POS system engineered for electronics hardw
 ## Features
 
 - **High-Throughput Cashier POS (`/kasir`)**: Real-time cart calculations, keyboard-friendly SKU search, dynamic line-item addition/deletion, and cash exchange calculation.
-- **Zero-Collision Sequential Invoicing**: Atomic sequential order numbers and invoice code generation backed by MongoDB sequence collections (`SequenceGeneratorService`).
+- **Zero-Collision Sequential Invoicing**: Atomic sequential order numbers and invoice code generation backed by MongoDB sequence collections with `findAndModify` (`SequenceGeneratorService`).
 - **Real-Time Stock Depletion Pipeline**: Every completed transaction automatically decrements SKU inventory levels with transactional consistency and out-of-stock validation.
 - **Automated Financial Margin Computations (`/finance`)**: Real-time calculation of gross revenue, wholesale cost of goods sold (COGS), and merchant net profit percentages.
 - **Printable Thermal Bill Receipts (`/bill`)**: Dedicated CSS print styles formatted specifically for standard 58mm and 80mm point-of-sale thermal printers.
+- **Interactive Soft UI Telemetry Dashboard (`/dashboard`)**: Creative Tim dashboard theme with Chart.js monthly sales trend charts, gross order summaries, and stock metrics.
+- **Automated Database Seeding Endpoint (`/seed`)**: Pre-configured bootstrap controller seeding sample electronics inventory, categories, and test user credentials.
 - **Role-Based Authentication (`/login`)**: Session-based security gate protecting register checkout, financial ledger audits, and administrative inventory mutations.
 
 ---
@@ -109,9 +110,3 @@ Open [http://localhost:8080/](http://localhost:8080/) in your web browser. A see
 ## Author
 
 Developed by **[Widi Firmansyah](https://widifirmaan.web.id)**.
-
----
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
