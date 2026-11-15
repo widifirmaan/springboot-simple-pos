@@ -1,14 +1,21 @@
 # Simpos
 
-> Lightweight Spring Boot 3 & MongoDB point-of-sale system for retail electronics and inventory tracking.
+> Point-of-sale system for retail electronics and inventory tracking built with Spring Boot 3 and MongoDB.
 
-Simpos is an enterprise-grade retail POS system engineered for electronics hardware merchants. Built with Spring Boot 3 and MongoDB, it provides real-time barcode product search, multi-item checkout, automated sequential invoice generation, inventory tracking, profit margin calculations, and printable receipt slips.
+Simpos is a retail point-of-sale (POS) and inventory management web application built with Spring Boot 3 and MongoDB. It features product barcode search, multi-item checkout with cash change calculation, sequential invoice generation, stock depletion tracking, profit margin calculations, and 58mm/80mm thermal receipt printing.
 
 [![Engine](https://img.shields.io/badge/Spring_Boot-3.2.4-6DB33F?style=flat-square&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-17-ED8B00?style=flat-square&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
 [![Database](https://img.shields.io/badge/MongoDB-Reactive_Data-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![Template Engine](https://img.shields.io/badge/Thymeleaf-3-005F0F?style=flat-square&logo=thymeleaf&logoColor=white)](https://www.thymeleaf.org/)
 [![Build Tool](https://img.shields.io/badge/Maven-3.9-C71A36?style=flat-square&logo=apachemaven&logoColor=white)](https://maven.apache.org/)
+
+---
+
+## Live Production
+
+- **URL:** [https://pos.widifirmaan.web.id](https://pos.widifirmaan.web.id)
+- **Deployment:** Production VPS / Cloudflare Proxy
 
 ---
 
@@ -27,13 +34,13 @@ Simpos is an enterprise-grade retail POS system engineered for electronics hardw
 
 ## Features
 
-- **High-Throughput Cashier POS (`/kasir`)**: Real-time cart calculations, keyboard-friendly SKU search, dynamic line-item addition/deletion, and cash exchange calculation.
-- **Zero-Collision Sequential Invoicing**: Atomic sequential order numbers and invoice code generation backed by MongoDB sequence collections with `findAndModify` (`SequenceGeneratorService`).
-- **Real-Time Stock Depletion Pipeline**: Every completed transaction automatically decrements SKU inventory levels with transactional consistency and out-of-stock validation.
-- **Automated Financial Margin Computations (`/finance`)**: Real-time calculation of gross revenue, wholesale cost of goods sold (COGS), and merchant net profit percentages.
-- **Printable Thermal Bill Receipts (`/bill`)**: Dedicated CSS print styles formatted specifically for standard 58mm and 80mm point-of-sale thermal printers.
-- **Interactive Soft UI Telemetry Dashboard (`/dashboard`)**: Creative Tim dashboard theme with Chart.js monthly sales trend charts, gross order summaries, and stock metrics.
-- **Automated Database Seeding Endpoint (`/seed`)**: Pre-configured bootstrap controller seeding sample electronics inventory, categories, and test user credentials.
+- **Cashier POS Register (`/kasir`)**: Real-time cart calculations, SKU search, dynamic line-item addition/deletion, and cash exchange calculation.
+- **Sequential Invoicing**: Atomic sequential order numbers and invoice code generation backed by MongoDB sequence collections with `findAndModify` (`SequenceGeneratorService`).
+- **Stock Depletion on Purchase**: Every completed transaction automatically decrements SKU inventory levels with transactional consistency and out-of-stock validation.
+- **Financial Margin Reports (`/finance`)**: Real-time calculation of gross revenue, wholesale cost of goods sold (COGS), and merchant net profit percentages.
+- **Thermal Bill Receipts (`/bill`)**: Dedicated CSS print styles formatted specifically for standard 58mm and 80mm point-of-sale thermal printers.
+- **Soft UI Dashboard (`/dashboard`)**: Creative Tim dashboard theme with Chart.js monthly sales trend charts, gross order summaries, and stock metrics.
+- **Database Seeding Endpoint (`/seed`)**: Pre-configured bootstrap controller seeding sample electronics inventory, categories, and test user credentials.
 - **Role-Based Authentication (`/login`)**: Session-based security gate protecting register checkout, financial ledger audits, and administrative inventory mutations.
 
 ---
@@ -43,7 +50,7 @@ Simpos is an enterprise-grade retail POS system engineered for electronics hardw
 | Category | Technologies | Purpose |
 | :--- | :--- | :--- |
 | **Framework** | Spring Boot `3.2.4` | Backend application runtime, dependency injection, and MVC architecture |
-| **Language** | Java `17` LTS | Strict object-oriented typings, modern records, and switch pattern matching |
+| **Language** | Java `17` LTS | Object-oriented business logic, records, and service implementations |
 | **Database** | MongoDB | Document database for catalog records, historical invoices, and atomic sequences |
 | **Data Access** | Spring Data MongoDB | Repository abstractions and custom aggregation queries |
 | **UI Rendering** | Thymeleaf `3.x` | Server-rendered HTML templates with dynamic model binding |
@@ -84,26 +91,28 @@ Simpos is an enterprise-grade retail POS system engineered for electronics hardw
 
 - **Java Development Kit (JDK)**: Version 17 or higher
 - **Apache Maven**: Version 3.8+ (or use `./mvnw`)
-- **MongoDB**: Version 5.0+ running locally or a MongoDB Atlas URI
+- **MongoDB**: Version 5.0+ running locally on port 27017
 
 ### Installation & Setup
 
-> **Environment Variables:** Configure your MongoDB connection string in `src/main/resources/application.properties` before launching the application.
+> **Environment Variables:** Verify your MongoDB connection settings in `src/main/resources/application.properties` before starting the application.
 
 ```bash
 # 1. Clone the repository
 git clone https://github.com/widifirmaan/springboot-simple-pos.git
 cd springboot-simple-pos
 
-# 2. Configure MongoDB connection in src/main/resources/application.properties:
-# spring.data.mongodb.uri=mongodb://localhost:27017/pos_db
-# server.port=8080
+# 2. Verify settings in src/main/resources/application.properties:
+# spring.data.mongodb.host=localhost
+# spring.data.mongodb.port=27017
+# spring.data.mongodb.database=primaelectronic
+# server.port=8081
 
 # 3. Build and run application via Maven
 mvn clean spring-boot:run
 ```
 
-Open [http://localhost:8080/](http://localhost:8080/) in your web browser. A seed endpoint is available at `/seed` to populate initial demo catalog items.
+Open [http://localhost:8081/](http://localhost:8081/) in your web browser. Access `/seed` to populate initial demo catalog items.
 
 ---
 
