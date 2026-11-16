@@ -133,13 +133,13 @@ cd springboot-simple-pos
 
 #### 4. Seed Database & Access Application
 
-1. Open your browser and navigate to `http://localhost:8081/seed` to seed initial accounts and catalog items.
-2. Navigate to `http://localhost:8081/` to login with the demo accounts:
+Trigger the seeder to populate default accounts and catalog items (see [Database Seeding](#database-seeding--demo-credentials) below):
 
-| Role | Username | Password | Default Redirect | Accessible Features |
-| :--- | :--- | :--- | :--- | :--- |
-| **Admin** | `hamam` | `123` | `/dashboard` | Dashboard, Stock Barang, Keuangan, Tagihan, Kasir |
-| **Cashier** | `kasir` | `123` | `/kasir` | Kasir POS Register, Tagihan |
+```bash
+curl -X GET http://localhost:8081/seed
+```
+
+Then navigate to `http://localhost:8081/` in your browser.
 
 ---
 
@@ -153,9 +153,48 @@ docker compose up -d
 
 # Check running containers
 docker compose ps
+
+# Seed the database
+curl -X GET http://localhost:8081/seed
 ```
 
-The application will be accessible at `http://localhost:8081/`. Access `http://localhost:8081/seed` to initialize the database.
+The application will be accessible at `http://localhost:8081/`.
+
+---
+
+### Database Seeding & Demo Credentials
+
+Simpos includes a built-in bootstrap seeder endpoint (`/seed`) that creates required user roles, resets passwords, and populates the initial electronics catalog.
+
+#### 1. Trigger the Seeder
+
+Execute the seeder via terminal (`curl`) or directly in your browser:
+
+```bash
+# Trigger via cURL:
+curl -X GET http://localhost:8081/seed
+
+# Expected Output:
+# Admin user created (hamam/123). <br/>Kasir user created (kasir/123). <br/>Dummy stocks created. <br/>
+```
+
+Or open in your web browser: `http://localhost:8081/seed`.
+
+#### 2. Default Demo Accounts
+
+| Role | Username | Password | Access Level | Default Route | Accessible Modules |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Administrator** | `hamam` | `123` | Level 1 | `/dashboard` | Dashboard, Stock Barang, Keuangan, Tagihan, Kasir |
+| **Cashier (Kasir)** | `kasir` | `123` | Level 2 | `/kasir` | Kasir POS Register, Tagihan Sales |
+
+#### 3. Pre-Seeded Inventory Items
+
+| Item ID | Product Name | Stock Qty | Purchase Price (Init) | Selling Price (Final) | Store ID |
+| :---: | :--- | :---: | :---: | :---: | :---: |
+| `1` | Samsung Galaxy S23 | 10 | Rp 12.000.000 | Rp 13.000.000 | Toko 1 |
+| `2` | iPhone 15 Pro | 5 | Rp 18.000.000 | Rp 19.500.000 | Toko 1 |
+| `3` | Xiaomi Redmi Note 12 | 20 | Rp 2.500.000 | Rp 2.800.000 | Toko 1 |
+| `4` | Laptop Asus ROG | 3 | Rp 15.000.000 | Rp 16.500.000 | Toko 1 |
 
 ---
 
