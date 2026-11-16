@@ -1,0 +1,24 @@
+services:
+  app:
+    build: .
+    container_name: simpos-app
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATA_MONGODB_HOST=mongodb
+      - SPRING_DATA_MONGODB_PORT=27017
+      - SPRING_DATA_MONGODB_DATABASE=primaelectronic
+      - SERVER_PORT=8081
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:7.0
+    container_name: simpos-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
