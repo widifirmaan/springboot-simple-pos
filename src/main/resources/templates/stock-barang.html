@@ -143,18 +143,18 @@
                 <table class="table align-items-center mb-0" id="stockTable">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary font-weight-bolder opacity-7">Barang</th>
-                      <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Harga</th>
-                      <th class="text-center text-uppercase text-secondary font-weight-bolder opacity-7">Jumlah</th>
-                      <th class="text-center text-uppercase text-secondary font-weight-bolder opacity-7">Toko</th>
-                      <th class="text-secondary opacity-7" th:if="${isLoggedIn}">Aksi</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-4">Barang</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-end pe-4 text-md-start">Harga</th>
+                      <th class="d-none d-md-table-cell text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
+                      <th class="d-none d-md-table-cell text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Toko</th>
+                      <th class="d-none d-md-table-cell text-end pe-4 text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" th:if="${isLoggedIn}">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr th:each="row : ${stocks}">
                       <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
+                        <div class="d-flex ps-4 pe-2 py-2 align-items-center">
+                          <div class="d-none d-md-block me-2">
                             <svg th:id="'barcode' + ${row.id}"></svg>
                             <script th:inline="javascript">
                               /*<![CDATA[*/
@@ -165,27 +165,44 @@
                             </script>
                           </div>
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm" th:text="${row.name}">Name</h6>
+                            <h6 class="mb-0 text-sm font-weight-bold" th:text="${row.name}">Name</h6>
+                            <div class="d-flex align-items-center gap-2 mt-1 d-md-none">
+                              <span class="badge badge-sm py-1 px-2"
+                                th:classappend="${row.qty > 9} ? 'bg-gradient-success' : 'bg-gradient-danger'"
+                                th:text="${row.qty} + ' Pcs'">Qty</span>
+                              <span class="badge badge-sm bg-light text-secondary border font-weight-bold py-1 px-2"
+                                th:text="'Toko ' + ${row.store}">Store</span>
+                            </div>
                           </div>
                         </div>
                       </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0"
+                      <td class="align-middle text-end pe-4 text-md-start">
+                        <p class="text-xs font-weight-bold mb-0 text-dark"
                           th:text="'Rp. ' + ${#numbers.formatDecimal(row.priceFinal, 0, 'POINT', 0, 'COMMA')}">Price</p>
-                        <p class="text-xs text-secondary mb-0"
-                          th:text="'Rp. ' + ${#numbers.formatDecimal(row.priceInit, 0, 'POINT', 0, 'COMMA')}">Init Price
+                        <p class="text-xxs text-secondary mb-0"
+                          th:text="'Modal: Rp. ' + ${#numbers.formatDecimal(row.priceInit, 0, 'POINT', 0, 'COMMA')}">Init Price
                         </p>
+                        <div class="mt-1 d-md-none" th:if="${isLoggedIn}">
+                          <button class="btn btn-link text-warning px-1 py-0 mb-0" th:data-id="${row.id}" th:data-name="${row.name}"
+                            th:data-priceinit="${row.priceInit}" th:data-pricefinal="${row.priceFinal}"
+                            th:data-qty="${row.qty}" th:data-store="${row.store}" onclick="openEditModal(this)">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          <button class="btn btn-link text-danger px-1 py-0 mb-0" th:data-id="${row.id}" onclick="openDeleteModal(this)">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                        </div>
                       </td>
-                      <td class="align-middle text-center text-sm">
+                      <td class="d-none d-md-table-cell align-middle text-center text-sm">
                         <span class="badge badge-sm"
                           th:classappend="${row.qty > 9} ? 'bg-gradient-success' : 'bg-gradient-danger'"
                           th:text="${row.qty} + ' Pcs'">Qty</span>
                       </td>
-                      <td class="align-middle text-center text-sm">
+                      <td class="d-none d-md-table-cell align-middle text-center text-sm">
                         <span class="text-secondary text-xs font-weight-bold"
                           th:text="'Toko ' + ${row.store}">Store</span>
                       </td>
-                      <td class="align-middle text-end pe-4" th:if="${isLoggedIn}">
+                      <td class="d-none d-md-table-cell align-middle text-end pe-4" th:if="${isLoggedIn}">
                         <button class="btn btn-warning btn-sm" th:data-id="${row.id}" th:data-name="${row.name}"
                           th:data-priceinit="${row.priceInit}" th:data-pricefinal="${row.priceFinal}"
                           th:data-qty="${row.qty}" th:data-store="${row.store}" onclick="openEditModal(this)">

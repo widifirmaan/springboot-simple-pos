@@ -1,7 +1,9 @@
 package com.primaelectronic.pos.controller;
 
+import com.primaelectronic.pos.model.Bill;
 import com.primaelectronic.pos.model.Stock;
 import com.primaelectronic.pos.model.User;
+import com.primaelectronic.pos.repository.BillRepository;
 import com.primaelectronic.pos.repository.StockRepository;
 import com.primaelectronic.pos.repository.UserRepository;
 import com.primaelectronic.pos.service.SequenceGeneratorService;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RestController
@@ -21,6 +24,9 @@ public class SeedController {
 
     @Autowired
     private StockRepository stockRepository;
+
+    @Autowired
+    private BillRepository billRepository;
 
     @Autowired
     private SequenceGeneratorService sequenceGeneratorService;
@@ -72,6 +78,16 @@ public class SeedController {
             result.append("Stocks already exist. <br/>");
         }
 
+        // Seed Bills
+        if (billRepository.count() == 0) {
+            createBill("PT Surya Jaya Elektronik", "15.000.000", "Pengadaan Batch 4 Sparepart LED", "", 2, 15000000, LocalDate.now().plusDays(10), "hamam");
+            createBill("CV Prima Distribusi", "8.750.000", "Restock Kabel HDMI 4K & Charger", "", 1, 0, LocalDate.now().minusDays(2), "hamam");
+            createBill("Multi Media Perkasa", "5.200.000", "Pembelian Adaptor & Converter Type-C", "", 3, 2200000, LocalDate.now().plusDays(5), "hamam");
+            result.append("Dummy bills created. <br/>");
+        } else {
+            result.append("Bills already exist. <br/>");
+        }
+
         return result.toString();
     }
 
@@ -86,5 +102,20 @@ public class SeedController {
         stock.setCreatedAt(LocalDateTime.now());
         stock.setModifiedAt(LocalDateTime.now());
         stockRepository.save(stock);
+    }
+
+    private void createBill(String nama, String nominal, String ket, String pic, int status, int nominalMinus, LocalDate dueDate, String createdBy) {
+        Bill bill = new Bill();
+        bill.setId(sequenceGeneratorService.generateSequence(Bill.SEQUENCE_NAME));
+        bill.setNama(nama);
+        bill.setNominal(nominal);
+        bill.setKet(ket);
+        bill.setPic(pic);
+        bill.setStatus(status);
+        bill.setNominalMinus(nominalMinus);
+        bill.setDueDate(dueDate);
+        bill.setCreatedBy(createdBy);
+        bill.setCreatedAt(LocalDate.now());
+        billRepository.save(bill);
     }
 }

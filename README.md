@@ -36,7 +36,7 @@ Simpos is a point-of-sale (POS) and inventory management web application enginee
 - **Vendor Billing & Invoices (`/bill`)**: Accounts payable ledger tracking vendor invoices, due dates (`dueDate`), person in charge (PIC), payment statuses (`Lunas` / `Belum Lunas`), balance remainders (`nominalMinus`), and search filters.
 - **Executive Analytics Dashboard (`/dashboard`)**: Daily gross revenue summaries, transaction volume count, store switcher, and active inventory status cards.
 - **Atomic Invoicing & Sequence Generator**: Auto-incrementing numerical identifier sequence collection (`DatabaseSequence`) utilizing MongoDB `findAndModify` operations for consistent transactional concurrency across transactions, stock, and bills.
-- **Bootstrap Database Seeding (`/seed`)**: Development endpoint to initialize default admin (`hamam`), cashier (`kasir`), and electronic product stock items.
+- **Bootstrap Database Seeding (`/seed`)**: Development endpoint to initialize default admin (`hamam`), cashier (`kasir`), electronic product stock catalog, and vendor billing records.
 
 ---
 
@@ -175,7 +175,7 @@ Execute the seeder via terminal (`curl`) or directly in your browser:
 curl -X GET http://localhost:8081/seed
 
 # Expected Output:
-# Admin user created (hamam/123). <br/>Kasir user created (kasir/123). <br/>Dummy stocks created. <br/>
+# Admin user created (hamam/123). <br/>Kasir user created (kasir/123). <br/>Dummy stocks created. <br/>Dummy bills created. <br/>
 ```
 
 Or open in your web browser: `http://localhost:8081/seed`.
