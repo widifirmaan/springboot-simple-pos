@@ -120,63 +120,80 @@
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
-                                <table class="table align-items-center" id="billsTable">
+                                <table class="table align-items-center mb-0" id="billsTable">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary font-weight-bolder opacity-7">
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Nama/Org Sales</th>
                                             <th
-                                                class="text-center text-uppercase text-secondary font-weight-bolder opacity- ps-2">
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                                 Nominal</th>
                                             <th
-                                                class="text-center text-uppercase text-secondary font-weight-bolder opacity-7">
-                                                Keterangan</th>
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Keterangan / Bukti</th>
                                             <th
-                                                class="text-center text-uppercase text-secondary font-weight-bolder opacity-7">
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Status</th>
                                             <th
-                                                class="text-center text-uppercase text-secondary font-weight-bolder opacity-7">
-                                                Date/Due Date</th>
-                                            <th class="text-secondary opacity-7"></th>
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Date / Due Date</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr th:each="bill : ${bills}">
                                             <td>
-                                                <p class="p-3" th:text="${bill.nama}">Nama</p>
+                                                <div class="d-flex px-3 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm font-weight-bold" th:text="${bill.nama}">Nama</h6>
+                                                        <p class="text-xs text-secondary mb-0" th:if="${bill.createdBy != null and !bill.createdBy.isEmpty()}" th:text="'Input: ' + ${bill.createdBy}">PIC</p>
+                                                    </div>
+                                                </div>
                                             </td>
-                                            <td>
-                                                <p class="text-center font-weight-bold"
-                                                    th:text="'Rp. ' + ${bill.nominal}">Rp. 0</p>
-                                                <p class="text-center text-secondary"
-                                                    th:text="'Kekurangan Rp. ' + ${bill.nominalMinus}">Kekurangan</p>
+                                            <td class="align-middle text-center text-sm">
+                                                <span class="text-xs font-weight-bold d-block" th:text="'Rp. ' + ${bill.nominal}">Rp. 0</span>
+                                                <span th:if="${bill.nominalMinus > 0}" class="badge badge-sm bg-light text-danger border font-weight-bold mt-1" th:text="'Sisa: Rp. ' + ${bill.nominalMinus}">Kekurangan</span>
+                                                <span th:if="${bill.nominalMinus == 0}" class="badge badge-sm bg-light text-success border font-weight-bold mt-1">Lunas</span>
                                             </td>
-                                            <td>
-                                                <p class="text-center" th:text="${bill.ket}">Keterangan</p>
-                                                <img th:if="${bill.pic != null}" th:src="${bill.pic}"
-                                                    style="max-height: 50px; display: block; margin: 0 auto;" />
+                                            <td class="align-middle text-center">
+                                                <p class="text-xs font-weight-bold mb-1" th:text="${bill.ket}">Keterangan</p>
+                                                <!-- Handle foto bukti jika ada -->
+                                                <div th:if="${bill.pic != null and !bill.pic.isEmpty() and (#strings.startsWith(bill.pic, 'data:image') or #strings.startsWith(bill.pic, 'http'))}">
+                                                    <a th:href="${bill.pic}" target="_blank" title="Lihat Foto Bukti">
+                                                        <img th:src="${bill.pic}" class="avatar avatar-sm border-radius-md shadow-sm border" alt="Foto Pelunasan" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='inline-block';" />
+                                                    </a>
+                                                    <span style="display:none;" class="badge badge-sm bg-light text-secondary font-weight-normal border">
+                                                        <i class="fas fa-image-slash me-1 opacity-6"></i>Tidak ada foto
+                                                    </span>
+                                                </div>
+                                                <!-- Handle jika image tidak ada / bukan gambar -->
+                                                <div th:unless="${bill.pic != null and !bill.pic.isEmpty() and (#strings.startsWith(bill.pic, 'data:image') or #strings.startsWith(bill.pic, 'http'))}">
+                                                    <span class="badge badge-sm bg-light text-secondary font-weight-normal border">
+                                                        <i class="fas fa-image-slash me-1 opacity-6"></i>Tidak ada foto
+                                                    </span>
+                                                </div>
                                             </td>
-                                            <td>
-                                                <p class="text-center font-weight-bold">
-                                                    <span th:if="${bill.status == 1}"
-                                                        class="badge badge-sm bg-gradient-success">Lunas</span>
-                                                    <span th:if="${bill.status == 2}"
-                                                        class="badge badge-sm bg-gradient-danger">Belum Dibayar</span>
-                                                    <span th:if="${bill.status == 3}"
-                                                        class="badge badge-sm bg-gradient-warning">Belum Lunas</span>
-                                                </p>
+                                            <td class="align-middle text-center text-sm">
+                                                <span th:if="${bill.status == 1}"
+                                                    class="badge badge-sm bg-gradient-success"><i class="fas fa-check-circle me-1"></i>Lunas</span>
+                                                <span th:if="${bill.status == 2}"
+                                                    class="badge badge-sm bg-gradient-danger"><i class="fas fa-clock me-1"></i>Belum Dibayar</span>
+                                                <span th:if="${bill.status == 3}"
+                                                    class="badge badge-sm bg-gradient-warning"><i class="fas fa-exclamation-circle me-1"></i>Belum Lunas</span>
                                             </td>
-                                            <td>
-                                                <p class="text-center font-weight-bold" th:text="${bill.createdAt}">Date
-                                                </p>
-                                                <p class="text-center text-secondary" th:text="${bill.dueDate}">
-                                                    Duplicate</p>
+                                            <td class="align-middle text-center">
+                                                <span class="text-xs font-weight-bold d-block" th:text="${bill.createdAt}">Date</span>
+                                                <span class="text-xxs text-secondary d-block" th:if="${bill.dueDate != null}" th:text="'Tempo: ' + ${bill.dueDate}">Due Date</span>
                                             </td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                                    th:attr="data-bs-target='#editBillModal'+${bill.id}">Edit</button>
-                                                <button class="btn btn-danger btn-sm"
-                                                    th:onclick="'deleteBill(' + ${bill.id} + ')'">Hapus</button>
+                                            <td class="align-middle text-center">
+                                                <div class="d-flex justify-content-center gap-1">
+                                                    <button class="btn btn-outline-primary btn-sm mb-0 px-2 py-1" data-bs-toggle="modal"
+                                                        th:attr="data-bs-target='#editBillModal'+${bill.id}">Edit</button>
+                                                    <button class="btn btn-outline-danger btn-sm mb-0 px-2 py-1"
+                                                        th:onclick="'deleteBill(' + ${bill.id} + ')'">Hapus</button>
+                                                </div>
+                                            </td>
+                                        </tr>
 
                                                 <!-- Edit Modal -->
                                                 <div class="modal fade" th:id="'editBillModal' + ${bill.id}"
@@ -202,8 +219,9 @@
                                                                             th:id="'picEdit' + ${bill.id}"
                                                                             th:value="${bill.pic}">
                                                                         <img th:id="'previewEdit' + ${bill.id}"
-                                                                            th:src="${bill.pic}" class="img-fluid mt-2"
-                                                                            style="max-height: 200px;">
+                                                                            th:src="${bill.pic}" class="img-fluid mt-2 border-radius-md"
+                                                                            th:style="${bill.pic != null and !bill.pic.isEmpty() and (#strings.startsWith(bill.pic, 'data:image') or #strings.startsWith(bill.pic, 'http'))} ? 'max-height: 200px;' : 'display:none; max-height: 200px;'"
+                                                                            onerror="this.style.display='none';">
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label>Nama Sales</label>

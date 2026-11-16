@@ -17,7 +17,6 @@ Simpos is a point-of-sale (POS) and inventory management web application enginee
 
 | Desktop Interface (MacBook Pro M4) | Mobile Interface (iPhone 16 Pro) |
 | :---: | :---: |
-| **Cashier POS Register Desktop**<br>![Cashier POS Register Desktop](screenshots/POS%20Cashier%20Desktop.png) | **Cashier POS Register Mobile**<br>![Cashier POS Register Mobile](screenshots/POS%20Cashier%20Mobile.png) |
 | **Analytics Dashboard Desktop**<br>![Analytics Dashboard Desktop](screenshots/POS%20Dashboard%20Desktop.png) | **Analytics Dashboard Mobile**<br>![Analytics Dashboard Mobile](screenshots/POS%20Dashboard%20Mobile.png) |
 | **Inventory & Stock Manager Desktop**<br>![Inventory & Stock Manager Desktop](screenshots/Stock%20Inventory%20Desktop.png) | **Inventory & Stock Manager Mobile**<br>![Inventory & Stock Manager Mobile](screenshots/Stock%20Inventory%20Mobile.png) |
 | **Financial Ledger & Profit Desktop**<br>![Financial Ledger & Profit Desktop](screenshots/Finance%20Profit%20Desktop.png) | **Financial Ledger & Profit Mobile**<br>![Financial Ledger & Profit Mobile](screenshots/Finance%20Profit%20Mobile.png) |
