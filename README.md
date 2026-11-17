@@ -15,13 +15,39 @@ Simpos is a point-of-sale (POS) and inventory management web application enginee
 
 ## Showcase
 
-| Desktop | Mobile |
+### 1. Executive Operations Dashboard & Authentication (`/login`, `/dashboard`)
+
+| Desktop Interface (MacBook Pro M4) | Mobile Interface (iPhone 16 Pro) |
 | :---: | :---: |
-| **Analytics Dashboard Desktop**<br>![Analytics Dashboard Desktop](screenshots/POS%20Dashboard%20Desktop.png) | **Analytics Dashboard Mobile**<br>![Analytics Dashboard Mobile](screenshots/POS%20Dashboard%20Mobile.png) |
-| **Inventory & Stock Manager Desktop**<br>![Inventory & Stock Manager Desktop](screenshots/Stock%20Inventory%20Desktop.png) | **Inventory & Stock Manager Mobile**<br>![Inventory & Stock Manager Mobile](screenshots/Stock%20Inventory%20Mobile.png) |
-| **Financial Ledger & Profit Desktop**<br>![Financial Ledger & Profit Desktop](screenshots/Finance%20Profit%20Desktop.png) | **Financial Ledger & Profit Mobile**<br>![Financial Ledger & Profit Mobile](screenshots/Finance%20Profit%20Mobile.png) |
-| **Sales Invoices & Billing Table Desktop**<br>![Sales Invoices & Billing Table Desktop](screenshots/Bill%20Receipt%20Desktop.png) | **Sales Invoices & Billing Table Mobile**<br>![Sales Invoices & Billing Table Mobile](screenshots/Bill%20Receipt%20Mobile.png) |
-| **Authentication Portal Desktop**<br>![Authentication Portal Desktop](screenshots/Login%20Screen%20Desktop.png) | **Authentication Portal Mobile**<br>![Authentication Portal Mobile](screenshots/Login%20Screen%20Mobile.png) |
+| **Authentication Portal (Role-Based Gateway)**<br>![POS Login Screen Desktop](screenshots/POS%20Login%20Screen%20Desktop.png) | **Authentication Portal (Role-Based Gateway)**<br>![POS Login Screen Mobile](screenshots/POS%20Login%20Screen%20Mobile.png) |
+| **Executive Analytics Dashboard (Gross Revenue & Metrics)**<br>![POS Analytics Dashboard Desktop](screenshots/POS%20Analytics%20Dashboard%20Desktop.png) | **Executive Analytics Dashboard (Gross Revenue & Metrics)**<br>![POS Analytics Dashboard Mobile](screenshots/POS%20Analytics%20Dashboard%20Mobile.png) |
+
+### 2. Cashier POS Register & Checkout Workflows (`/kasir`)
+
+| Desktop Interface (MacBook Pro M4) | Mobile Interface (iPhone 16 Pro) |
+| :---: | :---: |
+| **Cashier Point-of-Sale Register Terminal**<br>![POS Cashier Register Desktop](screenshots/POS%20Cashier%20Register%20Terminal%20Desktop.png) | **Cashier Point-of-Sale Register Terminal**<br>![POS Cashier Register Mobile](screenshots/POS%20Cashier%20Register%20Terminal%20Mobile.png) |
+| **Cashier Checkout & Instant Change Calculation**<br>![POS Checkout Desktop](screenshots/POS%20Checkout%20&%20Change%20Calculation%20Desktop.png) | **Cashier Checkout & Instant Change Calculation**<br>![POS Checkout Mobile](screenshots/POS%20Checkout%20&%20Change%20Calculation%20Mobile.png) |
+
+### 3. Inventory Stock, Barcodes & SKU Provisioning (`/stock-barang`)
+
+| Desktop Interface (MacBook Pro M4) | Mobile Interface (iPhone 16 Pro) |
+| :---: | :---: |
+| **Stock Inventory Catalog with Dynamic SVG Barcodes**<br>![POS Stock Inventory Desktop](screenshots/POS%20Stock%20Inventory%20Catalog%20Desktop.png) | **Stock Inventory Catalog with Dynamic SVG Barcodes**<br>![POS Stock Inventory Mobile](screenshots/POS%20Stock%20Inventory%20Catalog%20Mobile.png) |
+| **Add Electronic Stock SKU Modal**<br>![POS Add Stock SKU Modal Desktop](screenshots/POS%20Add%20Stock%20SKU%20Modal%20Desktop.png) | **Add Electronic Stock SKU Modal**<br>![POS Add Stock SKU Modal Mobile](screenshots/POS%20Add%20Stock%20SKU%20Modal%20Mobile.png) |
+
+### 4. Accounts Payable & Vendor Invoices (`/bill`)
+
+| Desktop Interface (MacBook Pro M4) | Mobile Interface (iPhone 16 Pro) |
+| :---: | :---: |
+| **Accounts Payable & Vendor Billing Ledger**<br>![POS Vendor Invoices Desktop](screenshots/POS%20Vendor%20Invoices%20Table%20Desktop.png) | **Accounts Payable & Vendor Billing Ledger**<br>![POS Vendor Invoices Mobile](screenshots/POS%20Vendor%20Invoices%20Table%20Mobile.png) |
+| **Add Vendor Bill Modal**<br>![POS Add Vendor Bill Modal Desktop](screenshots/POS%20Add%20Vendor%20Bill%20Modal%20Desktop.png) | **Add Vendor Bill Modal**<br>![POS Add Vendor Bill Modal Mobile](screenshots/POS%20Add%20Vendor%20Bill%20Modal%20Mobile.png) |
+
+### 5. Financial Ledger & Profit Margin Reports (`/finance`)
+
+| Desktop Interface (MacBook Pro M4) | Mobile Interface (iPhone 16 Pro) |
+| :---: | :---: |
+| **Financial Ledger & Gross Profit Analytics**<br>![POS Financial Profit Desktop](screenshots/POS%20Financial%20Profit%20Ledger%20Desktop.png) | **Financial Ledger & Gross Profit Analytics**<br>![POS Financial Profit Mobile](screenshots/POS%20Financial%20Profit%20Ledger%20Mobile.png) |
 
 ---
 
