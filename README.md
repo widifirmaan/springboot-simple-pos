@@ -1,6 +1,6 @@
 # Simpos
 
-> Sistem Point of Sale (POS) ritel elektronik dan manajemen stok inventaris berbasis Spring Boot 3, MongoDB, dan Thymeleaf.
+> Retail point-of-sale (POS) and inventory management web application built with Spring Boot 3, MongoDB, and Thymeleaf.
 
 [![Engine](https://img.shields.io/badge/Spring_Boot-3.2.4-6DB33F?style=flat-square&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-17_LTS-ED8B00?style=flat-square&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
@@ -13,76 +13,76 @@
 
 ## Live URL
 
-- **Deployment Mode**: Aplikasi web lokal / on-premise berbasis server Java Spring Boot dan basis data MongoDB.
+- **Deployment Mode**: On-premise / local deployment powered by Java Spring Boot and MongoDB.
 - **Local URL**: [http://localhost:8081](http://localhost:8081)
 
 ---
 
-## Screenshot
+## Screenshots
 
 | Desktop | Mobile |
 | :---: | :---: |
-| **Login Gateway & Autentikasi Role**<br>![Login](screenshots/Login%20Desktop.png) | **Login Gateway & Autentikasi Role**<br>![Login](screenshots/Login%20Mobile.png) |
-| **Dashboard Operasional & Ringkasan Omset**<br>![Dashboard](screenshots/Dashboard%20Desktop.png) | **Dashboard Operasional & Ringkasan Omset**<br>![Dashboard](screenshots/Dashboard%20Mobile.png) |
-| **Terminal Kasir & Kalkulasi Kembalian**<br>![Kasir](screenshots/Kasir%20Desktop.png) | **Terminal Kasir & Kalkulasi Kembalian**<br>![Kasir](screenshots/Kasir%20Mobile.png) |
-| **Katalog Stok Barang & Barcode SVG**<br>![Stok Barang](screenshots/Stok%20Barang%20Desktop.png) | **Katalog Stok Barang & Barcode SVG**<br>![Stok Barang](screenshots/Stok%20Barang%20Mobile.png) |
-| **Daftar Tagihan Sales & Invoice Vendor**<br>![Tagihan](screenshots/Tagihan%20Desktop.png) | **Daftar Tagihan Sales & Invoice Vendor**<br>![Tagihan](screenshots/Tagihan%20Mobile.png) |
-| **Laporan Keuangan & Laba Kotor**<br>![Keuangan](screenshots/Keuangan%20Desktop.png) | **Laporan Keuangan & Laba Kotor**<br>![Keuangan](screenshots/Keuangan%20Mobile.png) |
+| **Authentication Gateway (Role-Based)**<br>![Login](screenshots/Login%20Desktop.png) | **Authentication Gateway (Role-Based)**<br>![Login](screenshots/Login%20Mobile.png) |
+| **Executive Operations Dashboard**<br>![Dashboard](screenshots/Dashboard%20Desktop.png) | **Executive Operations Dashboard**<br>![Dashboard](screenshots/Dashboard%20Mobile.png) |
+| **Cashier Terminal & Change Calculation**<br>![Kasir](screenshots/Kasir%20Desktop.png) | **Cashier Terminal & Change Calculation**<br>![Kasir](screenshots/Kasir%20Mobile.png) |
+| **Product Inventory & SVG Barcodes**<br>![Stok Barang](screenshots/Stok%20Barang%20Desktop.png) | **Product Inventory & SVG Barcodes**<br>![Stok Barang](screenshots/Stok%20Barang%20Mobile.png) |
+| **Accounts Payable & Vendor Billing**<br>![Tagihan](screenshots/Tagihan%20Desktop.png) | **Accounts Payable & Vendor Billing**<br>![Tagihan](screenshots/Tagihan%20Mobile.png) |
+| **Financial Ledger & Gross Profit Reports**<br>![Keuangan](screenshots/Keuangan%20Desktop.png) | **Financial Ledger & Gross Profit Reports**<br>![Keuangan](screenshots/Keuangan%20Mobile.png) |
 
 ---
 
-## Fitur
+## Features
 
-- **Autentikasi Berbasis Role (`/login`, `/`)**:
-  - **Admin (`hamam` / `123`, Level Akses 1)**: Memiliki hak akses penuh mencakup Dashboard Omset (`/dashboard`), Manajemen Stok Barang (`/stock-barang`), Laporan Keuangan (`/finance`), Tagihan Vendor (`/bill`), dan Kasir Transaksi (`/kasir`).
-  - **Kasir (`kasir` / `123`, Level Akses 2)**: Hak akses operasional terbatas untuk transaksi kasir (`/kasir`) dan pencatatan tagihan, secara otomatis dicegah mengakses data laba kotor dan analitik keuangan.
-- **Terminal Kasir POS (`/kasir`)**: Penambahan item produk belanjaan, pengaturan jumlah kuantitas, kalkulasi subtotal instan, perhitungan otomatis uang kembalian tunai, dan cetak nota transaksi HTML.
-- **Inventaris Stok & Generator Barcode (`/stock-barang`)**: Manajemen katalog barang elektronik, harga modal, harga jual, penanggung jawab (PIC), generator barcode SVG dinamis berbasis JsBarcode, serta filter lokasi toko (Toko 1 & Toko 2) dengan indikator badge stok aman / menipis.
-- **Laporan Laba Kotor Keuangan (`/finance`)**: Perhitungan keuntungan kotor harian dan bulanan, rekapitulasi volume barang keluar, filter rentang tanggal (`tgldari` & `tglsampai`), serta ekspor laporan ke Excel.
-- **Manajemen Tagihan Vendor (`/bill`)**: Buku pencatatan hutang dagang supplier, tanggal jatuh tempo (*due date*), status pembayaran (*Lunas* / *Belum Dibayar*), dan kalkulasi sisa tanggungan.
-- **Sequence Generator Otomatis**: Pengelolaan ID inkremental unik melalui koleksi `database_sequences` berbasis operasi atomik `findAndModify` MongoDB untuk mencegah duplikasi nota transaksi.
-- **Inisialisasi Data Demo (`/seed`)**: Endpoint otomatis untuk menginisialisasi akun pengguna awal, katalog sampel smartphone & laptop, serta data riwayat tagihan.
+- **Role-Based Access Control (`/login`, `/`)**:
+  - **Administrator (`hamam` / `123`, Access Level 1)**: Full permissions across executive Analytics Dashboard (`/dashboard`), Product Inventory (`/stock-barang`), Financial Ledger (`/finance`), Vendor Invoices (`/bill`), and Cashier Terminal (`/kasir`).
+  - **Cashier (`kasir` / `123`, Access Level 2)**: Operational permissions for register checkout (`/kasir`) and bill entries, automatically restricted from viewing executive financial profit margins and revenue analytics.
+- **Cashier POS Register (`/kasir`)**: Real-time line-item addition, cart quantity adjustments, automatic subtotal calculation, instant cash change computation, and printable HTML receipt generation.
+- **Inventory Stock & Barcode Engine (`/stock-barang`)**: Product SKU catalog tracking, purchase vs retail prices, dynamic SVG barcode generation powered by JsBarcode, dual-store location filtering (Store 1 & Store 2), and stock status alert pills.
+- **Financial Profit Margin Reports (`/finance`)**: Real-time gross profit calculation, volume count of sold items, customizable date range filtering (`tgldari` & `tglsampai`), and 1-click Excel report export.
+- **Accounts Payable Ledger (`/bill`)**: Vendor invoice tracking, due dates, payment status tags (*Lunas* / *Belum Dibayar*), and outstanding balance remainders.
+- **Atomic Sequence Generator**: Incremental sequence counter collection (`database_sequences`) utilizing MongoDB `findAndModify` operations for collision-free transactional invoice numbers.
+- **Database Seeder (`/seed`)**: Built-in HTTP endpoint to bootstrap demo administrator and cashier accounts, sample electronic products, and vendor billing records.
 
 ---
 
 ## Tech Stack
 
-| Kategori | Teknologi | Deskripsi / Peran |
+| Category | Technology | Description / Purpose |
 | :--- | :--- | :--- |
-| **Backend Framework** | Spring Boot `3.2.4` | Framework MVC enterprise, Inversion of Control, dan dependency injection |
-| **Bahasa Pemrograman** | Java `17` LTS | Logika bisnis berorientasi objek, service layer, dan controller |
-| **Basis Data** | MongoDB `7.0` | Database dokumen NoSQL untuk penyimpanan katalog, faktur, dan sequence |
-| **Akses Data** | Spring Data MongoDB | Abstraksi repository dan kueri dokumen dinamis |
-| **Template Engine** | Thymeleaf `3.x` | Rendering HTML di sisi server dengan binding data model |
-| **Tema & UI** | Soft UI Dashboard (Bootstrap 5) | Desain dashboard modern dengan tata letak kartu dan tabel responsif |
-| **Generator Barcode** | JsBarcode `3.11.5` | Pembangkitan barcode SVG vektor per ID produk di browser |
-| **Boilerplate Helper** | Project Lombok | Reduksi boilerplate getter, setter, dan konstruktor model Java |
-| **Build & Tooling** | Maven Wrapper (`./mvnw`) | Manajemen dependensi dan kompilasi executable JAR |
-| **Kontainerisasi** | Docker | Eksekusi instance database MongoDB lokal |
+| **Backend Framework** | Spring Boot `3.2.4` | Enterprise MVC application framework, inversion of control, and dependency injection |
+| **Programming Language** | Java `17` LTS | Object-oriented business logic, records, and service layer implementations |
+| **Database** | MongoDB `7.0` | NoSQL document database for product catalog, sales invoices, and atomic sequences |
+| **Data Access** | Spring Data MongoDB | Repository abstractions and custom aggregation queries |
+| **Template Engine** | Thymeleaf `3.x` | Server-side HTML template rendering with dynamic model binding |
+| **UI & Theme** | Soft UI Dashboard (Bootstrap 5) | Responsive dashboard interface with card layouts and data tables |
+| **Barcode Generator** | JsBarcode `3.11.5` | Client-side SVG barcode rendering per product identifier |
+| **Productivity** | Project Lombok | Eliminates boilerplate getters, setters, and constructors in domain models |
+| **Build System** | Apache Maven Wrapper (`./mvnw`) | Dependency management and executable JAR compilation |
+| **Containerization** | Docker | Container runtime for local MongoDB instance |
 
 ---
 
 ## Database Architecture
 
-Simpos menggunakan basis data NoSQL MongoDB dengan 6 koleksi utama (`com.primaelectronic.pos.model`):
+Simpos structures data across 6 primary MongoDB document collections (`com.primaelectronic.pos.model`):
 
 ```json
-// 1. user — Akun pengguna & penugasan toko
+// 1. user — User accounts and store assignment
 {
   "_id": 1,
   "username": "hamam",
   "password": "123",
-  "access": 1,              // 1: Admin, 2: Kasir
+  "access": 1,              // 1: Admin, 2: Cashier
   "store": 1
 }
 
-// 2. stock — Katalog barang & inventaris
+// 2. stock — Product catalog and inventory
 {
   "_id": 1,
   "name": "Samsung Galaxy S23",
   "qty": 10,
-  "priceInit": 12000000.0,   // Harga modal beli
-  "priceFinal": 13000000.0,  // Harga jual ritel
+  "priceInit": 12000000.0,   // Purchase price
+  "priceFinal": 13000000.0,  // Retail selling price
   "store": 1,
   "pic": "admin",
   "createdAt": "2026-11-17T10:00:00",
@@ -90,7 +90,7 @@ Simpos menggunakan basis data NoSQL MongoDB dengan 6 koleksi utama (`com.primael
   "modifiedBy": "admin"
 }
 
-// 3. transaction — Catatan transaksi kasir
+// 3. transaction — Cashier checkout records
 {
   "_id": 1,
   "date": "2026-11-17T10:15:00",
@@ -101,7 +101,7 @@ Simpos menggunakan basis data NoSQL MongoDB dengan 6 koleksi utama (`com.primael
   "payment": "CASH"
 }
 
-// 4. invoice — Arsip nota belanja
+// 4. invoice — Sales receipts with printable HTML
 {
   "_id": "6739...",
   "databarang": "[{\"name\":\"Samsung Galaxy S23\",\"qty\":1,\"price\":13000000}]",
@@ -113,7 +113,7 @@ Simpos menggunakan basis data NoSQL MongoDB dengan 6 koleksi utama (`com.primael
   "payment": "CASH"
 }
 
-// 5. bill — Tagihan hutang vendor / sales
+// 5. bill — Accounts payable vendor invoices
 {
   "_id": 1,
   "nama": "Supplier Elektronik Jaya",
@@ -127,7 +127,7 @@ Simpos menggunakan basis data NoSQL MongoDB dengan 6 koleksi utama (`com.primael
   "createdBy": "hamam"
 }
 
-// 6. database_sequences — Auto-increment atomik
+// 6. database_sequences — Atomic auto-increment counters
 {
   "_id": "transaction_sequence",
   "seq": 1
@@ -136,17 +136,17 @@ Simpos menggunakan basis data NoSQL MongoDB dengan 6 koleksi utama (`com.primael
 
 ---
 
-## Panduan Setup & Menjalankan Lokal
+## Local Setup & Deployment
 
-### 1. Prasyarat Sistem
+### 1. Prerequisites
 
-- **Java Development Kit (JDK)**: Versi `17` LTS (OpenJDK atau Oracle JDK)
-- **Docker**: Untuk menjalankan instance MongoDB lokal
-- **Apache Maven**: Disediakan melalui wrapper bawaan (`./mvnw`)
+- **Java Development Kit (JDK)**: Version `17` LTS (OpenJDK or Oracle JDK)
+- **Docker**: For running a local MongoDB instance
+- **Apache Maven**: Provided via the bundled Maven Wrapper (`./mvnw`)
 
-### 2. Environment & Konfigurasi Basis Data
+### 2. Configuration & Environment
 
-Konfigurasi koneksi aplikasi terletak di `src/main/resources/application.properties`:
+Database connection settings are configured in `src/main/resources/application.properties`:
 
 ```properties
 spring.application.name=simpos
@@ -155,49 +155,49 @@ spring.data.mongodb.uri=mongodb://localhost:27017/simpos
 spring.data.mongodb.database=simpos
 ```
 
-### 3. Menjalankan Database MongoDB Lokal
+### 3. Running Local MongoDB Database
 
-Jalankan container database MongoDB lokal via Docker:
+Start a local MongoDB container via Docker:
 
 ```bash
 docker run -d --name simpos-mongo -p 27017:27017 mongo:7.0
 ```
 
-### 4. Menjalankan Aplikasi Spring Boot
+### 4. Running the Spring Boot Application
 
 ```bash
-# Clone repository
+# Clone the repository
 git clone https://github.com/widifirmaan/springboot-simple-pos.git
 cd springboot-simple-pos
 
-# Jalankan server Spring Boot
+# Run application using Maven Wrapper
 ./mvnw spring-boot:run
 ```
 
-Aplikasi berjalan pada port `8081`. Buka [http://localhost:8081](http://localhost:8081) di browser Anda.
+The server starts on port `8081`. Open [http://localhost:8081](http://localhost:8081) in your browser.
 
-### 5. Inisialisasi Data Seeder
+### 5. Seeding Demo Data
 
-Setelah server berjalan, inisialisasi data awal dengan membuka URL seeder berikut di browser atau via curl:
+Once the server is running, trigger database seeding via browser or curl:
 
 ```bash
 curl http://localhost:8081/seed
 ```
 
-#### Kredensial Akun Seeder:
-- **Administrator**: Username `hamam` / Password `123` (Hak akses penuh semua modul)
-- **Kasir**: Username `kasir` / Password `123` (Hak akses transaksi kasir dan tagihan)
+#### Pre-seeded Demo Accounts:
+- **Administrator**: Username `hamam` / Password `123` (Full access to all modules)
+- **Cashier**: Username `kasir` / Password `123` (Access to cashier terminal and bills)
 
-### 6. Panduan Uji Manual (Testing Checklist)
+### 6. Manual Testing Checklist
 
-| No | Fitur | Langkah Pengujian | Hasil yang Diharapkan |
+| No | Feature | Test Steps | Expected Result |
 | :---: | :--- | :--- | :--- |
-| 1 | **Login Admin** | Buka `http://localhost:8081`, login dengan `hamam` / `123` | Berhasil login dan diarahkan ke Dashboard Omset (`/dashboard`) |
-| 2 | **Katalog Stok** | Buka menu `/stock-barang` | Tabel stok menampilkan item smartphone/laptop beserta barcode SVG dan pill status kuantitas |
-| 3 | **Tambah Produk** | Klik tombol *Tambah Barang*, isi nama produk, harga modal, harga jual, kuantitas, simpan | Produk baru muncul di tabel dengan nomor barcode unik |
-| 4 | **Transaksi Kasir** | Buka `/kasir`, masukkan nama pembeli, pilih produk, isi nominal uang bayar, klik *Cetak & Bayar* | Nota belanja tercetak, sisa stok produk otomatis terpotong, dan kembalian terhitung pas |
-| 5 | **Buku Tagihan** | Buka `/bill` | Tabel tagihan menampilkan vendor, status lunas/belum lunas, dan tombol aksi edit |
-| 6 | **Laporan Keuangan** | Buka `/finance`, atur filter tanggal dan klik *Cari* | Ringkasan laba kotor terhitung otomatis dari selisih harga jual dan harga modal |
+| 1 | **Admin Login** | Open `http://localhost:8081`, login with `hamam` / `123` | Authentication succeeds and redirects to Revenue Dashboard (`/dashboard`) |
+| 2 | **Inventory Catalog** | Navigate to `/stock-barang` | Displays products with barcodes, retail prices, and stock status badges |
+| 3 | **Add New Product** | Click *Tambah Barang*, fill in product details and stock, submit | Product appears in the table with an automatically generated SVG barcode |
+| 4 | **Cashier Checkout** | Open `/kasir`, enter customer name, select items, enter cash paid, submit | Receipt generates, item stock decrements accordingly, and change is computed accurately |
+| 5 | **Vendor Billing** | Navigate to `/bill` | Displays accounts payable records with status pills and edit modals |
+| 6 | **Financial Reports** | Navigate to `/finance`, select date range, click *Cari* | Calculates gross revenue, sold item count, and gross profit margins |
 
 ---
 
