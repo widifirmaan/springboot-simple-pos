@@ -15,7 +15,7 @@ Simpos is a point-of-sale (POS) and inventory management web application enginee
 
 ## Showcase
 
-| Desktop Interface (MacBook Pro M4) | Mobile Interface (iPhone 16 Pro) |
+| Desktop | Mobile |
 | :---: | :---: |
 | **Analytics Dashboard Desktop**<br>![Analytics Dashboard Desktop](screenshots/POS%20Dashboard%20Desktop.png) | **Analytics Dashboard Mobile**<br>![Analytics Dashboard Mobile](screenshots/POS%20Dashboard%20Mobile.png) |
 | **Inventory & Stock Manager Desktop**<br>![Inventory & Stock Manager Desktop](screenshots/Stock%20Inventory%20Desktop.png) | **Inventory & Stock Manager Mobile**<br>![Inventory & Stock Manager Mobile](screenshots/Stock%20Inventory%20Mobile.png) |
@@ -55,6 +55,80 @@ Simpos is a point-of-sale (POS) and inventory management web application enginee
 | **Productivity** | Project Lombok | Eliminates boilerplate getters, setters, and constructors |
 | **Containerization** | Docker & Docker Compose | Multi-stage production container build and MongoDB container orchestration |
 | **Build System** | Apache Maven `3.9` | Dependency resolution, testing, and executable JAR packaging via `./mvnw` |
+
+---
+
+## Database Architecture
+
+Simpos utilizes MongoDB for flexible document storage with atomic sequence counters. Data is structured across 6 primary collections (`com.primaelectronic.pos.model`):
+
+```json
+// 1. user — User accounts & store assignment
+{
+  "_id": 1,
+  "username": "hamam",
+  "password": "123",
+  "access": 1,              // 1: Admin, 2: Cashier
+  "store": 1
+}
+
+// 2. stock — Product catalog & inventory
+{
+  "_id": 1,
+  "name": "Samsung Galaxy S23",
+  "qty": 10,
+  "priceInit": 12000000.0,   // Purchase price
+  "priceFinal": 13000000.0,  // Retail selling price
+  "store": 1,
+  "pic": "admin",
+  "createdAt": "2026-11-17T10:00:00",
+  "modifiedAt": "2026-11-17T10:00:00",
+  "modifiedBy": "admin"
+}
+
+// 3. transaction — POS checkout records
+{
+  "_id": 1,
+  "date": "2026-11-17T10:15:00",
+  "amount": 1,
+  "product": "Samsung Galaxy S23",
+  "userId": "kasir",
+  "toko": 1,
+  "payment": "CASH"
+}
+
+// 4. invoice — Sales receipts with printable HTML
+{
+  "_id": "6739...",
+  "databarang": "[{\"name\":\"Samsung Galaxy S23\",\"qty\":1,\"price\":13000000}]",
+  "nota": "<html>...</html>",
+  "money": 13000000.0,
+  "toko": 1,
+  "tgl": "2026-11-17T10:15:00",
+  "username": "kasir",
+  "payment": "CASH"
+}
+
+// 5. bill — Accounts payable vendor invoices
+{
+  "_id": 1,
+  "nama": "Supplier Elektronik Jaya",
+  "nominal": "50000000",
+  "ket": "Pengadaan Stok Smartphone Batch 1",
+  "pic": "Widi Firmansyah",
+  "status": 1,               // 1: Lunas, 0: Belum Lunas
+  "nominalMinus": 0,
+  "dueDate": "2026-12-01",
+  "createdAt": "2026-11-17",
+  "createdBy": "hamam"
+}
+
+// 6. database_sequences — Auto-increment identifier counter
+{
+  "_id": "stock_sequence",
+  "seq": 4
+}
+```
 
 ---
 
