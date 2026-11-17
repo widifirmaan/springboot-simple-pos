@@ -272,6 +272,21 @@ Or open in your web browser: `http://localhost:8081/seed`.
 
 ---
 
+### 5. Panduan Uji Manual (Testing Checklist)
+
+Lakukan verifikasi manual berikut di browser:
+
+| No | Fitur yang Diuji | Langkah Pengujian | Hasil yang Diharapkan |
+| :---: | :--- | :--- | :--- |
+| 1 | **Database Seeder** | Akses `GET http://localhost:8081/seed` | Muncul pesan sukses: admin, kasir, dummy stocks, dan dummy bills terbuat |
+| 2 | **Login Administrator** | Buka `/login`, login dengan `hamam` / `123` | Dialihkan otomatis ke executive dashboard `/dashboard` |
+| 3 | **Katalog Stok & Barcode** | Buka menu `/stock-barang` | Menampilkan 4 produk elektronik dengan SVG barcode yang digenerate oleh JsBarcode |
+| 4 | **Transaksi Kasir (POS)** | Buka `/kasir`, pilih produk, masukkan nominal bayar, submit | Transaksi sukses, kembalian terhitung, dan modal nota cetak (invoice) tampil |
+| 5 | **Vendor Billing** | Buka `/bill` | Tampil daftar tagihan supplier dengan status pembayaran (*Lunas* / *Belum Lunas*) |
+| 6 | **Role Cashier Isolation** | Logout, login dengan `kasir` / `123` | Otomatis diarahkan ke `/kasir`; akses ke data finansial sensitif `/finance` dibatasi |
+
+---
+
 ## Author
 
 Developed by **[Widi Firmansyah](https://widifirmaan.web.id)**.
