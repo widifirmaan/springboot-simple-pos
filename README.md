@@ -1,4 +1,4 @@
-# Simpos
+# Simpos 🛒
 
 > Retail point-of-sale (POS) and inventory management web application built with Spring Boot 3, MongoDB, and Thymeleaf.
 
@@ -22,7 +22,7 @@
 
 ### Authentication & Public Catalog
 
-| Desktop Interface (MacBook Pro M4) | Mobile Interface (iPhone 16 Pro) |
+| Desktop (MacBook Pro M4) | Mobile (iPhone 16 Pro) |
 | :---: | :---: |
 | **Authentication Gateway (Role-Based)**<br>![POS Login Screen Desktop](screenshots/POS%20Login%20Screen%20Desktop.png) | **Authentication Gateway (Role-Based)**<br>![POS Login Screen Mobile](screenshots/POS%20Login%20Screen%20Mobile.png) |
 | **Invalid Credential Warning (Inline Alert)**<br>![POS Login Alert Invalid Credentials Desktop](screenshots/POS%20Login%20Alert%20Invalid%20Credentials%20Desktop.png) | **Invalid Credential Warning (Inline Alert)**<br>![POS Login Alert Invalid Credentials Mobile](screenshots/POS%20Login%20Alert%20Invalid%20Credentials%20Mobile.png) |
@@ -32,7 +32,7 @@
 
 ### Executive Analytics, Inventory & Finance
 
-| Desktop Interface (MacBook Pro M4) | Mobile Interface (iPhone 16 Pro) |
+| Desktop (MacBook Pro M4) | Mobile (iPhone 16 Pro) |
 | :---: | :---: |
 | **Executive Operations Dashboard**<br>![POS Analytics Dashboard Desktop](screenshots/POS%20Analytics%20Dashboard%20Desktop.png) | **Executive Operations Dashboard**<br>![POS Analytics Dashboard Mobile](screenshots/POS%20Analytics%20Dashboard%20Mobile.png) |
 | **Transaction Payment Confirmation (Modal)**<br>![POS Dashboard Modal Payment Confirmation Desktop](screenshots/POS%20Dashboard%20Modal%20Payment%20Confirmation%20Desktop.png) | **Transaction Payment Confirmation (Modal)**<br>![POS Dashboard Modal Payment Confirmation Mobile](screenshots/POS%20Dashboard%20Modal%20Payment%20Confirmation%20Mobile.png) |
@@ -48,7 +48,7 @@
 
 ### Vendor Billing & Cashier Workflow
 
-| Desktop Interface (MacBook Pro M4) | Mobile Interface (iPhone 16 Pro) |
+| Desktop (MacBook Pro M4) | Mobile (iPhone 16 Pro) |
 | :---: | :---: |
 | **Accounts Payable & Vendor Billing**<br>![POS Vendor Bills Table Desktop](screenshots/POS%20Vendor%20Bills%20Table%20Desktop.png) | **Accounts Payable & Vendor Billing**<br>![POS Vendor Bills Table Mobile](screenshots/POS%20Vendor%20Bills%20Table%20Mobile.png) |
 | **Vendor Invoice Registration (Add Bill Modal)**<br>![POS Bill Modal Add Bill Desktop](screenshots/POS%20Bill%20Modal%20Add%20Bill%20Desktop.png) | **Vendor Invoice Registration (Add Bill Modal)**<br>![POS Bill Modal Add Bill Mobile](screenshots/POS%20Bill%20Modal%20Add%20Bill%20Mobile.png) |
@@ -59,7 +59,7 @@
 
 ---
 
-## Features
+## Fitur
 
 - **Role-Based Access Control (`/login`, `/`)**:
   - **Administrator (`hamam` / `123`, Access Level 1)**: Full permissions across executive Analytics Dashboard (`/dashboard`), Product Inventory (`/stock-barang`), Financial Ledger (`/finance`), Vendor Invoices (`/bill`), and Cashier Terminal (`/kasir`).
@@ -88,9 +88,26 @@
 | **Build System** | Apache Maven Wrapper (`./mvnw`) | Dependency management and executable JAR compilation |
 | **Containerization** | Docker | Container runtime for local MongoDB instance |
 
----
+## Tutorial Run Local & Setup
 
-## Database Architecture
+### 1. Prerequisites
+
+- **Java Development Kit (JDK)**: Version `17` LTS (OpenJDK or Oracle JDK)
+- **Docker**: For running a local MongoDB instance
+- **Apache Maven**: Provided via the bundled Maven Wrapper (`./mvnw`)
+
+### 2. Configuration & Environment
+
+Database connection settings are configured in `src/main/resources/application.properties`:
+
+```properties
+spring.application.name=simpos
+server.port=8081
+spring.data.mongodb.uri=mongodb://localhost:27017/simpos
+spring.data.mongodb.database=simpos
+```
+
+### 3. Database Architecture & Local MongoDB
 
 Simpos structures data across 6 primary MongoDB document collections (`com.primaelectronic.pos.model`):
 
@@ -161,29 +178,6 @@ Simpos structures data across 6 primary MongoDB document collections (`com.prima
   "seq": 1
 }
 ```
-
----
-
-## Tutorial Run Local & Setup
-
-### 1. Prerequisites
-
-- **Java Development Kit (JDK)**: Version `17` LTS (OpenJDK or Oracle JDK)
-- **Docker**: For running a local MongoDB instance
-- **Apache Maven**: Provided via the bundled Maven Wrapper (`./mvnw`)
-
-### 2. Configuration & Environment
-
-Database connection settings are configured in `src/main/resources/application.properties`:
-
-```properties
-spring.application.name=simpos
-server.port=8081
-spring.data.mongodb.uri=mongodb://localhost:27017/simpos
-spring.data.mongodb.database=simpos
-```
-
-### 3. Running Local MongoDB Database
 
 Start a local MongoDB container via Docker:
 
