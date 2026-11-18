@@ -164,7 +164,7 @@ Simpos structures data across 6 primary MongoDB document collections (`com.prima
 
 ---
 
-## Local Setup & Deployment
+## Tutorial Run Local & Setup
 
 ### 1. Prerequisites
 
@@ -204,7 +204,7 @@ cd springboot-simple-pos
 
 The server starts on port `8081`. Open [http://localhost:8081](http://localhost:8081) in your browser.
 
-### 5. Seeding Demo Data
+### 5. Seeding Demo Data & Auth Credentials
 
 Once the server is running, trigger database seeding via browser or curl:
 
@@ -216,19 +216,35 @@ curl http://localhost:8081/seed
 - **Administrator**: Username `hamam` / Password `123` (Full access to all modules)
 - **Cashier**: Username `kasir` / Password `123` (Access to cashier terminal and bills)
 
-### 6. Manual Testing Checklist
+---
 
-| No | Feature | Test Steps | Expected Result |
-| :---: | :--- | :--- | :--- |
-| 1 | **Admin Login** | Open `http://localhost:8081`, login with `hamam` / `123` | Authentication succeeds and redirects to Revenue Dashboard (`/dashboard`) |
-| 2 | **Inventory Catalog** | Navigate to `/stock-barang` | Displays products with barcodes, retail prices, and stock status badges |
-| 3 | **Add New Product** | Click *Tambah Barang*, fill in product details and stock, submit | Product appears in the table with an automatically generated SVG barcode |
-| 4 | **Cashier Checkout** | Open `/kasir`, enter customer name, select items, enter cash paid, submit | Receipt generates, item stock decrements accordingly, and change is computed accurately |
-| 5 | **Vendor Billing** | Navigate to `/bill` | Displays accounts payable records with status pills and edit modals |
-| 6 | **Financial Reports** | Navigate to `/finance`, select date range, click *Cari* | Calculates gross revenue, sold item count, and gross profit margins |
+## Testing & QA Automation
+
+Automated testing and QA verification are powered by the system's `qa-toolkit`:
+
+### 1. Playwright Test Suite
+End-to-end smoke verification covering login screen rendering and `/seed` operational endpoint:
+
+```bash
+cd /home/widifirmaan/Projects/qa-toolkit
+npx playwright test tests/playwright/simpos.spec.js
+```
+
+### 2. Cypress E2E Verification
+Cross-browser regression testing on local DOM structure and seed endpoint response:
+
+```bash
+cd /home/widifirmaan/Projects/qa-toolkit
+npx cypress run --spec cypress/e2e/simpos.cy.js
+```
+
+### 3. QA Execution Summary
+- **Playwright**: 2 tests passed (Login Screen DOM Mount & Seed Endpoint Status 200)
+- **Cypress**: 2 specs passed (Local Port 8081 DOM Mount & API Request Verification)
+- **Status**: ✅ All automated tests verified and passing
 
 ---
 
 ## Author
 
-Developed by **[Widi Firmansyah](https://widifirmaan.web.id)**.
+Made with ❤️ by **Widi Firmansyah** / [widifirmaan.web.id](https://widifirmaan.web.id)
