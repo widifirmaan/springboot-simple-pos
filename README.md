@@ -20,14 +20,42 @@
 
 ## Screenshots
 
-| Desktop | Mobile |
+### Authentication & Public Catalog
+
+| Desktop Interface (MacBook Pro M4) | Mobile Interface (iPhone 16 Pro) |
 | :---: | :---: |
-| **Authentication Gateway (Role-Based)**<br>![Login](screenshots/Login%20Desktop.png) | **Authentication Gateway (Role-Based)**<br>![Login](screenshots/Login%20Mobile.png) |
-| **Executive Operations Dashboard**<br>![Dashboard](screenshots/Dashboard%20Desktop.png) | **Executive Operations Dashboard**<br>![Dashboard](screenshots/Dashboard%20Mobile.png) |
-| **Cashier Terminal & Change Calculation**<br>![Kasir](screenshots/Kasir%20Desktop.png) | **Cashier Terminal & Change Calculation**<br>![Kasir](screenshots/Kasir%20Mobile.png) |
-| **Product Inventory & SVG Barcodes**<br>![Stok Barang](screenshots/Stok%20Barang%20Desktop.png) | **Product Inventory & SVG Barcodes**<br>![Stok Barang](screenshots/Stok%20Barang%20Mobile.png) |
-| **Accounts Payable & Vendor Billing**<br>![Tagihan](screenshots/Tagihan%20Desktop.png) | **Accounts Payable & Vendor Billing**<br>![Tagihan](screenshots/Tagihan%20Mobile.png) |
-| **Financial Ledger & Gross Profit Reports**<br>![Keuangan](screenshots/Keuangan%20Desktop.png) | **Financial Ledger & Gross Profit Reports**<br>![Keuangan](screenshots/Keuangan%20Mobile.png) |
+| **Authentication Gateway (Role-Based)**<br>![POS Login Screen Desktop](screenshots/POS%20Login%20Screen%20Desktop.png) | **Authentication Gateway (Role-Based)**<br>![POS Login Screen Mobile](screenshots/POS%20Login%20Screen%20Mobile.png) |
+| **Invalid Credential Warning (Inline Alert)**<br>![POS Login Alert Invalid Credentials Desktop](screenshots/POS%20Login%20Alert%20Invalid%20Credentials%20Desktop.png) | **Invalid Credential Warning (Inline Alert)**<br>![POS Login Alert Invalid Credentials Mobile](screenshots/POS%20Login%20Alert%20Invalid%20Credentials%20Mobile.png) |
+| **Public Product Catalog (Unauthenticated)**<br>![POS Public Stock Catalog Desktop](screenshots/POS%20Public%20Stock%20Catalog%20Desktop.png) | **Public Product Catalog (Unauthenticated)**<br>![POS Public Stock Catalog Mobile](screenshots/POS%20Public%20Stock%20Catalog%20Mobile.png) |
+
+---
+
+### Executive Analytics, Inventory & Finance
+
+| Desktop Interface (MacBook Pro M4) | Mobile Interface (iPhone 16 Pro) |
+| :---: | :---: |
+| **Executive Operations Dashboard**<br>![POS Analytics Dashboard Desktop](screenshots/POS%20Analytics%20Dashboard%20Desktop.png) | **Executive Operations Dashboard**<br>![POS Analytics Dashboard Mobile](screenshots/POS%20Analytics%20Dashboard%20Mobile.png) |
+| **Transaction Payment Confirmation (Modal)**<br>![POS Dashboard Modal Payment Confirmation Desktop](screenshots/POS%20Dashboard%20Modal%20Payment%20Confirmation%20Desktop.png) | **Transaction Payment Confirmation (Modal)**<br>![POS Dashboard Modal Payment Confirmation Mobile](screenshots/POS%20Dashboard%20Modal%20Payment%20Confirmation%20Mobile.png) |
+| **Product Inventory & SVG Barcodes**<br>![POS Stock Inventory Catalog Desktop](screenshots/POS%20Stock%20Inventory%20Catalog%20Desktop.png) | **Product Inventory & SVG Barcodes**<br>![POS Stock Inventory Catalog Mobile](screenshots/POS%20Stock%20Inventory%20Catalog%20Mobile.png) |
+| **Product Registration (Add Item Modal)**<br>![POS Stock Modal Add Item Desktop](screenshots/POS%20Stock%20Modal%20Add%20Item%20Desktop.png) | **Product Registration (Add Item Modal)**<br>![POS Stock Modal Add Item Mobile](screenshots/POS%20Stock%20Modal%20Add%20Item%20Mobile.png) |
+| **Product Record Amendment (Edit Item Modal)**<br>![POS Stock Modal Edit Item Desktop](screenshots/POS%20Stock%20Modal%20Edit%20Item%20Desktop.png) | **Product Record Amendment (Edit Item Modal)**<br>![POS Stock Modal Edit Item Mobile](screenshots/POS%20Stock%20Modal%20Edit%20Item%20Mobile.png) |
+| **Product Removal Gate (Delete Confirmation)**<br>![POS Stock Modal Delete Confirmation Desktop](screenshots/POS%20Stock%20Modal%20Delete%20Confirmation%20Desktop.png) | **Product Removal Gate (Delete Confirmation)**<br>![POS Stock Modal Delete Confirmation Mobile](screenshots/POS%20Stock%20Modal%20Delete%20Confirmation%20Mobile.png) |
+| **Financial Ledger & Gross Profit Reports**<br>![POS Finance Profit Ledger Desktop](screenshots/POS%20Finance%20Profit%20Ledger%20Desktop.png) | **Financial Ledger & Gross Profit Reports**<br>![POS Finance Profit Ledger Mobile](screenshots/POS%20Finance%20Profit%20Ledger%20Mobile.png) |
+| **Transaction Print Confirmation (Modal)**<br>![POS Finance Modal Print Confirmation Desktop](screenshots/POS%20Finance%20Modal%20Print%20Confirmation%20Desktop.png) | **Transaction Print Confirmation (Modal)**<br>![POS Finance Modal Print Confirmation Mobile](screenshots/POS%20Finance%20Modal%20Print%20Confirmation%20Mobile.png) |
+| **Ledger Transaction Amendment (Edit Modal)**<br>![POS Finance Modal Edit Transaction Desktop](screenshots/POS%20Finance%20Modal%20Edit%20Transaction%20Desktop.png) | **Ledger Transaction Amendment (Edit Modal)**<br>![POS Finance Modal Edit Transaction Mobile](screenshots/POS%20Finance%20Modal%20Edit%20Transaction%20Mobile.png) |
+
+---
+
+### Vendor Billing & Cashier Workflow
+
+| Desktop Interface (MacBook Pro M4) | Mobile Interface (iPhone 16 Pro) |
+| :---: | :---: |
+| **Accounts Payable & Vendor Billing**<br>![POS Vendor Bills Table Desktop](screenshots/POS%20Vendor%20Bills%20Table%20Desktop.png) | **Accounts Payable & Vendor Billing**<br>![POS Vendor Bills Table Mobile](screenshots/POS%20Vendor%20Bills%20Table%20Mobile.png) |
+| **Vendor Invoice Registration (Add Bill Modal)**<br>![POS Bill Modal Add Bill Desktop](screenshots/POS%20Bill%20Modal%20Add%20Bill%20Desktop.png) | **Vendor Invoice Registration (Add Bill Modal)**<br>![POS Bill Modal Add Bill Mobile](screenshots/POS%20Bill%20Modal%20Add%20Bill%20Mobile.png) |
+| **Vendor Invoice Amendment (Edit Bill Modal)**<br>![POS Bill Modal Edit Bill Desktop](screenshots/POS%20Bill%20Modal%20Edit%20Bill%20Desktop.png) | **Vendor Invoice Amendment (Edit Bill Modal)**<br>![POS Bill Modal Edit Bill Mobile](screenshots/POS%20Bill%20Modal%20Edit%20Bill%20Mobile.png) |
+| **Cashier Terminal & Change Calculation**<br>![POS Cashier Terminal Desktop](screenshots/POS%20Cashier%20Terminal%20Desktop.png) | **Cashier Terminal & Change Calculation**<br>![POS Cashier Terminal Mobile](screenshots/POS%20Cashier%20Terminal%20Mobile.png) |
+| **Cashier Cart & Checkout Summary**<br>![POS Cashier Checkout Summary Desktop](screenshots/POS%20Cashier%20Checkout%20Summary%20Desktop.png) | **Cashier Cart & Checkout Summary**<br>![POS Cashier Checkout Summary Mobile](screenshots/POS%20Cashier%20Checkout%20Summary%20Mobile.png) |
+| **Printable Sales Receipt**<br>![POS Cashier Receipt Desktop](screenshots/POS%20Cashier%20Receipt%20Desktop.png) | **Printable Sales Receipt**<br>![POS Cashier Receipt Mobile](screenshots/POS%20Cashier%20Receipt%20Mobile.png) |
 
 ---
 
