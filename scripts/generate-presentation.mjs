@@ -11,7 +11,7 @@ const downloadsDir = '/home/widifirmaan/Downloads';
 function encodeImage(filename) {
   const filePath = path.join(screenshotsDir, filename);
   if (!fs.existsSync(filePath)) {
-    console.warn(`Screenshot tidak ditemukan: ${filePath}`);
+    console.warn(`Peringatan: Screenshot tidak ditemukan: ${filePath}`);
     return '';
   }
   const fileBuffer = fs.readFileSync(filePath);
@@ -26,43 +26,42 @@ const images = {
   cashierDesktop: encodeImage('POS Cashier Terminal Desktop.png'),
   cashierMobile: encodeImage('POS Cashier Terminal Mobile.png'),
   checkoutDesktop: encodeImage('POS Cashier Checkout Summary Desktop.png'),
-  checkoutMobile: encodeImage('POS Cashier Checkout Summary Mobile.png'),
   receiptDesktop: encodeImage('POS Cashier Receipt Desktop.png'),
-  receiptMobile: encodeImage('POS Cashier Receipt Mobile.png'),
   analyticsDesktop: encodeImage('POS Analytics Dashboard Desktop.png'),
   analyticsMobile: encodeImage('POS Analytics Dashboard Mobile.png'),
   stockDesktop: encodeImage('POS Stock Inventory Catalog Desktop.png'),
   stockMobile: encodeImage('POS Stock Inventory Catalog Mobile.png'),
   financeDesktop: encodeImage('POS Finance Profit Ledger Desktop.png'),
-  financeMobile: encodeImage('POS Finance Profit Ledger Mobile.png'),
   billsDesktop: encodeImage('POS Vendor Bills Table Desktop.png'),
-  billsMobile: encodeImage('POS Vendor Bills Table Mobile.png'),
 };
 
-console.log('Menyusun HTML dokumen presentasi Simpos POS...');
+console.log('Menyusun HTML presentasi dengan style murni Simpos Soft UI Dashboard...');
 
 const htmlContent = `<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Simpos - Spring Boot 3 & MongoDB Enterprise POS Architecture</title>
+  <title>Simpos - Web Engineering Presentation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-spring: #0B1117;
-      --bg-card: #121D24;
-      --bg-surface: #182731;
-      --border-card: #1F303C;
-      --border-glow: #2D4658;
-      --text-main: #F8FAFC;
-      --text-muted: #94A3B8;
-      --accent-green: #6DB33F;
-      --accent-cyan: #00D2FF;
-      --accent-emerald: #10B981;
-      --accent-amber: #F59E0B;
-      --accent-indigo: #6366F1;
+      --bg-slate: #F8F9FA;
+      --card-white: #FFFFFF;
+      --card-elevated: #F4F4F5;
+      --border-subtle: #E3E3E7;
+      --border-highlight: #F97316;
+      --accent-orange: #F97316;
+      --accent-green: #22C55E;
+      --text-dark: #27272A;
+      --text-muted: #71717A;
+      --text-subtle: #A1A1AA;
+      --radius-card: 16px;
+      --radius-subcard: 12px;
+      --radius-pill: 50px;
+      --shadow-soft-ui: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
+      --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
     }
 
     * {
@@ -74,10 +73,11 @@ const htmlContent = `<!DOCTYPE html>
     }
 
     body {
-      background-color: #05080C;
+      background-color: var(--bg-slate);
       font-family: 'Plus Jakarta Sans', sans-serif;
-      color: var(--text-main);
-      line-height: 1.4;
+      color: var(--text-dark);
+      line-height: 1.45;
+      letter-spacing: -0.01em;
     }
 
     @page {
@@ -90,892 +90,775 @@ const htmlContent = `<!DOCTYPE html>
       height: 210mm;
       page-break-after: always;
       position: relative;
-      background: var(--bg-spring);
+      background: var(--bg-slate);
       display: flex;
       flex-direction: column;
-      padding: 16mm 18mm;
+      padding: 16mm 20mm;
       overflow: hidden;
       background-image: 
-        radial-gradient(circle at 100% 0%, rgba(109, 179, 63, 0.08) 0%, transparent 60%),
-        radial-gradient(circle at 0% 100%, rgba(0, 210, 255, 0.05) 0%, transparent 50%),
-        linear-gradient(to right, rgba(31, 48, 60, 0.2) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(31, 48, 60, 0.2) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+        radial-gradient(circle at 90% 10%, rgba(249, 115, 22, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 10% 90%, rgba(34, 197, 94, 0.03) 0%, transparent 40%);
     }
 
-    .slide::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan), var(--accent-emerald));
-      z-index: 50;
-    }
-
+    /* Slide Header */
     .slide-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 5mm;
-      border-bottom: 1px solid var(--border-card);
-      padding-bottom: 3.5mm;
+      margin-bottom: 6mm;
+      z-index: 10;
     }
 
-    .brand-cluster {
-      display: flex;
+    .brand-pill {
+      display: inline-flex;
       align-items: center;
       gap: 12px;
+      background: var(--card-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      padding: 6px 18px;
+      box-shadow: var(--shadow-card);
     }
 
-    .brand-badge {
-      background: rgba(109, 179, 63, 0.12);
-      border: 1px solid var(--accent-green);
-      color: var(--accent-green);
-      padding: 4px 10px;
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 10px;
-      letter-spacing: 0.08em;
+    .brand-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent-orange);
+      box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
+    }
+
+    .brand-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      color: var(--text-dark);
       text-transform: uppercase;
-      border-radius: 4px;
     }
 
-    .slide-section-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
+    .brand-subtitle {
+      font-size: 12px;
       color: var(--text-muted);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+      border-left: 1px solid var(--border-subtle);
+      padding-left: 12px;
+      margin-left: 2px;
     }
 
-    .slide-number {
+    .badge-pill {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
-      font-weight: 700;
-      color: var(--accent-green);
+      font-weight: 600;
+      color: var(--accent-orange);
+      background: rgba(249, 115, 22, 0.08);
+      border: 1px solid rgba(249, 115, 22, 0.22);
+      border-radius: var(--radius-pill);
+      padding: 6px 14px;
     }
 
-    .slide-body {
-      display: grid;
-      grid-template-columns: 1fr 1.35fr;
-      gap: 22px;
+    /* Content Layout */
+    .slide-content {
       flex: 1;
-      min-height: 0;
-    }
-
-    .slide-info {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 0;
+      z-index: 10;
     }
 
-    .headline-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .title-block {
+      margin-bottom: 5mm;
+    }
+
+    .slide-category {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-orange);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
     }
 
     .slide-title {
-      font-size: 24px;
+      font-size: 27px;
       font-weight: 800;
-      line-height: 1.2;
-      color: #FFFFFF;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
+      color: var(--text-dark);
+      line-height: 1.15;
     }
 
-    .slide-desc {
-      font-size: 12.5px;
+    .slide-subtitle {
+      font-size: 13.5px;
       color: var(--text-muted);
-      line-height: 1.55;
+      margin-top: 4px;
+      max-width: 900px;
     }
 
-    .feature-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin: 10px 0;
+    /* Soft UI Cards */
+    .soft-card {
+      background: var(--card-white);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft-ui);
+      padding: 18px 22px;
     }
 
-    .feature-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: 8px;
-      padding: 10px 14px;
-      border-left: 3px solid var(--accent-green);
+    .soft-card-elevated {
+      background: var(--card-white);
+      border-left: 4px solid var(--accent-orange);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft-ui);
+      padding: 18px 22px;
     }
 
-    .feature-card.cyan {
-      border-left-color: var(--accent-cyan);
+    /* Layout Splits */
+    .layout-split {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 20px;
+      align-items: stretch;
+      flex: 1;
     }
 
-    .feature-card.amber {
-      border-left-color: var(--accent-amber);
+    .layout-split-reversed {
+      display: grid;
+      grid-template-columns: 0.88fr 1.12fr;
+      gap: 20px;
+      align-items: stretch;
+      flex: 1;
     }
 
-    .feature-card.emerald {
-      border-left-color: var(--accent-emerald);
-    }
-
-    .feature-card-title {
-      font-size: 12.5px;
-      font-weight: 700;
-      color: #FFFFFF;
-      margin-bottom: 3px;
-      letter-spacing: -0.01em;
-    }
-
-    .feature-card-text {
-      font-size: 11px;
-      color: var(--text-muted);
-      line-height: 1.45;
-    }
-
-    .metrics-row {
+    .layout-grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      gap: 18px;
+      flex: 1;
     }
 
-    .metric-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: 6px;
-      padding: 8px 10px;
-      text-align: center;
+    .layout-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      flex: 1;
     }
 
-    .metric-val {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--accent-green);
-    }
-
-    .metric-lbl {
-      font-size: 9px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
+    /* Visual Stage */
     .visual-stage {
-      position: relative;
+      background: var(--card-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft-ui);
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
+      position: relative;
       height: 100%;
-      min-height: 0;
+      min-height: 290px;
+      padding: 12px;
     }
 
-    .screenshot-desktop {
-      max-width: 95%;
-      max-height: 380px;
+    .visual-stage img {
+      max-width: 100%;
+      max-height: 100%;
       object-fit: contain;
-      display: block;
-      filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.7));
+      filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.1));
     }
 
-    .screenshot-mobile {
-      position: absolute;
-      right: 0px;
-      bottom: -8px;
-      max-height: 280px;
-      max-width: 28%;
-      object-fit: contain;
-      display: block;
-      filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.8));
+    /* Feature Items */
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
     }
 
+    .feature-item {
+      background: var(--card-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-subcard);
+      box-shadow: var(--shadow-card);
+      padding: 13px 16px;
+    }
+
+    .feature-item-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 3px;
+    }
+
+    .feature-item-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Footer */
     .slide-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-top: 5mm;
-      border-top: 1px solid var(--border-card);
-      padding-top: 3mm;
-    }
-
-    .footer-tech {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    .footer-url {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      color: var(--accent-green);
-    }
-
-    /* Cover Styling */
-    .cover-body {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 30px;
-      align-items: center;
-      flex: 1;
-      min-height: 0;
-    }
-
-    .cover-tagline {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--accent-green);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .cover-title {
-      font-size: 38px;
-      font-weight: 900;
-      color: #FFFFFF;
-      line-height: 1.15;
-      letter-spacing: -0.03em;
-      margin-bottom: 14px;
-    }
-
-    .cover-desc {
-      font-size: 13.5px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    .cover-specs {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-
-    .spec-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: 8px;
-      padding: 10px 14px;
-    }
-
-    .spec-k {
-      font-size: 9px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .spec-v {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      font-weight: 700;
-      color: #FFFFFF;
-      margin-top: 2px;
-    }
-
-    /* Architecture Grid */
-    .arch-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      flex: 1;
-      min-height: 0;
-      margin-top: 10px;
-    }
-
-    .arch-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: 10px;
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .arch-title {
-      font-size: 14px;
-      font-weight: 800;
-      color: #FFFFFF;
-      border-bottom: 1px solid var(--border-card);
-      padding-bottom: 8px;
-    }
-
-    .arch-item {
+      padding-top: 3.5mm;
+      border-top: 1px solid var(--border-subtle);
       font-size: 11px;
-      color: var(--text-muted);
-      line-height: 1.5;
+      color: var(--text-subtle);
+      font-family: 'JetBrains Mono', monospace;
     }
 
-    .arch-item strong {
-      color: #FFFFFF;
+    .tech-pill {
+      display: inline-block;
+      padding: 4px 12px;
+      background: var(--card-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent-orange);
+      margin-right: 6px;
+      margin-top: 5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
     }
   </style>
 </head>
 <body>
 
   <!-- SLIDE 1: COVER -->
-  <section class="slide">
+  <div class="slide">
     <div class="slide-header">
-      <div class="brand-cluster">
-        <span class="brand-badge">ENTERPRISE POS</span>
-        <span class="slide-section-title">Dokumentasi Rekayasa Perangkat Lunak</span>
+      <div class="brand-pill">
+        <div class="brand-dot"></div>
+        <div class="brand-title">Simpos POS</div>
+        <div class="brand-subtitle">Spring Boot 3 &amp; MongoDB Enterprise POS Architecture</div>
       </div>
-      <div class="slide-number">01 / 10</div>
+      <div class="badge-pill">DECK-POS-01 / 10</div>
     </div>
 
-    <div class="cover-body">
-      <div>
-        <div class="cover-tagline">Java Enterprise Architecture</div>
-        <h1 class="cover-title">Simpos Sistem Kasir & Manajemen Retail</h1>
-        <p class="cover-desc">
-          Platform Point of Sale enterprise berbasis Spring Boot 3 dan MongoDB dengan otentikasi peran berjenjang (RBAC), terminal kasir interaktif, cetak struk thermal 58mm, inventaris stok otomatis, serta pencatatan laba rugi keuangan komprehensif.
-        </p>
-
-        <div class="cover-specs">
-          <div class="spec-card">
-            <div class="spec-k">Backend Framework</div>
-            <div class="spec-v">Spring Boot 3 & Java 17</div>
+    <div class="slide-content">
+      <div class="layout-split">
+        <div style="display: flex; flex-direction: column; justify-content: center; padding-right: 15px;">
+          <div style="display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+            <span class="tech-pill">Spring Boot 3.3</span>
+            <span class="tech-pill">Java 21 LTS</span>
+            <span class="tech-pill">MongoDB Atlas</span>
+            <span class="tech-pill">Soft UI System</span>
           </div>
-          <div class="spec-card">
-            <div class="spec-k">Database Engine</div>
-            <div class="spec-v">MongoDB NoSQL Replica</div>
-          </div>
-          <div class="spec-card">
-            <div class="spec-k">Security & Access</div>
-            <div class="spec-v">Spring Security 6 (RBAC)</div>
-          </div>
-          <div class="spec-card">
-            <div class="spec-k">Printing System</div>
-            <div class="spec-v">58mm Thermal ESC/POS</div>
+          <h1 style="font-size: 38px; font-weight: 900; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 16px;">
+            Arsitektur Web Kasir Enterprise Point of Sale
+          </h1>
+          <p style="font-size: 15px; color: var(--text-muted); line-height: 1.55; margin-bottom: 24px;">
+            Sistem kasir dan manajemen ritel modern dengan pemrosesan transaksi cepat, kontrol inventaris atomik multi-gudang, buku besar keuangan terpadu, dan antarmuka Soft UI Dashboard yang ergonomis.
+          </p>
+          <div class="soft-card" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 14px 18px;">
+            <div>
+              <div style="font-size: 11px; color: var(--text-subtle); font-family: 'JetBrains Mono', monospace;">DATABASE</div>
+              <div style="font-size: 19px; font-weight: 800; color: var(--accent-orange); margin-top: 2px;">MongoDB</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Document Store</div>
+            </div>
+            <div>
+              <div style="font-size: 11px; color: var(--text-subtle); font-family: 'JetBrains Mono', monospace;">DESAIN SISTEM</div>
+              <div style="font-size: 19px; font-weight: 800; color: var(--text-dark); margin-top: 2px;">Soft UI</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Sunset Orange #F97316</div>
+            </div>
+            <div>
+              <div style="font-size: 11px; color: var(--text-subtle); font-family: 'JetBrains Mono', monospace;">TRANSAKSI</div>
+              <div style="font-size: 19px; font-weight: 800; color: var(--accent-green); margin-top: 2px;">Atomic</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Stock Consistency</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="visual-stage">
-        <img src="${images.analyticsDesktop}" class="screenshot-desktop" alt="Simpos Cover">
-      </div>
-    </div>
-
-    <div class="slide-footer">
-      <span class="footer-tech">Spring Boot 3 + Java 17 + MongoDB + Spring Security + Thymeleaf</span>
-      <span class="footer-url">simpos.widifirmaan.web.id</span>
-    </div>
-  </section>
-
-  <!-- SLIDE 2: ARSITEKTUR BACKEND -->
-  <section class="slide">
-    <div class="slide-header">
-      <div class="brand-cluster">
-        <span class="brand-badge">ARCHITECTURE</span>
-        <span class="slide-section-title">Fondasi Sistem & Struktur Enterprise</span>
-      </div>
-      <div class="slide-number">02 / 10</div>
-    </div>
-
-    <div class="headline-group" style="margin-bottom: 12px;">
-      <h2 class="slide-title">Arsitektur Enterprise & Ketahanan Transaksi</h2>
-      <p class="slide-desc">Desain berlapis berbasis Spring Boot yang menjamin integritas transaksi penjualan, konsistensi stok barang, dan keamanan akses data multi-pengguna.</p>
-    </div>
-
-    <div class="arch-grid">
-      <div class="arch-card">
-        <div class="arch-title" style="color: var(--accent-green);">Spring Core & MVC Services</div>
-        <div class="arch-item"><strong>Layered Architecture:</strong> Pemisahan ketat antara Controller, Service Layer, dan Data Access Object (Repository).</div>
-        <div class="arch-item"><strong>Atomic Stock Mutations:</strong> Mutasi jumlah stok barang secara atomik untuk mencegah overselling pada waktu transaksi bersamaan.</div>
-        <div class="arch-item"><strong>Validasi Bean JSR-380:</strong> Pemeriksaan ketat tipe data, kuantitas harga, dan batas numerik sebelum data masuk ke database.</div>
-      </div>
-
-      <div class="arch-card">
-        <div class="arch-title" style="color: var(--accent-cyan);">Persistensi Dokumen MongoDB</div>
-        <div class="arch-item"><strong>Desain Skema Terdenormalisasi:</strong> Snapshot harga beli dan harga jual tersimpan dalam dokumen transaksi untuk integritas audit historis.</div>
-        <div class="arch-item"><strong>Indeks Performa Tinggi:</strong> Pengindeksan pada barcode barang, tanggal transaksi, dan status tagihan vendor untuk query instan.</div>
-        <div class="arch-item"><strong>Agregasi Laporan Keuangan:</strong> Pipeline agregasi MongoDB untuk kalkulasi omset, HPP, laba kotor, dan laba bersih secara seketika.</div>
-      </div>
-
-      <div class="arch-card">
-        <div class="arch-title" style="color: var(--accent-emerald);">Keamanan & Multi-Role RBAC</div>
-        <div class="arch-item"><strong>Spring Security 6:</strong> Manajemen sesi berbasis filter chain dengan enkripsi kata sandi BCrypt berkekuatan tinggi.</div>
-        <div class="arch-item"><strong>Hak Akses Berjenjang:</strong> Pemisahan peran Admin (akses penuh & laporan laba) dan Kasir (khusus operasional terminal jual).</div>
-        <div class="arch-item"><strong>Cetak Thermal Terisolasi:</strong> Driver cetak struk CSS print 58mm yang kompatibel dengan berbagai printer kasir USB/Bluetooth.</div>
+        <div class="visual-stage">
+          <img src="${images.cashierDesktop}" alt="Simpos Cashier Terminal Desktop">
+        </div>
       </div>
     </div>
 
     <div class="slide-footer">
-      <span class="footer-tech">Simpos Architecture Blueprint</span>
-      <span class="footer-url">simpos.widifirmaan.web.id</span>
+      <div>SIMPOS &bull; SPRING BOOT ENTERPRISE POS</div>
+      <div>WIDI FIRMANSYAH &bull; LEAD ENGINEER</div>
+      <div>01 / 10</div>
     </div>
-  </section>
+  </div>
 
-  <!-- SLIDE 3: TERMINAL KASIR -->
-  <section class="slide">
+  <!-- SLIDE 2: LATAR BELAKANG & SPESIFIKASI TEKNIS -->
+  <div class="slide">
     <div class="slide-header">
-      <div class="brand-cluster">
-        <span class="brand-badge">CASHIER TERMINAL</span>
-        <span class="slide-section-title">Terminal Kasir & Pemindaian Barcode</span>
+      <div class="brand-pill">
+        <div class="brand-dot"></div>
+        <div class="brand-title">Arsitektur &amp; Fondasi</div>
+        <div class="brand-subtitle">Spesifikasi Kebutuhan Sistem</div>
       </div>
-      <div class="slide-number">03 / 10</div>
+      <div class="badge-pill">DECK-POS-02 / 10</div>
     </div>
 
-    <div class="slide-body">
-      <div class="slide-info">
-        <div class="headline-group">
-          <h2 class="slide-title">Terminal Kasir & Pemrosesan Keranjang</h2>
-          <p class="slide-desc">Antarmuka registrasi transaksi dengan pencarian cepat barcode barang, kalkulasi diskon otomatis, dan pengelolaan keranjang belanja belanja.</p>
+    <div class="slide-content">
+      <div class="title-block">
+        <div class="slide-category">Fondasi Rekayasa Backend &amp; Web</div>
+        <h2 class="slide-title">Kebutuhan Kecepatan Checkout &amp; Konsistensi Data Ritel</h2>
+        <p class="slide-subtitle">Menghubungkan kehandalan Java 21 dengan fleksibilitas skema NoSQL untuk volume transaksi penjualan tinggi.</p>
+      </div>
+
+      <div class="layout-grid-3">
+        <div class="soft-card">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">01 &bull; TANTANGAN SISTEM</div>
+          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Antrean Checkout Kasir</h3>
+          <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
+            Proses kasir yang lambat saat jam sibuk mengakibatkan penumpukan antrean pembeli, menuntut latensi pemindaian barcode di bawah 100ms.
+          </p>
+        </div>
+
+        <div class="soft-card">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">02 &bull; SOLUSI ARSITEKTUR</div>
+          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Spring Boot &amp; Mongo Index</h3>
+          <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
+            Pengindeksan majemuk pada kolom barcode produk dan caching memori sesi kasir yang menjamin pencarian item seketika tanpa jeda I/O.
+          </p>
+        </div>
+
+        <div class="soft-card">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">03 &bull; ERGONOMI KASIR</div>
+          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Soft UI Dashboard Clean</h3>
+          <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
+            Estetika neomorfik halus berlatar putih bersih dengan kontras tinggi yang ramah mata dan mempercepat orientasi navigasi staf kasir.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div>SIMPOS &bull; ARSITEKTUR SISTEM</div>
+      <div>TRANSACTION SPEED STANDARDS</div>
+      <div>02 / 10</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: AUTENTIKASI & KEAMANAN SESI KASIR -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="brand-pill">
+        <div class="brand-dot"></div>
+        <div class="brand-title">Keamanan Sesi</div>
+        <div class="brand-subtitle">Spring Security RBAC &amp; Cashier Session</div>
+      </div>
+      <div class="badge-pill">DECK-POS-03 / 10</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="title-block">
+        <div class="slide-category">Kontrol Akses Pengguna</div>
+        <h2 class="slide-title">Autentikasi Multi-Peran &amp; Isolasi Hak Akses Kasir</h2>
+        <p class="slide-subtitle">Sistem keamanan berbasis peran (Admin, Kasir, Manager) dengan proteksi pemalsuan permintaan lintas situs (CSRF).</p>
+      </div>
+
+      <div class="layout-split">
+        <div class="visual-stage">
+          <img src="${images.loginDesktop}" alt="Simpos Login Screen Desktop">
         </div>
 
         <div class="feature-list">
-          <div class="feature-card">
-            <div class="feature-card-title">Dukungan Pemindai Barcode Cepat</div>
-            <div class="feature-card-text">Input pemindai barcode otomatis menambahkan produk ke keranjang belanja tanpa perlu menyentuh mouse.</div>
+          <div class="feature-item">
+            <div class="feature-item-title">Enkripsi Kata Sandi BCrypt</div>
+            <div class="feature-item-desc">
+              Penyimpanan kredensial dengan fungsi hash adaptif berbobot komputasi tinggi untuk menangkal serangan brute-force.
+            </div>
           </div>
-          <div class="feature-card cyan">
-            <div class="feature-card-title">Kalkulasi Otomatis Seketika</div>
-            <div class="feature-card-text">Perhitungan subtotal, kalkulasi pajak, diskon per item, dan total tagihan diperbarui secara langsung di sisi browser.</div>
+          <div class="feature-item">
+            <div class="feature-item-title">Validasi Sesi Aktif Kasir</div>
+            <div class="feature-item-desc">
+              Pengikatan sesi ke identitas terminal kasir spesifik yang membatasi akses modul inventaris dan keuangan hanya untuk manajer.
+            </div>
           </div>
-          <div class="feature-card amber">
-            <div class="feature-card-title">Validasi Stok Realtime</div>
-            <div class="feature-card-text">Peringatan visual seketika jika kuantitas barang yang dimasukkan melebihi sisa stok fisik di gudang.</div>
-          </div>
-        </div>
-
-        <div class="metrics-row">
-          <div class="metric-box">
-            <div class="metric-val">&lt; 300ms</div>
-            <div class="metric-lbl">Cart Add Latency</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-val">Barcode</div>
-            <div class="metric-lbl">Scanner Ready</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-val">Atomic</div>
-            <div class="metric-lbl">Stock Safety</div>
+          <div class="feature-item">
+            <div class="feature-item-title">Peringatan Kredensial Tidak Valid</div>
+            <div class="feature-item-desc">
+              Umpan balik pesan kesalahan visual terstruktur yang tidak membocorkan keberadaan username untuk memitigasi enumeration attack.
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="visual-stage">
-        <img src="${images.cashierDesktop}" class="screenshot-desktop" alt="Cashier Desktop">
-        <img src="${images.cashierMobile}" class="screenshot-mobile" alt="Cashier Mobile">
       </div>
     </div>
 
     <div class="slide-footer">
-      <span class="footer-tech">View: src/main/resources/templates/cashier.html</span>
-      <span class="footer-url">simpos.widifirmaan.web.id</span>
+      <div>SIMPOS &bull; AUTHENTICATION &amp; RBAC</div>
+      <div>SPRING SECURITY 6 ENGINE</div>
+      <div>03 / 10</div>
     </div>
-  </section>
+  </div>
 
-  <!-- SLIDE 4: CHECKOUT & STRUK THERMAL -->
-  <section class="slide">
+  <!-- SLIDE 4: TERMINAL KASIR & PEMROSESAN CEPAT -->
+  <div class="slide">
     <div class="slide-header">
-      <div class="brand-cluster">
-        <span class="brand-badge">RECEIPT PRINTING</span>
-        <span class="slide-section-title">Ringkasan Checkout & Struk Thermal 58mm</span>
+      <div class="brand-pill">
+        <div class="brand-dot"></div>
+        <div class="brand-title">Operasional Kasir</div>
+        <div class="brand-subtitle">Fast Barcode Scanning &amp; Cart State</div>
       </div>
-      <div class="slide-number">04 / 10</div>
+      <div class="badge-pill">DECK-POS-04 / 10</div>
     </div>
 
-    <div class="slide-body">
-      <div class="slide-info">
-        <div class="headline-group">
-          <h2 class="slide-title">Ringkasan Pembayaran & Cetak Struk</h2>
-          <p class="slide-desc">Alur penuntasan transaksi pembayaran tunai/non-tunai dengan penghitungan uang kembalian dan cetak struk format 58mm siap pakai.</p>
+    <div class="slide-content">
+      <div class="title-block">
+        <div class="slide-category">Terminal Penjualan Langsung</div>
+        <h2 class="slide-title">Terminal Kasir Berkecepatan Tinggi dengan Buffer Barcode</h2>
+        <p class="slide-subtitle">Antarmuka kasir responsif dengan penambahan kuantitas barang otomatis saat pemindai laser memindai kode batang.</p>
+      </div>
+
+      <div class="layout-split-reversed">
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-item-title">Input Pemindai Barcode Tanpa Fokus Hilang</div>
+            <div class="feature-item-desc">
+              Manajemen event listener keyboard yang secara otomatis mengarahkan hasil pindai barcode ke keranjang belanja aktif.
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item-title">Kalkulasi Subtotal &amp; Pajak Real-Time</div>
+            <div class="feature-item-desc">
+              Penghitungan diskon kupon, PPN ritel, dan total harga secara instan di sisi klien dengan sinkronisasi ke server Spring Boot.
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item-title">Pemberitahuan Stok Habis (Out-of-Stock Alert)</div>
+            <div class="feature-item-desc">
+              Pencegahan penjualan barang jika kuantitas stok di gudang tidak mencukupi melalui validasi atomik sebelum transaksi dicatat.
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-stage">
+          <img src="${images.cashierMobile}" alt="Simpos Cashier Mobile View">
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div>SIMPOS &bull; CASHIER TERMINAL</div>
+      <div>BARCODE &amp; CART ENGINE</div>
+      <div>04 / 10</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: CHECKOUT & RESI STRUK POS -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="brand-pill">
+        <div class="brand-dot"></div>
+        <div class="brand-title">Penyelesaian Transaksi</div>
+        <div class="brand-subtitle">Checkout Summary &amp; Thermal Receipt Engine</div>
+      </div>
+      <div class="badge-pill">DECK-POS-05 / 10</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="title-block">
+        <div class="slide-category">Penyelesaian Pembayaran</div>
+        <h2 class="slide-title">Modal Konfirmasi Checkout &amp; Format Struk Termal</h2>
+        <p class="slide-subtitle">Perhitungan kembalian tunai akurat dan pencetakan struk transaksi yang kompatibel dengan printer termal 58mm/80mm.</p>
+      </div>
+
+      <div class="layout-split">
+        <div class="visual-stage">
+          <img src="${images.receiptDesktop}" alt="Simpos Cashier Receipt Desktop">
         </div>
 
         <div class="feature-list">
-          <div class="feature-card">
-            <div class="feature-card-title">Kalkulasi Kembalian Otomatis</div>
-            <div class="feature-card-text">Input nominal uang tunai yang diterima langsung menampilkan jumlah kembalian secara akurat untuk kasir.</div>
+          <div class="feature-item">
+            <div class="feature-item-title">Modal Kalkulasi Uang Diterima &amp; Kembalian</div>
+            <div class="feature-item-desc">
+              Input denominasi uang cepat (Rp 50.000, Rp 100.000) yang mempercepat waktu penghitungan uang tunai oleh petugas kasir.
+            </div>
           </div>
-          <div class="feature-card cyan">
-            <div class="feature-card-title">Format Struk Thermal 58mm Standar</div>
-            <div class="feature-card-text">Pola layout CSS print yang dikalibrasi presisi untuk kertas struk thermal 58mm dengan font monospaced rapi.</div>
+          <div class="feature-item">
+            <div class="feature-item-title">Tata Letak Struk Monospace Ramah Termal</div>
+            <div class="feature-item-desc">
+              Format struk menggunakan font monospaced JetBrains Mono yang terhindar dari pergeseran kolom saat dicetak pada kertas termal.
+            </div>
           </div>
-          <div class="feature-card amber">
-            <div class="feature-card-title">Pencatatan Nomor Faktur Unik</div>
-            <div class="feature-card-text">Generator nomor invoice unik berseri dengan stempel waktu dan identitas kasir yang bertugas.</div>
-          </div>
-        </div>
-
-        <div class="metrics-row">
-          <div class="metric-box">
-            <div class="metric-val">58mm</div>
-            <div class="metric-lbl">Paper Width</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-val">Auto Calc</div>
-            <div class="metric-lbl">Cash Change</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-val">1-Click</div>
-            <div class="metric-lbl">Direct Print</div>
+          <div class="feature-item">
+            <div class="feature-item-title">Penyimpanan ID Transaksi Unik (UUID)</div>
+            <div class="feature-item-desc">
+              Setiap struk dilengkapi nomor invoice unik dan kode barcode verifikasi untuk mempermudah proses retur atau klaim pelanggan.
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="visual-stage">
-        <img src="${images.checkoutDesktop}" class="screenshot-desktop" alt="Checkout Summary Desktop">
-        <img src="${images.receiptMobile}" class="screenshot-mobile" alt="Receipt Mobile">
       </div>
     </div>
 
     <div class="slide-footer">
-      <span class="footer-tech">Engine: ESC/POS Thermal CSS Print Stylesheet</span>
-      <span class="footer-url">simpos.widifirmaan.web.id</span>
+      <div>SIMPOS &bull; CHECKOUT &amp; RECEIPT</div>
+      <div>THERMAL PRINT FORMATTER</div>
+      <div>05 / 10</div>
     </div>
-  </section>
+  </div>
 
-  <!-- SLIDE 5: DASHBOARD ANALITIK -->
-  <section class="slide">
+  <!-- SLIDE 6: MANAJEMEN INVENTARIS & STOK -->
+  <div class="slide">
     <div class="slide-header">
-      <div class="brand-cluster">
-        <span class="brand-badge">ANALYTICS</span>
-        <span class="slide-section-title">Dashboard Analitik & Metrik Penjualan</span>
+      <div class="brand-pill">
+        <div class="brand-dot"></div>
+        <div class="brand-title">Kontrol Inventaris</div>
+        <div class="brand-subtitle">Stock Management &amp; Atomic Deductions</div>
       </div>
-      <div class="slide-number">05 / 10</div>
+      <div class="badge-pill">DECK-POS-06 / 10</div>
     </div>
 
-    <div class="slide-body">
-      <div class="slide-info">
-        <div class="headline-group">
-          <h2 class="slide-title">Dashboard Analisis Pendapatan & KPI</h2>
-          <p class="slide-desc">Pusat kendali eksekutif dengan kartu metrik ringkasan omzet harian, total transaksi, rata-rata belanja (basket size), dan produk terlaris.</p>
+    <div class="slide-content">
+      <div class="title-block">
+        <div class="slide-category">Pengelolaan Persediaan Barang</div>
+        <h2 class="slide-title">Katalog Inventaris Produk &amp; Pengurangan Stok Atomik</h2>
+        <p class="slide-subtitle">Pencatatan persediaan barang dengan operasi pembaruan $inc MongoDB guna mencegah fenomena race-condition.</p>
+      </div>
+
+      <div class="layout-split-reversed">
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-item-title">Operasi Pengurangan Stok Atomik ($inc: -qty)</div>
+            <div class="feature-item-desc">
+              Pengurangan stok langsung pada basis data tanpa membaca dan menulis ulang manual untuk menjamin konsistensi multi-kasir.
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item-title">Peringatan Batas Minimum Stok (Low Stock)</div>
+            <div class="feature-item-desc">
+              Indikator warna oranye menyala pada baris produk yang kuantitasnya telah menyentuh batas ambang pemesanan ulang (reorder level).
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item-title">Manajemen Kategori &amp; Unit Satuan</div>
+            <div class="feature-item-desc">
+              Klasifikasi fleksibel berdasarkan jenis barang (makanan, minuman, elektronik) serta satuan kemasan (pcs, dus, pack).
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-stage">
+          <img src="${images.stockDesktop}" alt="Simpos Stock Inventory Desktop">
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div>SIMPOS &bull; INVENTORY CONTROL</div>
+      <div>ATOMIC CONCURRENCY ENGINE</div>
+      <div>06 / 10</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: BUKU BESAR KEUANGAN & LABA-RUGI -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="brand-pill">
+        <div class="brand-dot"></div>
+        <div class="brand-title">Audit Finansial</div>
+        <div class="brand-subtitle">Profit Ledger &amp; Financial Reporting</div>
+      </div>
+      <div class="badge-pill">DECK-POS-07 / 10</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="title-block">
+        <div class="slide-category">Pencatatan Finansial Usaha</div>
+        <h2 class="slide-title">Buku Besar Transaksi &amp; Perhitungan Margin Keuntungan</h2>
+        <p class="slide-subtitle">Audit transaksi harian otomatis yang memisahkan harga pokok penjualan (HPP) dari total margin laba bersih.</p>
+      </div>
+
+      <div class="layout-split">
+        <div class="visual-stage">
+          <img src="${images.financeDesktop}" alt="Simpos Finance Profit Ledger Desktop">
         </div>
 
         <div class="feature-list">
-          <div class="feature-card">
-            <div class="feature-card-title">Agregasi Pendapatan Real-Time</div>
-            <div class="feature-card-text">Kalkulasi total nilai transaksi hari ini yang diperbarui secara otomatis setiap kali pembayaran kasir selesai.</div>
+          <div class="feature-item">
+            <div class="feature-item-title">Pemisahan HPP &amp; Laba Kotor Otomatis</div>
+            <div class="feature-item-desc">
+              Pencatatan harga modal produk pada saat transaksi terjadi sehingga laporan keuntungan historis tidak terdistorsi fluktuasi harga baru.
+            </div>
           </div>
-          <div class="feature-card cyan">
-            <div class="feature-card-title">Pelacakan Produk Terlaris</div>
-            <div class="feature-card-text">Daftar peringkat produk dengan volume penjualan tertinggi untuk mendukung keputusan pengadaan stok barang.</div>
+          <div class="feature-item">
+            <div class="feature-item-title">Penyaringan Tanggal &amp; Shift Kasir</div>
+            <div class="feature-item-desc">
+              Kemudahan bagi pengelola untuk merekonsiliasi kas penutupan shift kasir berdasarkan rentang jam operasional tertentu.
+            </div>
           </div>
-          <div class="feature-card amber">
-            <div class="feature-card-title">Ringkasan Arus Kas Masuk</div>
-            <div class="feature-card-text">Pemisahan visual antara penerimaan tunai kasir dan transaksi non-tunai (transfer / e-wallet).</div>
-          </div>
-        </div>
-
-        <div class="metrics-row">
-          <div class="metric-box">
-            <div class="metric-val">Live</div>
-            <div class="metric-lbl">Revenue Metric</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-val">Top 10</div>
-            <div class="metric-lbl">Fast Moving</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-val">Visual</div>
-            <div class="metric-lbl">Trend Cards</div>
+          <div class="feature-item">
+            <div class="feature-item-title">Audit Trail Tidak Dapat Diubah (Immutable Log)</div>
+            <div class="feature-item-desc">
+              Setiap catatan mutasi finansial tersimpan permanen bersama cap waktu ISO untuk mencegah manipulasi data pembukuan toko.
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="visual-stage">
-        <img src="${images.analyticsDesktop}" class="screenshot-desktop" alt="Analytics Dashboard Desktop">
-        <img src="${images.analyticsMobile}" class="screenshot-mobile" alt="Analytics Dashboard Mobile">
       </div>
     </div>
 
     <div class="slide-footer">
-      <span class="footer-tech">View: src/main/resources/templates/dashboard.html</span>
-      <span class="footer-url">simpos.widifirmaan.web.id</span>
+      <div>SIMPOS &bull; FINANCIAL AUDIT</div>
+      <div>PROFIT &amp; LOSS REPORTING</div>
+      <div>07 / 10</div>
     </div>
-  </section>
+  </div>
 
-  <!-- SLIDE 6: MANAJEMEN STOK INVENTARIS -->
-  <section class="slide">
+  <!-- SLIDE 8: PENGELOLAAN TAGIHAN VENDOR -->
+  <div class="slide">
     <div class="slide-header">
-      <div class="brand-cluster">
-        <span class="brand-badge">INVENTORY</span>
-        <span class="slide-section-title">Katalog Inventaris & Ambang Batas Stok</span>
+      <div class="brand-pill">
+        <div class="brand-dot"></div>
+        <div class="brand-title">Hutang &amp; Vendor</div>
+        <div class="brand-subtitle">Vendor Bills &amp; Accounts Payable</div>
       </div>
-      <div class="slide-number">06 / 10</div>
+      <div class="badge-pill">DECK-POS-08 / 10</div>
     </div>
 
-    <div class="slide-body">
-      <div class="slide-info">
-        <div class="headline-group">
-          <h2 class="slide-title">Manajemen Stok & Peringatan Habis</h2>
-          <p class="slide-desc">Pencatatan data master barang mencakup kode SKU, nama produk, kategori, harga modal beli, harga eceran jual, dan batas stok menipis.</p>
+    <div class="slide-content">
+      <div class="title-block">
+        <div class="slide-category">Manajemen Rantai Pasok</div>
+        <h2 class="slide-title">Pengendalian Faktur Pemasok &amp; Jadwal Jatuh Tempo</h2>
+        <p class="slide-subtitle">Pencatatan pengadaan barang dari vendor dengan status verifikasi pembayaran lunas atau termin berjangka.</p>
+      </div>
+
+      <div class="layout-split-reversed">
+        <div class="visual-stage">
+          <img src="${images.billsDesktop}" alt="Simpos Vendor Bills Desktop">
         </div>
 
         <div class="feature-list">
-          <div class="feature-card">
-            <div class="feature-card-title">Peringatan Stok Menipis Otomatis</div>
-            <div class="feature-card-text">Penanda badge merah pada produk yang jumlah stoknya telah menyentuh batas minimum pemesanan ulang.</div>
+          <div class="feature-item">
+            <div class="feature-item-title">Pelacakan Status Faktur (Paid / Pending)</div>
+            <div class="feature-item-desc">
+              Badge visual warna hijau untuk tagihan yang telah diselesaikan dan kuning menyala untuk tagihan yang mendekati tanggal jatuh tempo.
+            </div>
           </div>
-          <div class="feature-card cyan">
-            <div class="feature-card-title">Modal CRUD Produk Cepat</div>
-            <div class="feature-card-text">Formulir penambahan, pengubahan data, dan penyesuaian stok fisik (stock opname) melalui dialog modal interaktif.</div>
+          <div class="feature-item">
+            <div class="feature-item-title">Integrasi Otomatis ke Stok Masuk</div>
+            <div class="feature-item-desc">
+              Penerimaan faktur vendor yang disetujui secara otomatis menambah kuantitas stok barang pada katalog inventaris tanpa entri ganda.
+            </div>
           </div>
-          <div class="feature-card amber">
-            <div class="feature-card-title">Katalog Publik Tersedia</div>
-            <div class="feature-card-text">Tampilan daftar barang publik tanpa harga modal yang aman ditampilkan pada layar display pelanggan toko.</div>
-          </div>
-        </div>
-
-        <div class="metrics-row">
-          <div class="metric-box">
-            <div class="metric-val">Alert</div>
-            <div class="metric-lbl">Low Stock Warning</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-val">SKU/Barcode</div>
-            <div class="metric-lbl">Unique Identifier</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-val">Instant</div>
-            <div class="metric-lbl">Modal Editor</div>
+          <div class="feature-item">
+            <div class="feature-item-title">Ekspor Dokumen ke Format Excel/PDF</div>
+            <div class="feature-item-desc">
+              Kemudahan penyusunan berkas pelaporan pajak dan pembayaran suplier melalui tombol unduh data terformat rapi.
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="visual-stage">
-        <img src="${images.stockDesktop}" class="screenshot-desktop" alt="Stock Catalog Desktop">
-        <img src="${images.stockMobile}" class="screenshot-mobile" alt="Stock Catalog Mobile">
       </div>
     </div>
 
     <div class="slide-footer">
-      <span class="footer-tech">View: src/main/resources/templates/stock.html</span>
-      <span class="footer-url">simpos.widifirmaan.web.id</span>
+      <div>SIMPOS &bull; VENDOR ACCOUNTS</div>
+      <div>SUPPLY CHAIN INTEGRATION</div>
+      <div>08 / 10</div>
     </div>
-  </section>
+  </div>
 
-  <!-- SLIDE 7: BUKU BESAR KEUANGAN -->
-  <section class="slide">
+  <!-- SLIDE 9: DASBOR ANALITIK & KINERJA -->
+  <div class="slide">
     <div class="slide-header">
-      <div class="brand-cluster">
-        <span class="brand-badge">FINANCE</span>
-        <span class="slide-section-title">Buku Besar Keuangan & Laba Bersih</span>
+      <div class="brand-pill">
+        <div class="brand-dot"></div>
+        <div class="brand-title">Kecerdasan Bisnis</div>
+        <div class="brand-subtitle">Analytics Dashboard &amp; Sales Insights</div>
       </div>
-      <div class="slide-number">07 / 10</div>
+      <div class="badge-pill">DECK-POS-09 / 10</div>
     </div>
 
-    <div class="slide-body">
-      <div class="slide-info">
-        <div class="headline-group">
-          <h2 class="slide-title">Buku Besar Finansial & Rekapitulasi Laba</h2>
-          <p class="slide-desc">Pencatatan laba kotor per transaksi yang dihitung dari selisih riil harga jual dan harga modal beli produk pada waktu transaksi.</p>
-        </div>
-
-        <div class="feature-list">
-          <div class="feature-card">
-            <div class="feature-card-title">Kalkulasi Laba Kotor Akurat</div>
-            <div class="feature-card-text">Perhitungan otomatis Gross Margin berdasarkan riwayat snapshot harga modal pembelian barang.</div>
-          </div>
-          <div class="feature-card cyan">
-            <div class="feature-card-title">Filter Rentang Tanggal Laporan</div>
-            <div class="feature-card-text">Kemudahan penarikan laporan omset dan laba bulanan atau mingguan untuk keperluan pembukuan pemilik usaha.</div>
-          </div>
-          <div class="feature-card amber">
-            <div class="feature-card-title">Audit Trail & Edit Transaksi</div>
-            <div class="feature-card-text">Pencatatan riwayat penyesuaian transaksi dengan otorisasi khusus Administrator untuk mencegah manipulasi data.</div>
-          </div>
-        </div>
-
-        <div class="metrics-row">
-          <div class="metric-box">
-            <div class="metric-val">Net Margin</div>
-            <div class="metric-lbl">Realtime Profit</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-val">Date Filter</div>
-            <div class="metric-lbl">Custom Range</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-val">Immutable</div>
-            <div class="metric-lbl">Cost Snapshot</div>
-          </div>
-        </div>
+    <div class="slide-content">
+      <div class="title-block">
+        <div class="slide-category">Pemantauan Metrik Bisnis</div>
+        <h2 class="slide-title">Visualisasi Metrik Omzet Harian &amp; Tren Penjualan</h2>
+        <p class="slide-subtitle">Grafik interaktif yang menyajikan ringkasan omzet, produk terlaris, dan performa kasir secara waktu nyata.</p>
       </div>
 
-      <div class="visual-stage">
-        <img src="${images.financeDesktop}" class="screenshot-desktop" alt="Finance Profit Desktop">
-        <img src="${images.financeMobile}" class="screenshot-mobile" alt="Finance Profit Mobile">
+      <div class="layout-grid-3">
+        <div class="soft-card">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">AGREGASI MONGODB</div>
+          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Pipeline $group &amp; $sum</h3>
+          <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
+            Pengolahan jutaan data transaksi penjualan langsung pada server basis data MongoDB tanpa membebani memori heap Java aplikasi Spring Boot.
+          </p>
+        </div>
+
+        <div class="soft-card">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">TOP PERFORMING ITEMS</div>
+          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Ranking Produk Terlaris</h3>
+          <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
+            Identifikasi produk unggulan yang paling banyak dibeli guna memandu strategi promosi dan pengadaan stok kembali secara presisi.
+          </p>
+        </div>
+
+        <div class="soft-card">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">RESPONSIVITAS DASBOR</div>
+          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Chart.js Hardware Accelerated</h3>
+          <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
+            Rendering kurva penjualan menggunakan HTML5 Canvas dengan frame rate mulus tanpa menghambat pemuatan komponen tabel data di sekitarnya.
+          </p>
+        </div>
       </div>
     </div>
 
     <div class="slide-footer">
-      <span class="footer-tech">View: src/main/resources/templates/finance.html</span>
-      <span class="footer-url">simpos.widifirmaan.web.id</span>
+      <div>SIMPOS &bull; BUSINESS ANALYTICS</div>
+      <div>MONGODB AGGREGATION PIPELINE</div>
+      <div>09 / 10</div>
     </div>
-  </section>
+  </div>
 
-  <!-- SLIDE 8: TAGIHAN VENDOR -->
-  <section class="slide">
+  <!-- SLIDE 10: RANGKUMAN ARSITEKTUR & PRODUKSI -->
+  <div class="slide">
     <div class="slide-header">
-      <div class="brand-cluster">
-        <span class="brand-badge">ACCOUNTS PAYABLE</span>
-        <span class="slide-section-title">Manajemen Tagihan Vendor & Pengeluaran</span>
+      <div class="brand-pill">
+        <div class="brand-dot"></div>
+        <div class="brand-title">Ringkasan Proyek</div>
+        <div class="brand-subtitle">Spesifikasi Akhir &amp; Kesiapan Produksi</div>
       </div>
-      <div class="slide-number">08 / 10</div>
+      <div class="badge-pill">DECK-POS-10 / 10</div>
     </div>
 
-    <div class="slide-body">
-      <div class="slide-info">
-        <div class="headline-group">
-          <h2 class="slide-title">Manajemen Hutang Tagihan Supplier</h2>
-          <p class="slide-desc">Pencatatan faktur pembelian barang dari distributor pihak ketiga dengan status pelunasan (Lunas / Jatuh Tempo) dan pengingat tanggal pembayaran.</p>
+    <div class="slide-content">
+      <div class="title-block">
+        <div class="slide-category">Rangkuman Akhir Rekayasa</div>
+        <h2 class="slide-title">Kesimpulan Implementasi Sistem Simpos POS</h2>
+        <p class="slide-subtitle">Solusi kasir ritel kelas enterprise yang menggabungkan keandalan Spring Boot, kecepatan MongoDB, dan keanggunan Soft UI.</p>
+      </div>
+
+      <div class="layout-grid-4">
+        <div class="soft-card">
+          <div style="font-size: 11px; color: var(--text-subtle); font-family: 'JetBrains Mono', monospace;">BACKEND</div>
+          <div style="font-size: 18px; font-weight: 800; color: var(--accent-orange); margin-top: 4px; margin-bottom: 4px;">Spring Boot 3</div>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Eksekusi Java 21 LTS dengan Spring Data MongoDB teruji.</p>
         </div>
 
-        <div class="feature-list">
-          <div class="feature-card">
-            <div class="feature-card-title">Pencatatan Faktur Supplier Terpusat</div>
-            <div class="feature-card-text">Daftar tagihan mencakup nama distributor, nomor faktur pengiriman, total tagihan, dan tanggal jatuh tempo.</div>
-          </div>
-          <div class="feature-card cyan">
-            <div class="feature-card-title">Status Pelunasan Visual</div>
-            <div class="feature-card-text">Label warna pembeda antara tagihan yang sudah diselesaikan dan faktur yang mendekati batas waktu tempo.</div>
-          </div>
-          <div class="feature-card amber">
-            <div class="feature-card-title">Sinkronisasi Beban Operasional</div>
-            <div class="feature-card-text">Tagihan yang telah dibayar otomatis mengurangi arus kas bersih toko pada laporan keuangan utama.</div>
-          </div>
+        <div class="soft-card">
+          <div style="font-size: 11px; color: var(--text-subtle); font-family: 'JetBrains Mono', monospace;">DATABASE</div>
+          <div style="font-size: 18px; font-weight: 800; color: var(--accent-orange); margin-top: 4px; margin-bottom: 4px;">MongoDB NoSQL</div>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Pengurangan stok atomik dan pipeline agregasi bisnis.</p>
         </div>
 
-        <div class="metrics-row">
-          <div class="metric-box">
-            <div class="metric-val">Due Date</div>
-            <div class="metric-lbl">Reminder Alert</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-val">Paid/Unpaid</div>
-            <div class="metric-lbl">Status Badges</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-val">Supplier</div>
-            <div class="metric-lbl">Directory</div>
-          </div>
+        <div class="soft-card">
+          <div style="font-size: 11px; color: var(--text-subtle); font-family: 'JetBrains Mono', monospace;">UI DESIGN</div>
+          <div style="font-size: 18px; font-weight: 800; color: var(--text-dark); margin-top: 4px; margin-bottom: 4px;">Soft UI System</div>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Palet Sunset Orange ramah mata dengan elevasi 3D.</p>
+        </div>
+
+        <div class="soft-card">
+          <div style="font-size: 11px; color: var(--text-subtle); font-family: 'JetBrains Mono', monospace;">STATUS</div>
+          <div style="font-size: 18px; font-weight: 800; color: var(--accent-green); margin-top: 4px; margin-bottom: 4px;">Siap Produksi</div>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Dukungan printer termal dan layout responsif seluler.</p>
         </div>
       </div>
 
-      <div class="visual-stage">
-        <img src="${images.billsDesktop}" class="screenshot-desktop" alt="Vendor Bills Desktop">
-        <img src="${images.billsMobile}" class="screenshot-mobile" alt="Vendor Bills Mobile">
+      <div class="visual-stage" style="min-height: 160px; max-height: 180px; margin-top: 15px;">
+        <img src="${images.analyticsDesktop}" alt="Simpos Analytics Dashboard Final View">
       </div>
     </div>
 
     <div class="slide-footer">
-      <span class="footer-tech">View: src/main/resources/templates/bills.html</span>
-      <span class="footer-url">simpos.widifirmaan.web.id</span>
+      <div>SIMPOS &bull; KESIMPULAN REKAYASA SISTEM</div>
+      <div>WIDI FIRMANSYAH &bull; LEAD ENGINEER</div>
+      <div>10 / 10</div>
     </div>
-  </section>
-
-  <!-- SLIDE 9: AUTENTIKASI KEAMANAN RBAC -->
-  <section class="slide">
-    <div class="slide-header">
-      <div class="brand-cluster">
-        <span class="brand-badge">SECURITY & AUTH</span>
-        <span class="slide-section-title">Otentikasi Berperan & Gerbang Masuk</span>
-      </div>
-      <div class="slide-number">09 / 10</div>
-    </div>
-
-    <div class="slide-body">
-      <div class="slide-info">
-        <div class="headline-group">
-          <h2 class="slide-title">Gerbang Autentikasi & Hak Akses RBAC</h2>
-          <p class="slide-desc">Perlindungan antarmuka dan endpoint API dengan Spring Security 6, hashing kredensial BCrypt, dan isolasi hak akses kasir versus manajer.</p>
-        </div>
-
-        <div class="feature-list">
-          <div class="feature-card">
-            <div class="feature-card-title">Role-Based Access Control (RBAC)</div>
-            <div class="feature-card-text">Kasir hanya memiliki wewenang terminal registrasi, sedangkan menu analitik dan laporan keuangan terkunci untuk Admin.</div>
-          </div>
-          <div class="feature-card cyan">
-            <div class="feature-card-title">Pencegahan Brute-Force & Alert</div>
-            <div class="feature-card-text">Pemberian feedback kesalahan kredensial yang jelas serta proteksi sesi peramban dari serangan session hijacking.</div>
-          </div>
-          <div class="feature-card amber">
-            <div class="feature-card-title">Desain Login Profesional</div>
-            <div class="feature-card-text">Antarmuka login elegan dengan brand Simpos dan pemilihan peran kerja yang intuitif.</div>
-          </div>
-        </div>
-
-        <div class="metrics-row">
-          <div class="metric-box">
-            <div class="metric-val">Spring Sec 6</div>
-            <div class="metric-lbl">Auth Engine</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-val">BCrypt</div>
-            <div class="metric-lbl">Password Hash</div>
-          </div>
-          <div class="metric-box">
-            <div class="metric-val">2 Roles</div>
-            <div class="metric-lbl">Admin & Cashier</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="visual-stage">
-        <img src="${images.loginDesktop}" class="screenshot-desktop" alt="Login Desktop">
-        <img src="${images.loginMobile}" class="screenshot-mobile" alt="Login Mobile">
-      </div>
-    </div>
-
-    <div class="slide-footer">
-      <span class="footer-tech">Security: Spring Security 6 Configuration</span>
-      <span class="footer-url">simpos.widifirmaan.web.id</span>
-    </div>
-  </section>
-
-  <!-- SLIDE 10: SPESIFIKASI PRODUKSI -->
-  <section class="slide">
-    <div class="slide-header">
-      <div class="brand-cluster">
-        <span class="brand-badge">SPECIFICATION</span>
-        <span class="slide-section-title">Ringkasan Spesifikasi & Kesiapan Produksi</span>
-      </div>
-      <div class="slide-number">10 / 10</div>
-    </div>
-
-    <div class="headline-group" style="margin-bottom: 12px;">
-      <h2 class="slide-title">Spesifikasi Teknis & Kesiapan Distribusi</h2>
-      <p class="slide-desc">Ringkasan arsitektur Java Enterprise, metrik kehandalan database, dan standarisasi container Docker untuk implementasi produksi toko.</p>
-    </div>
-
-    <div class="arch-grid">
-      <div class="arch-card">
-        <div class="arch-title" style="color: var(--accent-green);">Metrik Performa & Audit Web</div>
-        <div class="arch-item"><strong>Lighthouse Score:</strong> 97+ pada Best Practices, Accessibility, dan Performance.</div>
-        <div class="arch-item"><strong>Respon Endpoint Cepat:</strong> Rata-rata waktu eksekusi query MongoDB di bawah 15ms berkat pengindeksan presisi.</div>
-        <div class="arch-item"><strong>Ringan di RAM:</strong> Konsumsi memori JVM terkendali dengan runtime container OpenJDK 17 yang ramping.</div>
-      </div>
-
-      <div class="arch-card">
-        <div class="arch-title" style="color: var(--accent-cyan);">Integritas Data & Audit</div>
-        <div class="arch-item"><strong>ACID Transaction Support:</strong> Transaksi multi-dokumen MongoDB untuk memastikan mutasi stok dan kasir selalu konsisten.</div>
-        <div class="arch-item"><strong>Backup Otomatis:</strong> Prosedur dump database berkala untuk mencegah kehilangan catatan riwayat penjualan.</div>
-        <div class="arch-item"><strong>Kompatibilitas Hardware:</strong> Beroperasi lancar dengan barcode scanner USB, laci kasir RJ11, dan printer thermal.</div>
-      </div>
-
-      <div class="arch-card">
-        <div class="arch-title" style="color: var(--accent-emerald);">Infrastruktur & Deployment</div>
-        <div class="arch-item"><strong>Docker Containerized:</strong> Siap dijalankan dengan satu perintah via docker-compose (App + MongoDB).</div>
-        <div class="arch-item"><strong>On-Premise / Cloud Ready:</strong> Dapat dipasang di komputer lokal toko secara offline maupun di server cloud VPS.</div>
-        <div class="arch-item"><strong>Reliabilitas Tinggi:</strong> Ketersediaan operasional tanpa henti untuk menunjang transaksi kasir harian.</div>
-      </div>
-    </div>
-
-    <div class="slide-footer">
-      <span class="footer-tech">Simpos Production Specification Document</span>
-      <span class="footer-url">simpos.widifirmaan.web.id</span>
-    </div>
-  </section>
+  </div>
 
 </body>
 </html>
@@ -985,9 +868,9 @@ const htmlFilePath = path.join(projectRoot, 'presentation.html');
 fs.writeFileSync(htmlFilePath, htmlContent, 'utf-8');
 console.log(`HTML presentasi disimpan di: ${htmlFilePath}`);
 
+console.log('Menjalankan Playwright Chromium untuk render PDF Simpos Soft UI Dashboard...');
+
 async function renderPDF() {
-  console.log('Menjalankan Playwright Chromium untuk render PDF Simpos...');
-  
   const playwrightPath = '/home/widifirmaan/Projects/qa-toolkit/node_modules/playwright/index.mjs';
   const { chromium } = await import(playwrightPath);
 
@@ -998,19 +881,22 @@ async function renderPDF() {
 
   const page = await browser.newPage();
   await page.goto(`file://${htmlFilePath}`, { waitUntil: 'networkidle' });
-  await page.evaluateHandle('document.fonts.ready');
+  await page.evaluate(() => document.fonts.ready);
 
   const slidePdfPath = path.join(downloadsDir, 'Simpos.pdf');
+  const continuousPdfPath = path.join(downloadsDir, 'Simpos-Continuous.pdf');
+
+  // 1. Multi-Page Deck Mode (10 Slides A4 Landscape)
   console.log('Rendering Multi-Page A4 Landscape (Slide Mode)...');
   await page.pdf({
     path: slidePdfPath,
-    width: '297mm',
-    height: '210mm',
+    format: 'A4',
+    landscape: true,
     printBackground: true,
-    margin: { top: 0, right: 0, bottom: 0, left: 0 },
     preferCSSPageSize: true,
   });
 
+  // 2. Continuous Poster Mode (Single tall scroll)
   console.log('Rendering Continuous Single-Scroll Showcase (Poster Mode)...');
   await page.addStyleTag({
     content: `
@@ -1019,7 +905,7 @@ async function renderPDF() {
         margin: 0;
       }
       body {
-        background-color: #0B1117 !important;
+        background: #F8F9FA !important;
       }
       .slide {
         page-break-after: unset !important;
@@ -1033,26 +919,25 @@ async function renderPDF() {
   await page.waitForTimeout(500);
 
   const scrollHeight = await page.evaluate(() => document.documentElement.scrollHeight);
-  const contPdfPath = path.join(downloadsDir, 'Simpos-Continuous.pdf');
   await page.pdf({
-    path: contPdfPath,
+    path: continuousPdfPath,
     width: '1428px',
     height: `${scrollHeight}px`,
     printBackground: true,
-    margin: { top: 0, right: 0, bottom: 0, left: 0 },
+    pageRanges: '1',
   });
 
   await browser.close();
 
   const slideStat = fs.statSync(slidePdfPath);
-  const contStat = fs.statSync(contPdfPath);
+  const contStat = fs.statSync(continuousPdfPath);
 
-  console.log('\nPDF Simpos berhasil dibuat:');
+  console.log('\nPDF Simpos Soft UI Dashboard berhasil dibuat:');
   console.log(`- Multi-Page Deck: ${(slideStat.size / 1024 / 1024).toFixed(2)} MB (${slidePdfPath})`);
-  console.log(`- Continuous Poster: ${(contStat.size / 1024 / 1024).toFixed(2)} MB (${contPdfPath})\n`);
+  console.log(`- Continuous Poster: ${(contStat.size / 1024 / 1024).toFixed(2)} MB (${continuousPdfPath})\n`);
 }
 
 renderPDF().catch((err) => {
-  console.error('Gagal membuat PDF:', err);
+  console.error('Error saat render PDF:', err);
   process.exit(1);
 });
