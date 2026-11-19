@@ -226,33 +226,6 @@ curl http://localhost:8081/seed
 
 ---
 
-## Testing & QA Automation
-
-Automated testing and QA verification are powered by the system's `qa-toolkit`:
-
-### 1. Playwright Test Suite
-End-to-end smoke verification covering login screen rendering and `/seed` operational endpoint:
-
-```bash
-cd /home/widifirmaan/Projects/qa-toolkit
-npx playwright test tests/playwright/simpos.spec.js
-```
-
-### 2. Cypress E2E Verification
-Cross-browser regression testing on local DOM structure and seed endpoint response:
-
-```bash
-cd /home/widifirmaan/Projects/qa-toolkit
-npx cypress run --spec cypress/e2e/simpos.cy.js
-```
-
-### 3. QA Execution Summary
-- **Playwright**: 2 tests passed (Login Screen DOM Mount & Seed Endpoint Status 200)
-- **Cypress**: 2 specs passed (Local Port 8081 DOM Mount & API Request Verification)
-- **Status**: ✅ All automated tests verified and passing
-
----
-
 ## Author
 
 Made with ❤️ by **Widi Firmansyah** / [widifirmaan.web.id](https://widifirmaan.web.id)
