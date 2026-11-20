@@ -76,8 +76,8 @@
 ## Fitur
 
 - **Role-Based Access Control (`/login`, `/`)**:
-  - **Administrator (`hamam` / `123`, Access Level 1)**: Full permissions across executive Analytics Dashboard (`/dashboard`), Product Inventory (`/stock-barang`), Financial Ledger (`/finance`), Vendor Invoices (`/bill`), and Cashier Terminal (`/kasir`).
-  - **Cashier (`kasir` / `123`, Access Level 2)**: Operational permissions for register checkout (`/kasir`) and bill entries, automatically restricted from viewing executive financial profit margins and revenue analytics.
+  - **Administrator (`hamam` / `123`, Access Level 1)**: Full access across executive Analytics Dashboard (`/dashboard`), Product Inventory (`/stock-barang`), Financial Ledger (`/finance`), Vendor Invoices (`/bill`), and Cashier Terminal (`/kasir`).
+  - **Cashier (`kasir` / `123`, Access Level 2)**: Operational permissions for register checkout (`/kasir`), product stock catalog, and vendor billing entries. Non-admin users attempting to access `/dashboard` are automatically redirected to `/kasir`.
 - **Cashier POS Register (`/kasir`)**: Real-time line-item addition, cart quantity adjustments, automatic subtotal calculation, instant cash change computation, and printable HTML receipt generation.
 - **Inventory Stock & Barcode Engine (`/stock-barang`)**: Product SKU catalog tracking, purchase vs retail prices, dynamic SVG barcode generation powered by JsBarcode, dual-store location filtering (Store 1 & Store 2), and stock status alert pills.
 - **Financial Profit Margin Reports (`/finance`)**: Real-time gross profit calculation, volume count of sold items, customizable date range filtering (`tgldari` & `tglsampai`), and 1-click Excel report export.
@@ -115,10 +115,11 @@
 Database connection settings are configured in `src/main/resources/application.properties`:
 
 ```properties
-spring.application.name=simpos
-server.port=8081
-spring.data.mongodb.uri=mongodb://localhost:27017/simpos
+spring.application.name=Simpos
+spring.data.mongodb.host=localhost
+spring.data.mongodb.port=27017
 spring.data.mongodb.database=simpos
+server.port=8081
 ```
 
 ### 3. Database Architecture & Local MongoDB
