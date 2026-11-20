@@ -11,14 +11,14 @@ const downloadsDir = '/home/widifirmaan/Downloads';
 function encodeImage(filename) {
   const filePath = path.join(screenshotsDir, filename);
   if (!fs.existsSync(filePath)) {
-    console.warn(`Peringatan: Screenshot tidak ditemukan: ${filePath}`);
+    console.warn(`Warning: Screenshot file not found: ${filePath}`);
     return '';
   }
   const fileBuffer = fs.readFileSync(filePath);
   return `data:image/png;base64,${fileBuffer.toString('base64')}`;
 }
 
-console.log('Memproses screenshot Simpos POS...');
+console.log('Encoding Simpos POS screenshots...');
 
 const images = {
   loginDesktop: encodeImage('POS Login Screen Desktop.png'),
@@ -35,10 +35,10 @@ const images = {
   billsDesktop: encodeImage('POS Vendor Bills Table Desktop.png'),
 };
 
-console.log('Menyusun HTML presentasi dengan style murni Simpos Soft UI Dashboard...');
+console.log('Assembling English Simpos Soft UI Dashboard Presentation Deck HTML...');
 
 const htmlContent = `<!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Simpos - Web Engineering Presentation</title>
@@ -345,10 +345,10 @@ const htmlContent = `<!DOCTYPE html>
             <span class="tech-pill">Soft UI System</span>
           </div>
           <h1 style="font-size: 38px; font-weight: 900; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 16px;">
-            Arsitektur Web Kasir Enterprise Point of Sale
+            Enterprise Point of Sale Web Architecture
           </h1>
           <p style="font-size: 15px; color: var(--text-muted); line-height: 1.55; margin-bottom: 24px;">
-            Sistem kasir dan manajemen ritel modern dengan pemrosesan transaksi cepat, kontrol inventaris atomik multi-gudang, buku besar keuangan terpadu, dan antarmuka Soft UI Dashboard yang ergonomis.
+            A high-performance retail point-of-sale system featuring ultra-fast transaction processing, atomic multi-warehouse inventory control, integrated profit ledger accounting, and an ergonomic Soft UI Dashboard.
           </p>
           <div class="soft-card" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 14px 18px;">
             <div>
@@ -357,12 +357,12 @@ const htmlContent = `<!DOCTYPE html>
               <div style="font-size: 11px; color: var(--text-muted);">Document Store</div>
             </div>
             <div>
-              <div style="font-size: 11px; color: var(--text-subtle); font-family: 'JetBrains Mono', monospace;">DESAIN SISTEM</div>
+              <div style="font-size: 11px; color: var(--text-subtle); font-family: 'JetBrains Mono', monospace;">DESIGN SYSTEM</div>
               <div style="font-size: 19px; font-weight: 800; color: var(--text-dark); margin-top: 2px;">Soft UI</div>
               <div style="font-size: 11px; color: var(--text-muted);">Sunset Orange #F97316</div>
             </div>
             <div>
-              <div style="font-size: 11px; color: var(--text-subtle); font-family: 'JetBrains Mono', monospace;">TRANSAKSI</div>
+              <div style="font-size: 11px; color: var(--text-subtle); font-family: 'JetBrains Mono', monospace;">TRANSACTIONS</div>
               <div style="font-size: 19px; font-weight: 800; color: var(--accent-green); margin-top: 2px;">Atomic</div>
               <div style="font-size: 11px; color: var(--text-muted);">Stock Consistency</div>
             </div>
@@ -382,64 +382,64 @@ const htmlContent = `<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- SLIDE 2: LATAR BELAKANG & SPESIFIKASI TEKNIS -->
+  <!-- SLIDE 2: BACKGROUND & SYSTEM SPECIFICATIONS -->
   <div class="slide">
     <div class="slide-header">
       <div class="brand-pill">
         <div class="brand-dot"></div>
-        <div class="brand-title">Arsitektur &amp; Fondasi</div>
-        <div class="brand-subtitle">Spesifikasi Kebutuhan Sistem</div>
+        <div class="brand-title">Architecture &amp; Foundations</div>
+        <div class="brand-subtitle">System Engineering Requirements</div>
       </div>
       <div class="badge-pill">DECK-POS-02 / 10</div>
     </div>
 
     <div class="slide-content">
       <div class="title-block">
-        <div class="slide-category">Fondasi Rekayasa Backend &amp; Web</div>
-        <h2 class="slide-title">Kebutuhan Kecepatan Checkout &amp; Konsistensi Data Ritel</h2>
-        <p class="slide-subtitle">Menghubungkan kehandalan Java 21 dengan fleksibilitas skema NoSQL untuk volume transaksi penjualan tinggi.</p>
+        <div class="slide-category">Backend &amp; Web Engineering Foundations</div>
+        <h2 class="slide-title">Checkout Latency &amp; Retail Data Consistency Requirements</h2>
+        <p class="slide-subtitle">Pairing the concurrency strength of Java 21 LTS with NoSQL document flexibility to manage high-throughput retail checkout volume.</p>
       </div>
 
       <div class="layout-grid-3">
         <div class="soft-card">
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">01 &bull; TANTANGAN SISTEM</div>
-          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Antrean Checkout Kasir</h3>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">01 &bull; SYSTEM BOTTLENECK</div>
+          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Cashier Queue Congestion</h3>
           <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
-            Proses kasir yang lambat saat jam sibuk mengakibatkan penumpukan antrean pembeli, menuntut latensi pemindaian barcode di bawah 100ms.
+            Peak-hour transaction lag causes physical retail bottlenecks, demanding barcode scan latencies strictly below 100ms.
           </p>
         </div>
 
         <div class="soft-card">
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">02 &bull; SOLUSI ARSITEKTUR</div>
-          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Spring Boot &amp; Mongo Index</h3>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">02 &bull; ARCHITECTURAL SOLUTION</div>
+          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Spring Boot &amp; Compound Mongo Indexes</h3>
           <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
-            Pengindeksan majemuk pada kolom barcode produk dan caching memori sesi kasir yang menjamin pencarian item seketika tanpa jeda I/O.
+            Compound indexing on barcode fields combined with in-memory cashier session caching ensures instantaneous catalog resolution.
           </p>
         </div>
 
         <div class="soft-card">
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">03 &bull; ERGONOMI KASIR</div>
-          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Soft UI Dashboard Clean</h3>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">03 &bull; CASHIER ERGONOMICS</div>
+          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Clean Soft UI Dashboard</h3>
           <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
-            Estetika neomorfik halus berlatar putih bersih dengan kontras tinggi yang ramah mata dan mempercepat orientasi navigasi staf kasir.
+            Subtle neumorphic cards on soft slate backgrounds providing high visual clarity, reducing ocular fatigue during extended shifts.
           </p>
         </div>
       </div>
     </div>
 
     <div class="slide-footer">
-      <div>SIMPOS &bull; ARSITEKTUR SISTEM</div>
+      <div>SIMPOS &bull; SYSTEM ARCHITECTURE</div>
       <div>TRANSACTION SPEED STANDARDS</div>
       <div>02 / 10</div>
     </div>
   </div>
 
-  <!-- SLIDE 3: AUTENTIKASI & KEAMANAN SESI KASIR -->
+  <!-- SLIDE 3: AUTHENTICATION & CASHIER SESSION SECURITY -->
   <div class="slide">
     <div class="slide-header">
       <div class="brand-pill">
         <div class="brand-dot"></div>
-        <div class="brand-title">Keamanan Sesi</div>
+        <div class="brand-title">Session Security</div>
         <div class="brand-subtitle">Spring Security RBAC &amp; Cashier Session</div>
       </div>
       <div class="badge-pill">DECK-POS-03 / 10</div>
@@ -447,9 +447,9 @@ const htmlContent = `<!DOCTYPE html>
 
     <div class="slide-content">
       <div class="title-block">
-        <div class="slide-category">Kontrol Akses Pengguna</div>
-        <h2 class="slide-title">Autentikasi Multi-Peran &amp; Isolasi Hak Akses Kasir</h2>
-        <p class="slide-subtitle">Sistem keamanan berbasis peran (Admin, Kasir, Manager) dengan proteksi pemalsuan permintaan lintas situs (CSRF).</p>
+        <div class="slide-category">User Access Control</div>
+        <h2 class="slide-title">Role-Based Access Control &amp; Cashier Session Isolation</h2>
+        <p class="slide-subtitle">Granular security framework enforcing least privilege across Admin, Cashier, and Store Manager tiers with strict CSRF protection.</p>
       </div>
 
       <div class="layout-split">
@@ -459,21 +459,21 @@ const htmlContent = `<!DOCTYPE html>
 
         <div class="feature-list">
           <div class="feature-item">
-            <div class="feature-item-title">Enkripsi Kata Sandi BCrypt</div>
+            <div class="feature-item-title">Adaptive BCrypt Credential Hashing</div>
             <div class="feature-item-desc">
-              Penyimpanan kredensial dengan fungsi hash adaptif berbobot komputasi tinggi untuk menangkal serangan brute-force.
+              Enterprise-grade credential encryption with dynamic work factors mitigating brute-force offline dictionary attacks.
             </div>
           </div>
           <div class="feature-item">
-            <div class="feature-item-title">Validasi Sesi Aktif Kasir</div>
+            <div class="feature-item-title">Terminal-Bound Active Session Tracking</div>
             <div class="feature-item-desc">
-              Pengikatan sesi ke identitas terminal kasir spesifik yang membatasi akses modul inventaris dan keuangan hanya untuk manajer.
+              Binding active authentication states to physical cashier station IDs, restricting financial ledger access to managerial accounts.
             </div>
           </div>
           <div class="feature-item">
-            <div class="feature-item-title">Peringatan Kredensial Tidak Valid</div>
+            <div class="feature-item-title">Obfuscated Credential Error Handling</div>
             <div class="feature-item-desc">
-              Umpan balik pesan kesalahan visual terstruktur yang tidak membocorkan keberadaan username untuk memitigasi enumeration attack.
+              Structured failure responses that avoid leaking user account existence, mitigating enumeration vectors.
             </div>
           </div>
         </div>
@@ -487,12 +487,12 @@ const htmlContent = `<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- SLIDE 4: TERMINAL KASIR & PEMROSESAN CEPAT -->
+  <!-- SLIDE 4: CASHIER TERMINAL & FAST SCANNING -->
   <div class="slide">
     <div class="slide-header">
       <div class="brand-pill">
         <div class="brand-dot"></div>
-        <div class="brand-title">Operasional Kasir</div>
+        <div class="brand-title">Cashier Operations</div>
         <div class="brand-subtitle">Fast Barcode Scanning &amp; Cart State</div>
       </div>
       <div class="badge-pill">DECK-POS-04 / 10</div>
@@ -500,29 +500,29 @@ const htmlContent = `<!DOCTYPE html>
 
     <div class="slide-content">
       <div class="title-block">
-        <div class="slide-category">Terminal Penjualan Langsung</div>
-        <h2 class="slide-title">Terminal Kasir Berkecepatan Tinggi dengan Buffer Barcode</h2>
-        <p class="slide-subtitle">Antarmuka kasir responsif dengan penambahan kuantitas barang otomatis saat pemindai laser memindai kode batang.</p>
+        <div class="slide-category">Real-Time Sales Terminal</div>
+        <h2 class="slide-title">High-Throughput Cashier Terminal with Barcode Event Buffering</h2>
+        <p class="slide-subtitle">Highly responsive point-of-sale terminal with automated item aggregation triggered directly by physical hardware barcode scanners.</p>
       </div>
 
       <div class="layout-split-reversed">
         <div class="feature-list">
           <div class="feature-item">
-            <div class="feature-item-title">Input Pemindai Barcode Tanpa Fokus Hilang</div>
+            <div class="feature-item-title">Focus-Resilient Barcode Scanner Listener</div>
             <div class="feature-item-desc">
-              Manajemen event listener keyboard yang secara otomatis mengarahkan hasil pindai barcode ke keranjang belanja aktif.
+              Keyboard event ingestion capturing rapid scanner input streams directly into active transaction carts regardless of focus.
             </div>
           </div>
           <div class="feature-item">
-            <div class="feature-item-title">Kalkulasi Subtotal &amp; Pajak Real-Time</div>
+            <div class="feature-item-title">Client-Side Subtotal &amp; Tax Calculation</div>
             <div class="feature-item-desc">
-              Penghitungan diskon kupon, PPN ritel, dan total harga secara instan di sisi klien dengan sinkronisasi ke server Spring Boot.
+              Instant computation of applied promotional discounts, VAT rates, and line totals synchronized with Spring Boot REST endpoints.
             </div>
           </div>
           <div class="feature-item">
-            <div class="feature-item-title">Pemberitahuan Stok Habis (Out-of-Stock Alert)</div>
+            <div class="feature-item-title">Real-Time Out-of-Stock Interception</div>
             <div class="feature-item-desc">
-              Pencegahan penjualan barang jika kuantitas stok di gudang tidak mencukupi melalui validasi atomik sebelum transaksi dicatat.
+              Proactive client-side validation preventing cart additions for exhausted warehouse stock before commit.
             </div>
           </div>
         </div>
@@ -540,12 +540,12 @@ const htmlContent = `<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- SLIDE 5: CHECKOUT & RESI STRUK POS -->
+  <!-- SLIDE 5: CHECKOUT & RECEIPT FORMATTING -->
   <div class="slide">
     <div class="slide-header">
       <div class="brand-pill">
         <div class="brand-dot"></div>
-        <div class="brand-title">Penyelesaian Transaksi</div>
+        <div class="brand-title">Transaction Settlement</div>
         <div class="brand-subtitle">Checkout Summary &amp; Thermal Receipt Engine</div>
       </div>
       <div class="badge-pill">DECK-POS-05 / 10</div>
@@ -553,9 +553,9 @@ const htmlContent = `<!DOCTYPE html>
 
     <div class="slide-content">
       <div class="title-block">
-        <div class="slide-category">Penyelesaian Pembayaran</div>
-        <h2 class="slide-title">Modal Konfirmasi Checkout &amp; Format Struk Termal</h2>
-        <p class="slide-subtitle">Perhitungan kembalian tunai akurat dan pencetakan struk transaksi yang kompatibel dengan printer termal 58mm/80mm.</p>
+        <div class="slide-category">Payment Finalization</div>
+        <h2 class="slide-title">Checkout Settlement Modal &amp; Thermal Receipt Formatting</h2>
+        <p class="slide-subtitle">Accurate cash tender calculations and ESC/POS thermal receipt formatting compatible with standard 58mm and 80mm printers.</p>
       </div>
 
       <div class="layout-split">
@@ -565,21 +565,21 @@ const htmlContent = `<!DOCTYPE html>
 
         <div class="feature-list">
           <div class="feature-item">
-            <div class="feature-item-title">Modal Kalkulasi Uang Diterima &amp; Kembalian</div>
+            <div class="feature-item-title">Rapid Cash Tender &amp; Change Calculator</div>
             <div class="feature-item-desc">
-              Input denominasi uang cepat (Rp 50.000, Rp 100.000) yang mempercepat waktu penghitungan uang tunai oleh petugas kasir.
+              Pre-configured cash denomination pills accelerating change calculation for cashier operators.
             </div>
           </div>
           <div class="feature-item">
-            <div class="feature-item-title">Tata Letak Struk Monospace Ramah Termal</div>
+            <div class="feature-item-title">Monospace Thermal-Safe Receipt Formatting</div>
             <div class="feature-item-desc">
-              Format struk menggunakan font monospaced JetBrains Mono yang terhindar dari pergeseran kolom saat dicetak pada kertas termal.
+              JetBrains Mono monospace formatting preventing column misalignment on narrow continuous thermal rolls.
             </div>
           </div>
           <div class="feature-item">
-            <div class="feature-item-title">Penyimpanan ID Transaksi Unik (UUID)</div>
+            <div class="feature-item-title">UUID Transaction Fingerprinting</div>
             <div class="feature-item-desc">
-              Setiap struk dilengkapi nomor invoice unik dan kode barcode verifikasi untuk mempermudah proses retur atau klaim pelanggan.
+              Unique invoice IDs and cryptographic barcodes printed on every voucher to streamline returns and auditing.
             </div>
           </div>
         </div>
@@ -593,12 +593,12 @@ const htmlContent = `<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- SLIDE 6: MANAJEMEN INVENTARIS & STOK -->
+  <!-- SLIDE 6: INVENTORY CONTROL & ATOMIC DEDUCTIONS -->
   <div class="slide">
     <div class="slide-header">
       <div class="brand-pill">
         <div class="brand-dot"></div>
-        <div class="brand-title">Kontrol Inventaris</div>
+        <div class="brand-title">Inventory Control</div>
         <div class="brand-subtitle">Stock Management &amp; Atomic Deductions</div>
       </div>
       <div class="badge-pill">DECK-POS-06 / 10</div>
@@ -606,29 +606,29 @@ const htmlContent = `<!DOCTYPE html>
 
     <div class="slide-content">
       <div class="title-block">
-        <div class="slide-category">Pengelolaan Persediaan Barang</div>
-        <h2 class="slide-title">Katalog Inventaris Produk &amp; Pengurangan Stok Atomik</h2>
-        <p class="slide-subtitle">Pencatatan persediaan barang dengan operasi pembaruan $inc MongoDB guna mencegah fenomena race-condition.</p>
+        <div class="slide-category">Inventory &amp; Stock Management</div>
+        <h2 class="slide-title">Stock Catalog &amp; Race-Free Atomic Inventory Deductions</h2>
+        <p class="slide-subtitle">Multi-item catalog tracking powered by MongoDB $inc atomic mutation operators, eliminating distributed race conditions.</p>
       </div>
 
       <div class="layout-split-reversed">
         <div class="feature-list">
           <div class="feature-item">
-            <div class="feature-item-title">Operasi Pengurangan Stok Atomik ($inc: -qty)</div>
+            <div class="feature-item-title">Atomic In-Database Deductions ($inc: -qty)</div>
             <div class="feature-item-desc">
-              Pengurangan stok langsung pada basis data tanpa membaca dan menulis ulang manual untuk menjamin konsistensi multi-kasir.
+              Direct database-level decrement mutations without manual read-modify-write loops, ensuring multi-lane concurrency.
             </div>
           </div>
           <div class="feature-item">
-            <div class="feature-item-title">Peringatan Batas Minimum Stok (Low Stock)</div>
+            <div class="feature-item-title">Visual Low-Stock Threshold Alarms</div>
             <div class="feature-item-desc">
-              Indikator warna oranye menyala pada baris produk yang kuantitasnya telah menyentuh batas ambang pemesanan ulang (reorder level).
+              Prominent amber badges alerting inventory managers when item counts breach minimum reorder safety buffers.
             </div>
           </div>
           <div class="feature-item">
-            <div class="feature-item-title">Manajemen Kategori &amp; Unit Satuan</div>
+            <div class="feature-item-title">Category &amp; Unit Dimensioning</div>
             <div class="feature-item-desc">
-              Klasifikasi fleksibel berdasarkan jenis barang (makanan, minuman, elektronik) serta satuan kemasan (pcs, dus, pack).
+              Multi-tiered taxonomy classifying items across categories (Food, Drinks, Hardware) and packaging units (Pcs, Box, Pack).
             </div>
           </div>
         </div>
@@ -646,12 +646,12 @@ const htmlContent = `<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- SLIDE 7: BUKU BESAR KEUANGAN & LABA-RUGI -->
+  <!-- SLIDE 7: FINANCIAL AUDIT & PROFIT/LOSS REPORTING -->
   <div class="slide">
     <div class="slide-header">
       <div class="brand-pill">
         <div class="brand-dot"></div>
-        <div class="brand-title">Audit Finansial</div>
+        <div class="brand-title">Financial Audit</div>
         <div class="brand-subtitle">Profit Ledger &amp; Financial Reporting</div>
       </div>
       <div class="badge-pill">DECK-POS-07 / 10</div>
@@ -659,9 +659,9 @@ const htmlContent = `<!DOCTYPE html>
 
     <div class="slide-content">
       <div class="title-block">
-        <div class="slide-category">Pencatatan Finansial Usaha</div>
-        <h2 class="slide-title">Buku Besar Transaksi &amp; Perhitungan Margin Keuntungan</h2>
-        <p class="slide-subtitle">Audit transaksi harian otomatis yang memisahkan harga pokok penjualan (HPP) dari total margin laba bersih.</p>
+        <div class="slide-category">Retail Financial Auditing</div>
+        <h2 class="slide-title">Transaction Profit Ledger &amp; Margin Analysis Architecture</h2>
+        <p class="slide-subtitle">Automated ledger auditing separating Cost of Goods Sold (COGS) from gross and net profit margins per transaction.</p>
       </div>
 
       <div class="layout-split">
@@ -671,21 +671,21 @@ const htmlContent = `<!DOCTYPE html>
 
         <div class="feature-list">
           <div class="feature-item">
-            <div class="feature-item-title">Pemisahan HPP &amp; Laba Kotor Otomatis</div>
+            <div class="feature-item-title">Historical COGS Snapshot Isolation</div>
             <div class="feature-item-desc">
-              Pencatatan harga modal produk pada saat transaksi terjadi sehingga laporan keuntungan historis tidak terdistorsi fluktuasi harga baru.
+              Locking item cost baselines at transaction time so historical reporting remains immune to future supplier price changes.
             </div>
           </div>
           <div class="feature-item">
-            <div class="feature-item-title">Penyaringan Tanggal &amp; Shift Kasir</div>
+            <div class="feature-item-title">Date-Range &amp; Cashier Shift Reconciliation</div>
             <div class="feature-item-desc">
-              Kemudahan bagi pengelola untuk merekonsiliasi kas penutupan shift kasir berdasarkan rentang jam operasional tertentu.
+              Intuitive filtering enabling floor managers to audit terminal register balances per individual cashier shift.
             </div>
           </div>
           <div class="feature-item">
-            <div class="feature-item-title">Audit Trail Tidak Dapat Diubah (Immutable Log)</div>
+            <div class="feature-item-title">Immutable ISO-Timestamped Audit Trail</div>
             <div class="feature-item-desc">
-              Setiap catatan mutasi finansial tersimpan permanen bersama cap waktu ISO untuk mencegah manipulasi data pembukuan toko.
+              Permanent financial mutation journal with ISO-8601 audit timestamps preventing unauthorized database alterations.
             </div>
           </div>
         </div>
@@ -699,22 +699,22 @@ const htmlContent = `<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- SLIDE 8: PENGELOLAAN TAGIHAN VENDOR -->
+  <!-- SLIDE 8: VENDOR BILLS & ACCOUNTS PAYABLE -->
   <div class="slide">
     <div class="slide-header">
       <div class="brand-pill">
         <div class="brand-dot"></div>
-        <div class="brand-title">Hutang &amp; Vendor</div>
-        <div class="brand-subtitle">Vendor Bills &amp; Accounts Payable</div>
+        <div class="brand-title">Accounts Payable</div>
+        <div class="brand-subtitle">Vendor Bills &amp; Supply Chain Integration</div>
       </div>
       <div class="badge-pill">DECK-POS-08 / 10</div>
     </div>
 
     <div class="slide-content">
       <div class="title-block">
-        <div class="slide-category">Manajemen Rantai Pasok</div>
-        <h2 class="slide-title">Pengendalian Faktur Pemasok &amp; Jadwal Jatuh Tempo</h2>
-        <p class="slide-subtitle">Pencatatan pengadaan barang dari vendor dengan status verifikasi pembayaran lunas atau termin berjangka.</p>
+        <div class="slide-category">Supply Chain Finance</div>
+        <h2 class="slide-title">Supplier Invoice Management &amp; Accounts Payable Tracking</h2>
+        <p class="slide-subtitle">Procurement management tracking supplier bill balances, payment statuses, and delivery term agreements.</p>
       </div>
 
       <div class="layout-split-reversed">
@@ -724,21 +724,21 @@ const htmlContent = `<!DOCTYPE html>
 
         <div class="feature-list">
           <div class="feature-item">
-            <div class="feature-item-title">Pelacakan Status Faktur (Paid / Pending)</div>
+            <div class="feature-item-title">Invoice Status Life-Cycle (Paid / Pending)</div>
             <div class="feature-item-desc">
-              Badge visual warna hijau untuk tagihan yang telah diselesaikan dan kuning menyala untuk tagihan yang mendekati tanggal jatuh tempo.
+              Visual status indicators highlighting settled invoices in green and approaching maturities in amber.
             </div>
           </div>
           <div class="feature-item">
-            <div class="feature-item-title">Integrasi Otomatis ke Stok Masuk</div>
+            <div class="feature-item-title">Automated Restock Ingestion Integration</div>
             <div class="feature-item-desc">
-              Penerimaan faktur vendor yang disetujui secara otomatis menambah kuantitas stok barang pada katalog inventaris tanpa entri ganda.
+              Approving received vendor invoices immediately updates inventory counts without double-entry overhead.
             </div>
           </div>
           <div class="feature-item">
-            <div class="feature-item-title">Ekspor Dokumen ke Format Excel/PDF</div>
+            <div class="feature-item-title">Structured Export Pipeline (Excel &amp; PDF)</div>
             <div class="feature-item-desc">
-              Kemudahan penyusunan berkas pelaporan pajak dan pembayaran suplier melalui tombol unduh data terformat rapi.
+              One-click tabular report downloads supporting financial closing and corporate tax compliance workflows.
             </div>
           </div>
         </div>
@@ -752,12 +752,12 @@ const htmlContent = `<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- SLIDE 9: DASBOR ANALITIK & KINERJA -->
+  <!-- SLIDE 9: BUSINESS INTELLIGENCE & SALES ANALYTICS -->
   <div class="slide">
     <div class="slide-header">
       <div class="brand-pill">
         <div class="brand-dot"></div>
-        <div class="brand-title">Kecerdasan Bisnis</div>
+        <div class="brand-title">Business Intelligence</div>
         <div class="brand-subtitle">Analytics Dashboard &amp; Sales Insights</div>
       </div>
       <div class="badge-pill">DECK-POS-09 / 10</div>
@@ -765,33 +765,33 @@ const htmlContent = `<!DOCTYPE html>
 
     <div class="slide-content">
       <div class="title-block">
-        <div class="slide-category">Pemantauan Metrik Bisnis</div>
-        <h2 class="slide-title">Visualisasi Metrik Omzet Harian &amp; Tren Penjualan</h2>
-        <p class="slide-subtitle">Grafik interaktif yang menyajikan ringkasan omzet, produk terlaris, dan performa kasir secara waktu nyata.</p>
+        <div class="slide-category">Executive Performance Monitoring</div>
+        <h2 class="slide-title">Real-Time Revenue Metrics &amp; Trend Analytics</h2>
+        <p class="slide-subtitle">Interactive dashboards visualizing gross turnover, best-selling product hierarchies, and cashier performance metrics.</p>
       </div>
 
       <div class="layout-grid-3">
         <div class="soft-card">
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">AGREGASI MONGODB</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">MONGODB AGGREGATION</div>
           <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Pipeline $group &amp; $sum</h3>
           <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
-            Pengolahan jutaan data transaksi penjualan langsung pada server basis data MongoDB tanpa membebani memori heap Java aplikasi Spring Boot.
+            Processing millions of sales records directly in the database engine without bloating Java application heap space.
           </p>
         </div>
 
         <div class="soft-card">
           <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">TOP PERFORMING ITEMS</div>
-          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Ranking Produk Terlaris</h3>
+          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Best-Seller Rankings</h3>
           <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
-            Identifikasi produk unggulan yang paling banyak dibeli guna memandu strategi promosi dan pengadaan stok kembali secara presisi.
+            Automated identification of revenue-driving products to guide promotional campaigns and inventory reorder planning.
           </p>
         </div>
 
         <div class="soft-card">
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">RESPONSIVITAS DASBOR</div>
-          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Chart.js Hardware Accelerated</h3>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-orange); margin-bottom: 8px;">DASHBOARD RESPONSIVENESS</div>
+          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Hardware-Accelerated Chart.js</h3>
           <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
-            Rendering kurva penjualan menggunakan HTML5 Canvas dengan frame rate mulus tanpa menghambat pemuatan komponen tabel data di sekitarnya.
+            Smooth HTML5 Canvas curve rendering ensuring analytical dashboards load without thread blocking.
           </p>
         </div>
       </div>
@@ -804,47 +804,47 @@ const htmlContent = `<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- SLIDE 10: RANGKUMAN ARSITEKTUR & PRODUKSI -->
+  <!-- SLIDE 10: ARCHITECTURAL SYNTHESIS & PRODUCTION READINESS -->
   <div class="slide">
     <div class="slide-header">
       <div class="brand-pill">
         <div class="brand-dot"></div>
-        <div class="brand-title">Ringkasan Proyek</div>
-        <div class="brand-subtitle">Spesifikasi Akhir &amp; Kesiapan Produksi</div>
+        <div class="brand-title">System Summary</div>
+        <div class="brand-subtitle">Release Readiness &amp; Architecture Synthesis</div>
       </div>
       <div class="badge-pill">DECK-POS-10 / 10</div>
     </div>
 
     <div class="slide-content">
       <div class="title-block">
-        <div class="slide-category">Rangkuman Akhir Rekayasa</div>
-        <h2 class="slide-title">Kesimpulan Implementasi Sistem Simpos POS</h2>
-        <p class="slide-subtitle">Solusi kasir ritel kelas enterprise yang menggabungkan keandalan Spring Boot, kecepatan MongoDB, dan keanggunan Soft UI.</p>
+        <div class="slide-category">Final Engineering Synthesis</div>
+        <h2 class="slide-title">Simpos POS Platform Architectural Synthesis</h2>
+        <p class="slide-subtitle">Enterprise retail checkout solution marrying Spring Boot reliability, MongoDB performance, and refined Soft UI dashboard design.</p>
       </div>
 
       <div class="layout-grid-4">
         <div class="soft-card">
           <div style="font-size: 11px; color: var(--text-subtle); font-family: 'JetBrains Mono', monospace;">BACKEND</div>
           <div style="font-size: 18px; font-weight: 800; color: var(--accent-orange); margin-top: 4px; margin-bottom: 4px;">Spring Boot 3</div>
-          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Eksekusi Java 21 LTS dengan Spring Data MongoDB teruji.</p>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Java 21 LTS runtime with Spring Data MongoDB.</p>
         </div>
 
         <div class="soft-card">
           <div style="font-size: 11px; color: var(--text-subtle); font-family: 'JetBrains Mono', monospace;">DATABASE</div>
           <div style="font-size: 18px; font-weight: 800; color: var(--accent-orange); margin-top: 4px; margin-bottom: 4px;">MongoDB NoSQL</div>
-          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Pengurangan stok atomik dan pipeline agregasi bisnis.</p>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Atomic stock deductions and aggregation pipelines.</p>
         </div>
 
         <div class="soft-card">
           <div style="font-size: 11px; color: var(--text-subtle); font-family: 'JetBrains Mono', monospace;">UI DESIGN</div>
           <div style="font-size: 18px; font-weight: 800; color: var(--text-dark); margin-top: 4px; margin-bottom: 4px;">Soft UI System</div>
-          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Palet Sunset Orange ramah mata dengan elevasi 3D.</p>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Sunset Orange palette with gentle 3D elevation.</p>
         </div>
 
         <div class="soft-card">
           <div style="font-size: 11px; color: var(--text-subtle); font-family: 'JetBrains Mono', monospace;">STATUS</div>
-          <div style="font-size: 18px; font-weight: 800; color: var(--accent-green); margin-top: 4px; margin-bottom: 4px;">Siap Produksi</div>
-          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Dukungan printer termal dan layout responsif seluler.</p>
+          <div style="font-size: 18px; font-weight: 800; color: var(--accent-green); margin-top: 4px; margin-bottom: 4px;">Production Ready</div>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Thermal printer and mobile responsive viewports.</p>
         </div>
       </div>
 
@@ -854,7 +854,7 @@ const htmlContent = `<!DOCTYPE html>
     </div>
 
     <div class="slide-footer">
-      <div>SIMPOS &bull; KESIMPULAN REKAYASA SISTEM</div>
+      <div>SIMPOS &bull; ENGINEERING SYNTHESIS</div>
       <div>WIDI FIRMANSYAH &bull; LEAD ENGINEER</div>
       <div>10 / 10</div>
     </div>
@@ -866,9 +866,9 @@ const htmlContent = `<!DOCTYPE html>
 
 const htmlFilePath = path.join(projectRoot, 'presentation.html');
 fs.writeFileSync(htmlFilePath, htmlContent, 'utf-8');
-console.log(`HTML presentasi disimpan di: ${htmlFilePath}`);
+console.log(`Presentation HTML written to: ${htmlFilePath}`);
 
-console.log('Menjalankan Playwright Chromium untuk render PDF Simpos Soft UI Dashboard...');
+console.log('Launching Chromium with Playwright to render English Simpos Soft UI Dashboard PDFs...');
 
 async function renderPDF() {
   const playwrightPath = '/home/widifirmaan/Projects/qa-toolkit/node_modules/playwright/index.mjs';
@@ -932,12 +932,12 @@ async function renderPDF() {
   const slideStat = fs.statSync(slidePdfPath);
   const contStat = fs.statSync(continuousPdfPath);
 
-  console.log('\nPDF Simpos Soft UI Dashboard berhasil dibuat:');
+  console.log('\nSimpos English PDFs successfully generated:');
   console.log(`- Multi-Page Deck: ${(slideStat.size / 1024 / 1024).toFixed(2)} MB (${slidePdfPath})`);
   console.log(`- Continuous Poster: ${(contStat.size / 1024 / 1024).toFixed(2)} MB (${continuousPdfPath})\n`);
 }
 
 renderPDF().catch((err) => {
-  console.error('Error saat render PDF:', err);
+  console.error('Error during PDF rendering:', err);
   process.exit(1);
 });
