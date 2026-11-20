@@ -81,7 +81,7 @@
 - **Cashier POS Register (`/kasir`)**: Real-time line-item addition, cart quantity adjustments, automatic subtotal calculation, instant cash change computation, and printable HTML receipt generation.
 - **Inventory Stock & Barcode Engine (`/stock-barang`)**: Product SKU catalog tracking, purchase vs retail prices, dynamic SVG barcode generation powered by JsBarcode, dual-store location filtering (Store 1 & Store 2), and stock status alert pills.
 - **Financial Profit Margin Reports (`/finance`)**: Real-time gross profit calculation, volume count of sold items, customizable date range filtering (`tgldari` & `tglsampai`), and 1-click Excel report export.
-- **Accounts Payable Ledger (`/bill`)**: Vendor invoice tracking, due dates, payment status tags (*Lunas* / *Belum Dibayar*), and outstanding balance remainders.
+- **Accounts Payable Ledger (`/bill`)**: Vendor invoice tracking, due dates, payment status tags (*Lunas* / *Belum Dibayar* / *Belum Lunas*), and outstanding balance remainders.
 - **Atomic Sequence Generator**: Incremental sequence counter collection (`database_sequences`) utilizing MongoDB `findAndModify` operations for collision-free transactional invoice numbers.
 - **Database Seeder (`/seed`)**: Built-in HTTP endpoint to bootstrap demo administrator and cashier accounts, sample electronic products, and vendor billing records.
 
@@ -180,7 +180,7 @@ Simpos structures data across 6 primary MongoDB document collections (`com.prima
   "nominal": "50000000",
   "ket": "Pengadaan Stok Smartphone Batch 1",
   "pic": "Widi Firmansyah",
-  "status": 1,               // 1: Lunas, 0: Belum Dibayar
+  "status": 1,               // 1: Lunas, 2: Belum Dibayar, 3: Belum Lunas
   "nominalMinus": 0,
   "dueDate": "2026-12-01",
   "createdAt": "2026-11-17",
