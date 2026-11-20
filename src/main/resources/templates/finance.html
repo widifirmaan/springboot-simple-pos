@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     <link id="pagestyle" href="/assets/css/soft-ui-dashboard.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <style>
+        @media (max-width: 576px) {
+            .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .card { overflow-x: hidden; }
+            .modal-dialog { margin: 0.75rem auto; max-width: 95%; }
+        }
+    </style>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -96,7 +103,7 @@
             <div class="row">
                 <div class="col-lg-8 col-md-12">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-12">
                             <div class="card">
                                 <div class="card-header text-center pb-0">
                                     <div
@@ -113,7 +120,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 mt-md-0 mt-4">
+                        <div class="col-md-6 col-12 mt-md-0 mt-4">
                             <div class="card">
                                 <div class="card-header text-center pb-0">
                                     <div
@@ -135,21 +142,21 @@
                     <div class="card p-3 mt-3">
                         <form role="form" action="/finance" method="GET">
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-md-4 col-12">
                                     <div class="form-group">
                                         <label for="tgldari">Dari: </label>
                                         <input type="date" class="form-control" id="tgldari" name="tgldari"
                                             th:value="${tgldari}" required>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-md-4 col-12">
                                     <div class="form-group">
                                         <label for="tglsampai">Sampai: </label>
                                         <input type="date" class="form-control" id="tglsampai" name="tglsampai"
                                             th:value="${tglsampai}" required>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-md-4 col-12">
                                     <div class="form-group">
                                         <label for="pilihtoko">Pilih Toko: </label>
                                         <select class="form-select" id="pilihtoko" name="pilihtoko" required>
@@ -160,10 +167,10 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-6 text-end">
+                                <div class="col-md-6 col-12 text-end">
                                     <button class="btn btn-primary w-100 mt-3" type="submit">Cari</button>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-md-6 col-12">
                                     <button class="btn btn-primary w-100 mt-3" type="button"
                                         onClick="exportTableToExcel('transaksitbl')">Cetak Excel</button>
                                 </div>
@@ -223,45 +230,47 @@
                             </div>
                         </div>
                         <div class="card-body pt-4 p-3" id="transaksitbl">
-                            <table class="table text-center p-4">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center text-uppercase text-secondary font-weight-bolder">Tanggal
-                                        </th>
-                                        <th class="text-center text-uppercase text-secondary font-weight-bolder">Toko
-                                        </th>
-                                        <th class="text-center text-uppercase text-secondary font-weight-bolder">Barang
-                                            (Jumlah)</th>
-                                        <th class="text-center text-uppercase text-secondary font-weight-bolder">Nominal
-                                        </th>
-                                        <th class="text-center text-uppercase text-secondary font-weight-bolder">
-                                            Pembayaran</th>
-                                        <th class="rmvBtn"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="tr : ${transactions}">
-                                        <td th:text="${#temporals.format(tr.date, 'yyyy-MM-dd')}">Date</td>
-                                        <td th:text="${tr.toko}">Toko</td>
-                                        <td th:text="${tr.product}">Products</td>
-                                        <td
-                                            th:text="'Rp. ' + ${#numbers.formatDecimal(tr.amount, 0, 'COMMA', 0, 'POINT')}">
-                                            Amount</td>
-                                        <td th:text="${tr.payment}">Payment</td>
-                                        <td class="rmvBtn">
-                                            <button class="btn btn-sm btn-primary" th:data-id="${tr.id}"
-                                                th:data-product="${tr.product}" th:data-amount="${tr.amount}"
-                                                th:data-payment="${tr.payment}" th:data-toko="${tr.toko}"
-                                                onclick="openEditModal(this)">Edit</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="6" class="text-end fw-bold"
-                                            th:text="'Total: Rp. ' + ${#numbers.formatDecimal(totalFiltered, 0, 'COMMA', 0, 'POINT')}">
-                                            Total</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table text-center p-4">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center text-uppercase text-secondary font-weight-bolder">Tanggal
+                                            </th>
+                                            <th class="text-center text-uppercase text-secondary font-weight-bolder">Toko
+                                            </th>
+                                            <th class="text-center text-uppercase text-secondary font-weight-bolder">Barang
+                                                (Jumlah)</th>
+                                            <th class="text-center text-uppercase text-secondary font-weight-bolder">Nominal
+                                            </th>
+                                            <th class="text-center text-uppercase text-secondary font-weight-bolder">
+                                                Pembayaran</th>
+                                            <th class="rmvBtn"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="tr : ${transactions}">
+                                            <td th:text="${#temporals.format(tr.date, 'yyyy-MM-dd')}">Date</td>
+                                            <td th:text="${tr.toko}">Toko</td>
+                                            <td th:text="${tr.product}">Products</td>
+                                            <td
+                                                th:text="'Rp. ' + ${#numbers.formatDecimal(tr.amount, 0, 'COMMA', 0, 'POINT')}">
+                                                Amount</td>
+                                            <td th:text="${tr.payment}">Payment</td>
+                                            <td class="rmvBtn">
+                                                <button class="btn btn-sm btn-primary" th:data-id="${tr.id}"
+                                                    th:data-product="${tr.product}" th:data-amount="${tr.amount}"
+                                                    th:data-payment="${tr.payment}" th:data-toko="${tr.toko}"
+                                                    onclick="openEditModal(this)">Edit</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" class="text-end fw-bold"
+                                                th:text="'Total: Rp. ' + ${#numbers.formatDecimal(totalFiltered, 0, 'COMMA', 0, 'POINT')}">
+                                                Total</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -13,6 +13,19 @@
 
 </head>
 <style>
+    @media (max-width: 576px) {
+        .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        #printableArea { padding: 0.5rem !important; }
+        #tablenota th, #tablenota td { padding: 4px 3px !important; font-size: 11px !important; }
+        #tablenota { font-size: 11px !important; width: 100% !important; }
+        #tablenota input { font-size: 11px !important; padding: 2px 4px !important; }
+        #tablenota #hargaqty { width: 45px !important; text-align: center; }
+        #tablenota .btn { padding: 2px 6px !important; font-size: 11px !important; }
+        .input-group-text { font-size: 0.75rem !important; padding: 0.25rem 0.5rem !important; }
+        .form-control, .form-select { font-size: 0.75rem !important; }
+        .modal-dialog { margin: 0.75rem auto; max-width: 95%; }
+    }
+
     @media print {
         body {}
 
@@ -190,14 +203,14 @@
                                         (Timur Bangjo Kranon)<br />TELP: (0274)392092 / WA: 0895323089801</p>
                                     <hr>
                                 </div>
-                                <div class="row" style="text: size 12pt;">
-                                    <div class="col-6">
-                                        <div class="input-group mb-3 pl-2">
+                                <div class="row" style="font-size: 11pt;">
+                                    <div class="col-sm-6 col-12">
+                                        <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1">Kepada: </span>
                                             <input type="text" class="form-control" id="buyerName"
                                                 placeholder="Nama Pembeli" onkeyup="saveName()">
                                         </div>
-                                        <div class="input-group mb-3 pl-2" id="paymentMtdHead">
+                                        <div class="input-group mb-3" id="paymentMtdHead">
                                             <span class="input-group-text" id="basic-addon1">Pembayaran: </span>
                                             <select class="form-select" aria-label="Default select example"
                                                 id="paymentMtd">
@@ -207,8 +220,8 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <ul>
+                                    <div class="col-sm-6 col-12">
+                                        <ul class="list-unstyled ps-2">
                                             <li><span class="fw-bold">ID: </span><span
                                                     th:text="${transactionId}">-</span></li>
                                             <li><span class="fw-bold">Tanggal: </span><a id="date-nota"></a></li>
@@ -250,15 +263,11 @@
                                     </tbody>
                                 </table>
                                 <hr>
-                                <b>
-                                    <div class="input-group mb-2 mr-sm-2">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Harga Total: Rp.</div>
-                                        </div>
-                                        <input type="text" class="form-control" id="totalAll" placeholder="0">
-                                    </div>
+                                <div class="input-group mb-2 mr-sm-2 font-weight-bold">
+                                    <span class="input-group-text font-weight-bold">Harga Total: Rp.</span>
+                                    <input type="text" class="form-control font-weight-bold" id="totalAll" placeholder="0" readonly>
+                                </div>
                             </div>
-                            </b>
 
                             <script>
                                 window.addEventListener('load', function () { // onLoad Function
@@ -444,45 +453,50 @@
 
                                 function printDiv(divId) { //Tombol Cetak & Bayar
                                     if (confirm("Transaksi akan tercatat. Apakah anda yakin?")) {
-                                        let paymentMtd = document.getElementById("paymentMtd").value;
-                                        let paymentMtdHead = document.getElementById("paymentMtdHead");
-                                        let hideheader = document.getElementById("inputTable");
-                                        hideheader.remove();
-                                        paymentMtdHead.remove();
-                                        // class="table-responsive"
-                                        let hideResp = document.getElementById("tableResp");
-                                        hideResp.classList.remove('table-responsive');
-                                        const myElement = document.getElementById('res');
-                                        var printContents = document.getElementById(divId).innerHTML;
-                                        var originalContents = document.body.innerHTML;
-                                        document.body.innerHTML = printContents;
+                                        // 1. Collect data first while DOM is intact
                                         const table = document.getElementById('tablenota');
-                                        const rows = table.querySelectorAll('tbody tr');
+                                        const rows = table.querySelectorAll('tbody tr:not(#inputTable)');
                                         let data1 = [];
-                                        let combinedData = {};
-                                        let data2 = document.body.innerHTML;
-                                        let data3 = document.getElementById("totalAll").placeholder;
-                                        window.print();
-
                                         rows.forEach(row => {
                                             let cells = row.querySelectorAll('td');
-                                            let rowData = {
-                                                idbarang: cells[6].textContent,
-                                                qty: cells[2].textContent
-                                            };
-                                            data1.push(rowData);
+                                            if (cells.length >= 7) {
+                                                data1.push({
+                                                    idbarang: cells[6].textContent,
+                                                    qty: cells[2].textContent
+                                                });
+                                            }
+                                        });
+                                        let totalVal = document.getElementById("totalAll") ? (document.getElementById("totalAll").value || document.getElementById("totalAll").placeholder) : "0";
+                                        let paymentMtd = document.getElementById("paymentMtd") ? document.getElementById("paymentMtd").value : "CASH";
+
+                                        // 2. Clean up elements for receipt
+                                        let hideheader = document.getElementById("inputTable");
+                                        if (hideheader) hideheader.remove();
+                                        let paymentMtdHead = document.getElementById("paymentMtdHead");
+                                        if (paymentMtdHead) paymentMtdHead.remove();
+
+                                        // Remove action (+ / -) column and hidden ID column for printing
+                                        document.querySelectorAll('#tablenota thead tr').forEach(r => {
+                                            while (r.cells.length > 5) r.deleteCell(-1);
+                                        });
+                                        document.querySelectorAll('#tablenota tbody tr').forEach(r => {
+                                            while (r.cells.length > 5) r.deleteCell(-1);
                                         });
 
-                                        combinedData = {
+                                        // 3. Render print view
+                                        var printContents = '<div class="container py-2" style="max-width: 480px; margin: 0 auto;">' + document.getElementById(divId).innerHTML + '</div>';
+                                        document.body.innerHTML = printContents;
+                                        let data2 = document.body.innerHTML;
+                                        window.print();
+
+                                        let combinedData = {
                                             task: "saveTrans",
                                             dataBarang: data1,
                                             dataHTML: data2,
-                                            dataTrans: data3,
+                                            dataTrans: totalVal,
                                             dataPayment: paymentMtd
                                         };
-                                        // Post the data to a server
                                         saveTrans(combinedData);
-
                                     } else {
                                         console.log("Cancel Payment");
                                     }
