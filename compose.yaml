@@ -7,7 +7,7 @@ services:
     environment:
       - SPRING_DATA_MONGODB_HOST=mongodb
       - SPRING_DATA_MONGODB_PORT=27017
-      - SPRING_DATA_MONGODB_DATABASE=primaelectronic
+      - SPRING_DATA_MONGODB_DATABASE=simpos
       - SERVER_PORT=8081
     depends_on:
       - mongodb

@@ -246,6 +246,7 @@
                                                 <input list="productSelects" class="form-control" id="productSelect"
                                                     onchange="getPrice(this.value)" name="productSelect"
                                                     placeholder="Nama Barang/ID">
+                                                <input type="hidden" id="selectedStockId">
                                                 <datalist id="productSelects">
                                                     <option th:each="stock : ${allStocks}" th:if="${stock.qty > 0}"
                                                         th:value="${stock.id}"
@@ -296,13 +297,20 @@
                                     fetch("/api/stock/" + encodeURIComponent(input))
                                         .then(response => response.json())
                                         .then(data => {
-                                            let price = data.priceFinal || data.pricefinal;
+                                            let price = data.priceFinal || data.pricefinal || 0;
                                             document.getElementById('hargasatuan').innerHTML = "Rp. " + price.toLocaleString('id-ID');
                                             document.getElementById('hargaqty').value = "1";
                                             document.getElementById('hargatotal').innerHTML = "Rp. " + price.toLocaleString('id-ID');
+                                            if (data.name) {
+                                                document.getElementById('productSelect').value = data.name;
+                                                document.getElementById('selectedStockId').value = data.id || input;
+                                            } else {
+                                                document.getElementById('selectedStockId').value = input;
+                                            }
                                             return "1";
                                         })
                                         .catch(err => {
+                                            document.getElementById('selectedStockId').value = input;
                                             console.error("Fetch error:", err);
                                         });
                                 }
@@ -314,7 +322,10 @@
                                 }
 
                                 function addToTable() {
-                                    let input = document.getElementById('productSelect').value;
+                                    let input = document.getElementById('selectedStockId').value;
+                                    if (!input) {
+                                        input = document.getElementById('productSelect').value;
+                                    }
                                     if (!input) return; // Prevent adding empty
 
                                     let qty = document.getElementById('hargaqty').value;
@@ -358,14 +369,15 @@
                                             hiddenCell.textContent = input;
                                             hiddenCell.hidden = true;
                                             updateNomorBaris();
+                                            updateTotal();
 
                                             // Clear input after adding
                                             document.getElementById('productSelect').value = '';
+                                            document.getElementById('selectedStockId').value = '';
                                         })
                                         .catch(err => {
                                             console.error("Fetch error:", err);
                                         });
-                                    updateTotal();
                                 }
 
                                 function hapusProduk(inputbutton) {

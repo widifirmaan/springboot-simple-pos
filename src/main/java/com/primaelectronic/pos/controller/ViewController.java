@@ -1,6 +1,7 @@
 package com.primaelectronic.pos.controller;
 
 import com.primaelectronic.pos.model.Transaction;
+import com.primaelectronic.pos.model.User;
 import com.primaelectronic.pos.repository.StockRepository;
 import com.primaelectronic.pos.repository.TransactionRepository;
 import jakarta.servlet.http.HttpSession;
@@ -31,11 +32,19 @@ public class ViewController {
     @Autowired
     private com.primaelectronic.pos.service.SequenceGeneratorService sequenceGeneratorService;
 
+    private boolean isAdminSession(HttpSession session) {
+        Object userObj = session.getAttribute("user");
+        String username = (String) session.getAttribute("username");
+        if (userObj instanceof User user && user.getAccess() == 1) {
+            return true;
+        }
+        return "hamam".equals(username);
+    }
+
     @GetMapping("/")
     public String index(HttpSession session) {
         if (session.getAttribute("user") != null) {
-            String username = (String) session.getAttribute("username");
-            if ("hamam".equals(username)) {
+            if (isAdminSession(session)) {
                 return "redirect:/dashboard";
             } else {
                 return "redirect:/kasir";
@@ -98,10 +107,7 @@ public class ViewController {
         }
 
         String username = (String) session.getAttribute("username");
-        if (!"hamam".equals(username)) {
-            // Placeholder for kasir check, although PHP only checked if != hamam redirects
-            // to kasir.
-            // But if we are here and not hamam, we should go to kasir.
+        if (!isAdminSession(session)) {
             return "redirect:/kasir";
         }
 

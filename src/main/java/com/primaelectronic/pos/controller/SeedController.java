@@ -47,6 +47,10 @@ public class SeedController {
         } else {
             User admin = userRepository.findByUsername("hamam").get();
             admin.setPassword("123");
+            admin.setAccess(1);
+            if (admin.getStore() <= 0) {
+                admin.setStore(1);
+            }
             userRepository.save(admin);
             result.append("Admin password reset to 123. <br/>");
         }
@@ -63,6 +67,10 @@ public class SeedController {
         } else {
             User kasir = userRepository.findByUsername("kasir").get();
             kasir.setPassword("123");
+            kasir.setAccess(2);
+            if (kasir.getStore() <= 0) {
+                kasir.setStore(1);
+            }
             userRepository.save(kasir);
             result.append("Kasir password reset to 123. <br/>");
         }

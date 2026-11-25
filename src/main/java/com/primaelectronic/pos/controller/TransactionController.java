@@ -61,8 +61,13 @@ public class TransactionController {
         try {
             String username = (String) session.getAttribute("username");
             Integer toko = (Integer) session.getAttribute("toko");
+            if (toko == null) {
+                toko = (Integer) session.getAttribute("store");
+            }
             transactionService.processTransaction(request, username, toko);
             return ResponseEntity.ok("Transaksi Berhasil");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Error processing transaction: " + e.getMessage());

@@ -434,6 +434,7 @@
                                             hiddenCell.textContent = input; // Use the ID here
                                             hiddenCell.hidden = true;
                                             updateNomorBaris();
+                                            updateTotal();
 
                                             // Clear input after adding
                                             document.getElementById('productSelect').value = '';
@@ -442,7 +443,6 @@
                                         .catch(err => {
                                             console.error("Fetch error:", err);
                                         });
-                                    updateTotal();
                                 }
 
                                 function hapusProduk(inputbutton) {

@@ -14,7 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -74,56 +77,102 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional
     public void processTransaction(TransactionRequest request, String username, Integer toko) throws Exception {
-        if (username == null)
+        if (request == null || request.getDataBarang() == null || request.getDataBarang().isEmpty()) {
+            throw new IllegalArgumentException("Daftar barang transaksi tidak boleh kosong");
+        }
+        if (username == null) {
             username = "system";
-        if (toko == null)
+        }
+        if (toko == null || toko <= 0) {
             toko = 1;
+        }
 
-        // 1. Save Invoice
-        Invoice invoice = new Invoice();
-        invoice.setDatabarang(new ObjectMapper().writeValueAsString(request.getDataBarang()));
-        invoice.setNota(request.getDataHTML());
-        invoice.setMoney(request.getDataTrans());
-        invoice.setToko(toko);
-        invoice.setTgl(LocalDateTime.now());
-        invoice.setUsername(username);
-        invoice.setPayment(request.getDataPayment());
-        invoiceRepository.save(invoice);
-
-        // 2. Process Items & Update Stock
-        StringBuilder productString = new StringBuilder();
+        // 1. Pre-validate every item and snapshot original stock quantities before any writes
+        List<Map.Entry<Stock, Integer>> stockSnapshots = new ArrayList<>();
+        List<String> productLabels = new ArrayList<>();
 
         for (TransactionItemDTO item : request.getDataBarang()) {
+            if (item == null || item.getQty() <= 0) {
+                throw new IllegalArgumentException("Jumlah barang harus lebih dari 0");
+            }
+
             long stockId;
+            boolean numericId = true;
             try {
                 stockId = Long.parseLong(item.getIdbarang());
             } catch (NumberFormatException e) {
+                numericId = false;
+                stockId = -1;
+            }
+
+            if (!numericId) {
+                productLabels.add(item.getIdbarang() + " (" + item.getQty() + ")");
                 continue;
             }
 
             Stock stock = stockRepository.findById(stockId).orElse(null);
-
             if (stock != null) {
-                productString.append(stock.getName()).append(" (").append(item.getQty()).append("), ");
                 int currentQty = stock.getQty();
                 int buyQty = item.getQty();
+                if (currentQty < buyQty) {
+                    throw new IllegalArgumentException(
+                            "Stok tidak mencukupi untuk " + stock.getName() + " (tersedia: " + currentQty + ")");
+                }
+                stockSnapshots.add(new AbstractMap.SimpleEntry<>(stock, currentQty));
                 stock.setQty(currentQty - buyQty);
                 stock.setModifiedAt(LocalDateTime.now());
-                stockRepository.save(stock);
+                productLabels.add(stock.getName() + " (" + buyQty + ")");
             } else {
-                productString.append("ID:").append(stockId).append(" (").append(item.getQty()).append("), ");
+                productLabels.add("ID:" + stockId + " (" + item.getQty() + ")");
             }
         }
 
-        // 3. Save Transaction
-        Transaction transaction = new Transaction();
-        transaction.setId(sequenceGeneratorService.generateSequence(Transaction.SEQUENCE_NAME));
-        transaction.setDate(LocalDateTime.now());
-        transaction.setAmount((int) request.getDataTrans());
-        transaction.setProduct(productString.toString());
-        transaction.setUserId(username);
-        transaction.setToko(toko);
-        transaction.setPayment(request.getDataPayment());
-        transactionRepository.save(transaction);
+        String productSummary = String.join(", ", productLabels);
+        String itemsJson = new ObjectMapper().writeValueAsString(request.getDataBarang());
+
+        // 2. Persist stock updates, invoice, and transaction with compensating rollback for standalone MongoDB
+        List<Map.Entry<Stock, Integer>> updatedStocks = new ArrayList<>();
+        Invoice savedInvoice = null;
+        Transaction savedTransaction = null;
+
+        try {
+            for (Map.Entry<Stock, Integer> entry : stockSnapshots) {
+                stockRepository.save(entry.getKey());
+                updatedStocks.add(entry);
+            }
+
+            Invoice invoice = new Invoice();
+            invoice.setDatabarang(itemsJson);
+            invoice.setNota(request.getDataHTML());
+            invoice.setMoney(request.getDataTrans());
+            invoice.setToko(toko);
+            invoice.setTgl(LocalDateTime.now());
+            invoice.setUsername(username);
+            invoice.setPayment(request.getDataPayment());
+            savedInvoice = invoiceRepository.save(invoice);
+
+            Transaction transaction = new Transaction();
+            transaction.setId(sequenceGeneratorService.generateSequence(Transaction.SEQUENCE_NAME));
+            transaction.setDate(LocalDateTime.now());
+            transaction.setAmount((int) request.getDataTrans());
+            transaction.setProduct(productSummary);
+            transaction.setUserId(username);
+            transaction.setToko(toko);
+            transaction.setPayment(request.getDataPayment());
+            savedTransaction = transactionRepository.save(transaction);
+        } catch (Exception ex) {
+            if (savedTransaction != null) {
+                transactionRepository.deleteById(savedTransaction.getId());
+            }
+            if (savedInvoice != null && savedInvoice.getId() != null) {
+                invoiceRepository.deleteById(savedInvoice.getId());
+            }
+            for (Map.Entry<Stock, Integer> updated : updatedStocks) {
+                Stock stock = updated.getKey();
+                stock.setQty(updated.getValue());
+                stockRepository.save(stock);
+            }
+            throw ex;
+        }
     }
 }

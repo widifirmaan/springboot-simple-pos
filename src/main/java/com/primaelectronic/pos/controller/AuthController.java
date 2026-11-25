@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,6 +17,11 @@ public class AuthController {
     @Autowired
     private com.primaelectronic.pos.service.AuthService authService;
 
+    @GetMapping("/login")
+    public String loginPage() {
+        return "redirect:/";
+    }
+
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password, HttpSession session,
             Model model) {
@@ -24,9 +30,11 @@ public class AuthController {
 
         if (userOpt.isPresent()) {
             User user = userOpt.get();
+            int assignedStore = user.getStore() > 0 ? user.getStore() : 1;
             session.setAttribute("user", user);
             session.setAttribute("username", user.getUsername());
-            session.setAttribute("store", user.getStore());
+            session.setAttribute("store", assignedStore);
+            session.setAttribute("toko", assignedStore);
             return "redirect:/dashboard";
         }
 
