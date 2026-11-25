@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /stock-barang
+Disallow: /api/
+Disallow: /seed

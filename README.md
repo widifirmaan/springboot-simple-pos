@@ -82,63 +82,44 @@ Retail point-of-sale and multi-store inventory management web application built 
 - **Docker** (or a local **MongoDB `7.0`** instance on port `27017`)
 - **Maven Wrapper** (`./mvnw`, included in this repository)
 
-### 1. Start MongoDB
+### Quick Start
 
-```bash
-docker run -d --name simpos-mongo -p 27017:27017 mongo:7.0
-```
+1. **Start MongoDB**
 
-Alternatively, run both services together via Docker Compose (`app` + `mongodb` using database `simpos`):
+   ```bash
+   docker run -d --name simpos-mongo -p 27017:27017 mongo:7.0
+   ```
 
-```bash
-docker compose up --build
-```
+   Alternatively, run both services together via Docker Compose (`app` + `mongodb` using database `simpos`):
 
-Default local settings live in `src/main/resources/application.properties`:
+   ```bash
+   docker compose up --build
+   ```
 
-```properties
-spring.application.name=Simpos
-spring.data.mongodb.host=localhost
-spring.data.mongodb.port=27017
-spring.data.mongodb.database=simpos
-server.port=8081
-```
+   Default local settings live in `src/main/resources/application.properties` (`spring.data.mongodb.host=localhost`, `spring.data.mongodb.port=27017`, `spring.data.mongodb.database=simpos`, `server.port=8081`).
 
-### 2. Run Locally
+2. **Clone and start the Spring Boot application**
 
-```bash
-git clone https://github.com/widifirmaan/springboot-simple-pos.git
-cd springboot-simple-pos
-./mvnw spring-boot:run
-```
+   ```bash
+   git clone https://github.com/widifirmaan/springboot-simple-pos.git
+   cd springboot-simple-pos
+   ./mvnw spring-boot:run
+   ```
 
-Open `http://localhost:8081` in your browser.
+3. **Seed demo data and open the application**
 
-### 3. Seed Demo Data & Database Behavior
+   ```bash
+   curl http://localhost:8081/seed
+   ```
 
-Populate demo accounts, sample stock items, and sample vendor bills:
+   Visit `http://localhost:8081` in your browser. Collections seeded in MongoDB (`simpos`) include `user`, `stock`, `transaction`, `invoice`, `bill`, and atomic sequence counters in `database_sequences`. Checkout processing (`POST /api/transactions/process`) pre-validates cart quantities and available stock before updating `stock`, `invoice`, and `transaction` documents, with compensating rollback if an error occurs on standalone MongoDB instances (multi-document MongoDB transactions require a replica set).
 
-```bash
-curl http://localhost:8081/seed
-```
-
-Pre-seeded demo accounts:
+### Demo Credentials
 
 | Role | Username | Password | Default Landing Route |
 | :--- | :--- | :--- | :--- |
 | **Administrator (`access = 1`)** | `hamam` | `123` | `/dashboard` |
 | **Cashier (`access = 2`)** | `kasir` | `123` | `/kasir` |
-
-Collections in MongoDB (`simpos`):
-
-- `user`: numeric `_id`, `username`, `password`, `access`, `store`
-- `stock`: numeric `_id`, `name`, `qty`, `priceInit`, `priceFinal`, `store`, timestamps
-- `transaction`: numeric `_id`, `date`, `amount` (total IDR integer), `product` summary, `userId`, `toko`, `payment`
-- `invoice`: string ObjectId `_id`, `databarang` JSON, `nota` receipt HTML, `money`, `toko`, `tgl`, `username`, `payment`
-- `bill`: numeric `_id`, `nama`, `nominal`, `ket`, `pic` (payment proof URL or base64 JPEG data URL), `status` (`1` Lunas, `2` Belum Dibayar, `3` Belum Lunas), `nominalMinus`, `dueDate`, `createdAt`, `createdBy`
-- `database_sequences`: atomic `findAndModify` sequence counters (`user_sequence`, `stock_sequence`, `transaction_sequence`, `bill_sequence`)
-
-Checkout processing (`POST /api/transactions/process`) pre-validates cart quantities and available stock before updating `stock`, `invoice`, and `transaction` documents, with compensating rollback if an error occurs on standalone MongoDB instances (multi-document MongoDB transactions require a replica set).
 
 ## Author
 

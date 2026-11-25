@@ -240,6 +240,7 @@ public class ViewController {
         int soldItems = 0;
         java.util.regex.Pattern p = java.util.regex.Pattern.compile("\\((\\d+)\\)");
         for (Transaction t : monthTransactions) {
+            if (t.getProduct() == null) continue;
             java.util.regex.Matcher m = p.matcher(t.getProduct());
             while (m.find()) {
                 soldItems += Integer.parseInt(m.group(1));
